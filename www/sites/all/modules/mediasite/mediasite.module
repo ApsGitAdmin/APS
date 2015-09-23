@@ -1,0 +1,290 @@
+<?php
+
+/**
+ * @file
+ * Mediasite External Data Access Service (EDAS) primary functionality.
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function mediasite_menu() {
+  $items['admin/config/mediasite'] = array(
+    'title' => 'Mediasite',
+    'description' => 'Settings for Mediasite.',
+    'access arguments' => array('administer mediasite'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('mediasite_admin_settings_form'),
+    'file' => 'mediasite.admin.inc',
+  );
+  
+  $items['mediasite-get-auth-ticket'] = array(
+    'access arguments' => array('access content'),
+    'page callback' => 'mediasite_get_auth_ticket',
+    'type' => MENU_CALLBACK,
+  );
+  
+  return $items;
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function mediasite_permission() {
+  return array( 'administer mediasite' => 
+      array(
+        'title' => t('Administer Mediasite Module'),
+        'description' => t('Perform maintenance tasks for Mediasite Module'),
+    )
+  );
+}
+
+/**
+ * Implements hook_field_schema().
+ */
+function mediasite_field_schema($field) {
+  return array(
+    'columns' => array(
+      'mediasite_id' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_info().
+ */
+function mediasite_field_info() {
+  return array(
+    'mediasite' => array(
+      'label' => t('Mediasite ID'),
+      'description' => t('Mediasite Presentation ID field.'),
+      'default_widget' => 'mediasite_field',
+      'default_formatter' => 'mediasite_default',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function mediasite_field_widget_info() {
+  return array(
+    'mediasite_field' => array(
+      'label' => t('Text field'),
+      'field types' => array('mediasite'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function mediasite_field_settings_form($field, $instance, $has_data) {
+  $settings = $field['settings'];
+  // Add your global settings fields here
+  $form = array();
+  return $form;
+}
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function mediasite_field_instance_settings_form($field, $instance) {
+  $settings = $instance['settings'];
+  // Add your instance settings fields here.
+  $form = array();
+  return $form;
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function mediasite_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    case 'mediasite_field' :
+      $element['mediasite_id'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Mediasite ID'),
+        '#default_value' => isset($items[$delta]['mediasite_id']) ? $items[$delta]['mediasite_id'] : '',
+        '#required' => $element['#required'],
+        '#size' => 60,
+      );
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function mediasite_field_is_empty($item, $field) {
+  if (empty($item['mediasite_id'])) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function mediasite_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function mediasite_field_formatter_info() {
+  $info = array(
+    'mediasite_default' => array(
+      'label' => t('Embedded'),
+      'field types' => array('mediasite'),
+      'description' => t('Embeds the Mediasite ID into an iframe.'),
+    ),
+  );
+  return $info;
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function mediasite_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  switch ($display['type']) {
+    case 'mediasite_default' :
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'mediasite_embed',
+          '#item' => $item,
+        );
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function mediasite_theme() {
+  return array(
+    'mediasite_embed' => array(
+      'variables' => array(
+        'item' => NULL,
+        'widget' => NULL,
+      ),
+      'template' => 'mediasite-embed',
+      'file' => 'mediasite.theme.inc',
+    ),
+  );
+}
+
+/**
+ * Get user authentication ticket for a resourceid.
+ */
+function mediasite_authentication_ticket($resource_id, $user_name) {
+  $ticket_lifetime = variable_get('mediasite_ticket_lifetime', '');
+  
+  if (empty($resource_id) || empty($ticket_lifetime)) {
+    return FALSE;
+  }
+  
+  $client = mediasite_soap_connection();
+  $user_ticket = mediasite_user_ticket();
+  if (empty($user_ticket)) {
+    return FALSE;
+  }
+  
+  // get authentication ticket
+  $settings = new stdClass();
+  $settings->Username = $user_name;
+  $settings->ResourceId = $resource_id;
+  $settings->ClientIpAddress = NULL;
+  $settings->MinutesToLive = $ticket_lifetime;
+  $resource_request = new stdClass();
+  $resource_request->UserTicket = $user_ticket;
+  $resource_request->ImpersonationUsername = NULL;
+  $resource_request->TicketSettings = $settings;
+  
+  try {
+    $response = $client->CreateAuthTicket($resource_request);
+  }
+  catch (SoapFault $exception) {
+    return FALSE;
+  }
+  
+  return $response->AuthTicketId;
+}
+
+/**
+ * Get auth ticket json callback
+ */
+function mediasite_get_auth_ticket() {
+  // turn off caching on our callback
+  $GLOBALS['conf']['cache'] = FALSE;
+  
+  $query = $_GET;
+  unset($query['q']);
+  
+  if ($query['auth'] != 'false') {
+    $auth_ticket = mediasite_authentication_ticket($query['peid'], $query['username']);
+    if ($auth_ticket) {
+      $query['authTicket'] = $auth_ticket;
+    }
+  }
+  
+  $server_root['root'] = $query['mediasite_root'];
+  unset($query['mediasite_root']);
+  $server_root['player'] = $query['mediasite_player'];
+  unset($query['mediasite_player']);
+  
+  drupal_json_output(array('src' => $server_root['root'] . $server_root['player'] . '?' . http_build_query($query)));
+}
+
+/**
+ * Get user ticket.
+ */
+function mediasite_user_ticket() {
+  static $user_ticket;
+  $mediasite_user = variable_get('mediasite_user', '');
+  $mediasite_password = variable_get('mediasite_password', '');
+
+  if (!empty($user_ticket) || empty($mediasite_user) || empty($mediasite_password)) {
+    return $user_ticket;
+  }
+  
+  $client = mediasite_soap_connection();
+  try {
+    $response = $client->Login($mediasite_user, $mediasite_password);
+    $user_ticket = $response->UserTicket;
+  }
+  catch (SoapFault $exception) {
+    return FALSE;
+  }
+  return $user_ticket;
+}
+
+/**
+ * Get soap client.
+ */
+function mediasite_soap_connection($service_url = '') {
+  static $client;
+  if (!isset($service_url)) {
+    $service_url = variable_get('mediasite_services_api_location', '');
+  }
+
+  $path = libraries_get_path('mediasite');
+  require_once($path . '/edasproxy_client.php');
+
+  if (!empty($client) || empty($service_url)) {
+    return $client;
+  }
+  
+  $client = new ExternalAccessClient($service_url);
+  
+  return $client;
+}

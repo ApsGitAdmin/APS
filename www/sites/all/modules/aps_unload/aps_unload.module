@@ -1,0 +1,79 @@
+<?php
+/**
+ * @file
+ * Provides an API to allow other modules use the onBeforeUnload event of the browser window.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function aps_unload_menu() {
+  $items['ajax/aps_unload/%node/%user'] = array(
+      'page callback' => 'aps_unload_invoke_rule', 
+      'page arguments' => array(2,3),
+      'access arguments' => array('access content'), 
+      'type' => MENU_CALLBACK,
+    );
+
+  $items['ajax/aps_unload/browser/%'] = array(
+      'page callback' => 'aps_unload_browser_check', 
+      'page arguments' => array(3),
+      'access arguments' => array('access content'), 
+      'type' => MENU_CALLBACK,
+    );
+  return $items;
+}
+
+/**
+ * Implements hook_invoke_rule().
+ */
+function aps_unload_invoke_rule($node, $user) {
+  rules_invoke_event('aps_unload_webcast', $node, $user);
+}
+
+/**
+ * Implements hook_invoke_rule().
+ */
+function aps_unload_browser_check($browser) {
+  rules_invoke_event('aps_unload_browser_info', $browser);
+}
+
+/**
+ * @file
+ * Front-end interfaces that use the Google Analytics API module.
+ */
+
+function aps_unload_node_view($node, $view_mode, $langcode){
+  global $user;
+
+  if ($view_mode == 'full') {
+    // Load the onUnload API.
+    aps_onunload_add_js();
+
+    // Install our client-side behavior.
+    drupal_add_js(drupal_get_path('module', 'aps_unload') . '/js/aps_testing.js');
+    drupal_add_js(array('apsTesting' => array('nid' => $node->nid, 'uid' => $user->uid)), 'setting');
+  }
+}
+
+/**
+ * Make the onBeforeUnload API available to javascripts on the page.
+ */
+function aps_onbeforeunload_add_js() {
+  static $ready;
+  if (!isset($ready)) {
+    $ready = TRUE;
+    drupal_add_js(drupal_get_path('module', 'aps_unload') . '/js/aps_onbeforeunload.js');
+  }
+}
+
+/**
+ * Make the onUnload API available to javascripts on the page.
+ */
+function aps_onunload_add_js() {
+  static $ready;
+  if (!isset($ready)) {
+    $ready = TRUE;
+    drupal_add_js(drupal_get_path('module', 'aps_unload') . '/js/aps_onunload.js');
+  }
+}

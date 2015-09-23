@@ -1,0 +1,416 @@
+<?php
+/**
+ * @file
+ * A Slide Sync field using the Field Types API.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function slide_sync_theme() {
+  return array(
+    'mediaplayer_formatter' => array(
+      'variables' => array(
+        'image' => NULL,
+        'image_style' => NULL,
+        'link' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Returns HTML for a MediaPlayer.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - item: Associative array of image data, which may include "uri", "alt",
+ *     "width", "height", "title" and "attributes".
+ *   - attributes: An array containing attributes to add onto the link
+ *
+ * @ingroup themeable
+ */
+function theme_mediaplayer_formatter($variables) {
+  $item = $variables['image'];
+  $image = array(
+    'path' => $item['uri'],
+  );
+
+  if (isset($item['attributes'])) {
+    $image['attributes'] = $item['attributes'];
+  }
+
+  if (isset($variables['image_style'])) {
+    $image['style_name'] = $variables['image_style'];
+    $output = theme('image_style', $image);
+  }
+  else {
+    $output = theme('image', $image);
+  }
+
+  // The link path and link options are both optional, but for the options to be
+  // processed, the link path must at least be an empty string.
+  if (isset($variables['link'])) {
+    $path = $variables['link']['path'];
+    $options = isset($variables['link']['options']) ? $variables['link']['options'] : array();
+    // When displaying an image inside a link, the html option must be TRUE.
+    $options['html'] = TRUE;
+    $output = l($output, $path, $options);
+  }
+
+  return $output;
+}
+
+/**
+ * Implements hook_field_info().
+ *
+ * Provides the description of the field.
+ */
+function slide_sync_field_info() {
+  return array(
+    'slide_sync_output' => array(
+      'label' => t('Slide Output'),
+      'description' => t('Field containing timings, comments and images'),
+      'settings' => array(
+        'uri_scheme' => variable_get('file_default_scheme', 'public'),
+      ),
+      'instance_settings' => array(
+        'file_extensions' => 'jpg jpeg png',
+        'file_directory' => '',
+      ),
+      'default_widget' => 'slide_sync_widget',
+      'default_formatter' => 'slide_sync_image_formatter',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_validate().
+ *
+ * This hook gives us a chance to validate content that's in our
+ * field. We're really only interested in the $items parameter, since
+ * it holds arrays representing content in the field we've defined.
+ * We want to verify that the items only contain RGB hex values like
+ * this: #RRGGBB. If the item validates, we do nothing. If it doesn't
+ * validate, we add our own error notification to the $errors parameter.
+ *
+ * @see field_example_field_widget_error()
+ */
+function slide_sync_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  foreach ($items as $delta => $item) {
+    if (!empty($item['time'])) {
+      $timings_array = explode("\n", $item['time']);
+      foreach ($timings_array as $value) {
+        if (substr_count($value, ':') < 2) {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'slide_sync_time_setup_invalid',
+            'message' => t('Time values must contain 3 segments'),
+          );
+          break;
+        } 
+        else {
+          list($hours, $mins, $secs) = explode(':', $value);
+          if ((int) $mins > 60 || (int) $secs > 60) {
+            $errors[$field['field_name']][$langcode][$delta][] = array(
+              'error' => 'slide_sync_time_value_invalid',
+              'message' => t('Minutes and Seconds must be less than 60'),
+            );
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_is_empty().
+ *
+ * hook_field_is_emtpy() is where Drupal asks us if this field is empty.
+ * Return TRUE if it does not contain data, FALSE if it does. This lets
+ * the form API flag an error when required fields are empty.
+ */
+function slide_sync_field_is_empty($item, $field) {
+  return empty($item['time']);
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ *
+ * We need to tell Drupal that we have two different types of formatters
+ * for this field. One will change the text color, and the other will
+ * change the background color.
+ *
+ * @see field_example_field_formatter_view()
+ */
+function slide_sync_field_formatter_info() {
+  return array(
+    // This formatter just displays the hex value in the color indicated.
+    'slide_sync_image_formatter' => array(
+      'label' => t('HTML Image'),
+      'field types' => array('slide_sync_output'),
+    ),
+    'slide_sync_time_formatter' => array(
+      'label' => t('Time'),
+      'field types' => array('slide_sync_output'),
+    ),
+    'slide_sync_comment_formatter' => array(
+      'label' => t('Comment'),
+      'field types' => array('slide_sync_output'),
+    ),
+    'slide_sync_imagepath_formatter' => array(
+      'label' => t('Image Path'),
+      'field types' => array('slide_sync_output'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ *
+ * Two formatters are implemented.
+ * - field_example_simple_text just outputs markup indicating the color that
+ *   was entered and uses an inline style to set the text color to that value.
+ * - field_example_color_background does the same but also changes the
+ *   background color of div.region-content.
+ *
+ * @see field_example_field_formatter_info()
+ */
+function slide_sync_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    // This formatter simply outputs the field as text and with a color.
+    case 'slide_sync_image_formatter':
+      $i = 1;
+      foreach ($items as $delta => $item) {
+        if ($file = file_load($item['image'])) {
+          list($hours, $mins, $secs) = explode(':', $item['time']);
+          $time = ((3600 * $hours) + (60 * $mins) + $secs);
+          $element[$delta] = array(
+            '#theme' => 'mediaplayer_formatter',
+            '#image' => (array) $file,
+            '#image_style' => '4-3_slide-thumb',
+            '#link' => array(
+              'path' => '',
+              'options' => array(
+                'fragment' => 'slide' . $i,
+                'external' => TRUE,
+                'attributes' => array(
+                  'onclick' => 'jwplayer().seek(' . $time . ');'
+                ),
+              ),
+            ),
+          );
+        }
+        $i++;
+      }
+      break;
+    case 'slide_sync_time_formatter':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array('#markup' => t($item['time']));
+      }
+      break;
+    case 'slide_sync_comment_formatter':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array('#markup' => t($item['comment']));
+      }
+      break;
+    case 'slide_sync_imagepath_formatter':
+      foreach ($items as $delta => $item) {
+        if ($file = file_load($item['image'])) {
+          $output = file_create_url($file->uri);
+          $element[$delta] = array('#markup' => $output);
+        }
+      }
+      break;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ *
+ * Three widgets are provided.
+ * - A simple text-only widget where the user enters the '#ffffff'.
+ * - A 3-textfield widget that gathers the red, green, and blue values
+ *   separately.
+ * - A farbtastic colorpicker widget that chooses the value graphically.
+ *
+ * These widget types will eventually show up in hook_field_widget_form,
+ * where we will have to flesh them out.
+ *
+ * @see field_example_field_widget_form()
+ */
+function slide_sync_field_widget_info() {
+  return array(
+    'slide_sync_widget' => array(
+      'label' => t('Slide Sync Outputter'),
+      'field types' => array('slide_sync_output'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function slide_sync_field_settings_form($field, $instance, $has_data) {
+  $defaults = field_info_field_settings($field['type']);
+  $settings = array_merge($defaults, $field['settings']);
+
+  $form['#attached']['js'][] = drupal_get_path('module', 'file') . '/file.js';
+ 
+  $scheme_options = array();
+  foreach (file_get_stream_wrappers(STREAM_WRAPPERS_WRITE_VISIBLE) as $scheme => $stream_wrapper) {
+    $scheme_options[$scheme] = $stream_wrapper['name'];
+  }
+  $form['uri_scheme'] = array(
+    '#type' => 'radios',
+    '#title' => t('Upload destination'),
+    '#options' => $scheme_options,
+    '#default_value' => $settings['uri_scheme'],
+    '#description' => t('Select where the final files should be stored. Private file storage has significantly more overhead than public files, but allows restricted access to files within this field.'),
+    '#disabled' => $has_data,
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function slide_sync_field_instance_settings_form($field, $instance) {
+  $settings = $instance['settings'];
+  // Add your instance settings fields here.
+  $form['file_directory'] = array(
+    '#type' => 'textfield',
+    '#title' => t('File directory'),
+    '#default_value' => $settings['file_directory'],
+    '#description' => t('Optional subdirectory within the upload destination where files will be stored. Do not include preceding or trailing slashes.'),
+    '#element_validate' => array('_file_generic_settings_file_directory_validate'),
+    '#weight' => 3,
+  );
+
+  // Make the extension list a little more human-friendly by comma-separation.
+  $extensions = str_replace(' ', ', ', $settings['file_extensions']);
+  $form['file_extensions'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Allowed file extensions'),
+    '#default_value' => $extensions,
+    '#description' => t('Separate extensions with a space or comma and do not include the leading dot.'),
+    '#element_validate' => array('_file_generic_settings_extensions'),
+    '#weight' => 1,
+    // By making this field required, we prevent a potential security issue
+    // that would allow files of any type to be uploaded.
+    '#required' => TRUE,
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_field_widget_form().
+ *
+ * hook_widget_form() is where Drupal tells us to create form elements for
+ * our field's widget.
+ *
+ * We provide one of three different forms, depending on the widget type of
+ * the Form API item provided.
+ *
+ * The 'field_example_colorpicker' and 'field_example_text' are essentially
+ * the same, but field_example_colorpicker adds a javascript colorpicker
+ * helper.
+ *
+ * field_example_3text displays three text fields, one each for red, green,
+ * and blue. However, the field type defines a single text column,
+ * rgb, which needs an HTML color spec. Define an element validate
+ * handler that converts our r, g, and b fields into a simulated single
+ * 'rgb' form element.
+ */
+function slide_sync_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $defaults = array(
+    'time' => isset($items[$delta]['time']) ? $items[$delta]['time'] : '',
+    'comment' => isset($items[$delta]['comment']) ? $items[$delta]['comment'] : '',
+    'image' => isset($items[$delta]['image']) ? $items[$delta]['image'] : '',
+  );
+
+  $widget = $element;
+  $widget['#delta'] = $delta;
+
+  $time = array(
+    '#attributes' => array('class' => array('edit-field-slide-sync-time')),
+    '#type' => 'textfield',
+    '#title' => t('Time'),
+    '#description' => t('Must be in the format HH:MM:SS'),
+    '#default_value' => $defaults['time'],
+    '#size' => 12,
+    '#maxlength' => 8,
+    '#weight' => 1,
+  );
+  $comment = array(
+    '#attributes' => array('class' => array('edit-field-slide-sync-comment')),
+    '#type' => 'textfield',
+    '#title' => t('Comment'),
+    '#default_value' => $defaults['comment'],
+    '#weight' => 2,
+  );
+  $image = array(
+    '#type' => 'managed_file',
+    '#title' => t('Slide'),
+    '#upload_location' => file_field_widget_uri($field, $instance),
+    '#upload_validators' => file_field_widget_upload_validators($field, $instance),
+    '#default_value' => $defaults['image'],
+    '#weight' => 3,
+  );
+
+  $element['time'] = array_merge($widget, $time);
+  $element['comment'] = array_merge($widget, $comment);
+  $element['image'] = array_merge($widget, $image);
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function slide_sync_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  foreach ($items as $delta => $item) {
+    if (empty($item['image'])) {
+      unset($items[$delta]);
+      continue;
+    }
+    $file = file_load($item['image']);
+    if (empty($file)) {
+      unset($items[$delta]);
+      continue;
+    }
+    if (!$file->status) {
+      $file->status = FILE_STATUS_PERMANENT;
+      $id = (isset($entity->nid)) ? $entity->nid : 0;
+      file_usage_add($file, $field['module'], $entity_type, $id);
+      // Save
+      file_save($file);
+    }
+  }
+}
+
+/**
+ * Implements hook_field_widget_error().
+ *
+ * hook_field_widget_error() lets us figure out what to do with errors
+ * we might have generated in hook_field_validate(). Generally, we'll just
+ * call form_error().
+ *
+ * @see field_example_field_validate()
+ * @see form_error()
+ */
+function slide_sync_field_widget_error($element, $error, $form, &$form_state) {
+  switch ($error['error']) {
+    case 'slide_sync_time_setup_invalid':
+      form_error($element, $error['message']);
+      break;
+    case 'slide_sync_time_value_invalid':
+      form_error($element, $error['message']);
+      break;
+  }
+}

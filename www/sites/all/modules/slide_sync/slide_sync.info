@@ -1,0 +1,4 @@
+name = Slide Setup
+description = "Defines a new field type and populates information based on imports"
+package = Fields
+core = 7.x

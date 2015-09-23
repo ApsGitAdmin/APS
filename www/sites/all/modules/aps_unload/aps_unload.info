@@ -1,0 +1,4 @@
+name = aps Unload
+description = onBeforeUnload/onUnload module to provide actions when users leave the page.
+core = 7.x
+package = aps

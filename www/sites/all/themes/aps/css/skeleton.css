@@ -1,0 +1,500 @@
+
+/* 1200px Media Query for the Skeleton Grid - http://getskeleton.com
+* Adapted from http://www.aliaspooryorik.com/blog/index.cfm/e/posts.details/post/responsive-css-grid-systems-345
+* Added .alpha.omega combo classes. Hope to see that fixed in later versions of Skeleton: https://github.com/dhgamache/Skeleton/issues/68
+*/
+
+	
+/* #Base 1200 Grid
+================================================== */
+    .container                                  { position: relative; width: 1200px; margin: 0 auto; padding: 0; }
+    .column, .columns                           { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
+    .row                                        { margin-bottom: 20px; }
+
+    /* Nested Column Classes */
+    .column.alpha, .columns.alpha               { margin-left: 0; }
+    .column.omega, .columns.omega               { margin-right: 0; }
+	.column.alpha.omega, .columns.alpha.omega   { margin-left: 0; margin-right: 0}
+
+    /* Base Grid */
+    .container .one.column                      { width: 55px;  }
+    .container .two.columns                     { width: 130px; }
+    .container .three.columns                   { width: 205px; }
+    .container .four.columns                    { width: 280px; }
+    .container .five.columns                    { width: 355px; }
+    .container .six.columns                     { width: 430px; }
+    .container .seven.columns                   { width: 505px; }
+    .container .eight.columns                   { width: 580px; }
+    .container .nine.columns                    { width: 655px; }
+    .container .ten.columns                     { width: 730px; }
+    .container .eleven.columns                  { width: 805px; }
+    .container .twelve.columns                  { width: 880px; }
+    .container .thirteen.columns                { width: 955px; }
+    .container .fourteen.columns                { width: 1030px; }
+    .container .fifteen.columns                 { width: 1105px; }
+    .container .sixteen.columns                 { width: 1180px; }
+
+	.container .one-fifth.column                { width: 220px; }
+
+    .container .one-third.column                { width: 380px; }
+    .container .two-thirds.column               { width: 780px; }
+
+    /* Offsets */
+    .container .offset-by-one                   { padding-left: 75px;  }
+    .container .offset-by-two                   { padding-left: 150px; }
+    .container .offset-by-three                 { padding-left: 225px; }
+    .container .offset-by-four                  { padding-left: 300px; }
+    .container .offset-by-five                  { padding-left: 380px; }
+    .container .offset-by-six                   { padding-left: 455px; }
+    .container .offset-by-seven                 { padding-left: 530px; }
+    .container .offset-by-eight                 { padding-left: 605px; }
+    .container .offset-by-nine                  { padding-left: 680px; }
+    .container .offset-by-ten                   { padding-left: 755px; }
+    .container .offset-by-eleven                { padding-left: 830px; }
+    .container .offset-by-twelve                { padding-left: 905px; }
+    .container .offset-by-thirteen              { padding-left: 980px; }
+    .container .offset-by-fourteen              { padding-left: 1055px; }
+    .container .offset-by-fifteen               { padding-left: 1130px; }
+
+    nav                                         { height: 130px; }
+    nav ul li a                                 { font-size: 20px; }
+
+    .menuContainer                              { width: 100%; }
+
+    .header .title                              { font-size: 32px; width: 75%; color: #939393; }
+
+    .servicesContainer > div                    { display: block; margin-bottom: 60px; }
+
+    .services-header h1                         { margin-bottom: 10px; font-size: 50px; }
+    .services-header h1 span                    { color: #939393; font-size: 50px; display: inline-block; }
+
+    .services.odd.half .services-header,
+    .services.odd.half .services-text           { width: 45%; margin-left: 55%; clear: none; }
+
+    .services.odd.full .services-header,
+    .services.odd.full .services-text           { width: 100%; margin-left: 0%; clear: both; }
+
+    .services.even.half .services-header,
+    .services.even.half .services-text          { width: 45%; margin-right: 55%; clear: none; }
+
+    .services.even.full .services-header,
+    .services.even.full .services-text          { width: 100%; margin-right: 0%; clear: both; }
+
+    .services.even .video-container             { float: right; text-align: left; }
+    .services.odd .video-container              { float: left; text-align: left; }
+
+    .services .video-container                  { margin-top: -35px; margin-bottom: 0; width: 50%; }
+
+    .portfolio                                  { margin-top: 20px; }
+
+    .portfolioBlock                             { width: 200px; height: 200px; }
+    .portfolioBlock.even .portfolioImage img, 
+    .portfolioBlock.odd .portfolioImage img     { float: none; }
+    .portfolioName h2                           { margin-top: 60px; font-size: 20px; }
+    .portfolioImage img                         { height: 200px; width: 200px; }
+    .portfolioOverlay                           { font-size: 100px; }
+
+    a.view-add-link                             { width: 200px; height: 200px; font-size: 100px; line-height: 200px; -webkit-box-shadow:inset 0 0 50px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 50px 0 rgba(0,0,0,0.4); }
+
+    .return                                     { text-align: right; }
+
+    .contactLogo                                { text-align: left; }
+    .contactInfo                                { padding: 0 20px 0 0; }
+    .contactDetails                             { text-align: left; margin-top: 160px; margin-bottom: 0; }
+    .contactDetails ul                          { padding: 0; }
+
+    .googlemap-wrap                             { margin-left: 10px; }
+
+    form.contact-form .five.columns             { width: 355px; }
+    form.contact-form .four.columns             { width: 280px; }
+
+    .visible-desktop                            { display: block; }
+    .visible-tablet                             { display: none; }
+    .visible-phone                              { display: none; }
+
+    .hidden-desktop                             { display: none; }
+    .hidden-tablet                              { display: block; }
+    .hidden-phone                               { display: block; }
+
+/* #Base 960 Grid
+================================================== */
+ @media only screen and (min-width: 960px) and (max-width: 1199px) {
+    .container                                  { width: 960px; }
+    .column, .columns                           { margin-left: 10px; margin-right: 10px; }
+
+    /* Nested Column Classes */
+    .column.alpha, .columns.alpha               { margin-left: 0; }
+    .column.omega, .columns.omega               { margin-right: 0; }
+
+    /* Base Grid */
+    .container .one.column                      { width: 40px;  }
+    .container .two.columns                     { width: 100px; }
+    .container .three.columns                   { width: 160px; }
+    .container .four.columns                    { width: 220px; }
+    .container .five.columns                    { width: 280px; }
+    .container .six.columns                     { width: 340px; }
+    .container .seven.columns                   { width: 400px; }
+    .container .eight.columns                   { width: 460px; }
+    .container .nine.columns                    { width: 520px; }
+    .container .ten.columns                     { width: 580px; }
+    .container .eleven.columns                  { width: 640px; }
+    .container .twelve.columns                  { width: 700px; }
+    .container .thirteen.columns                { width: 760px; }
+    .container .fourteen.columns                { width: 820px; }
+    .container .fifteen.columns                 { width: 880px; }
+    .container .sixteen.columns                 { width: 940px; }
+	
+	.container .one-fifth.column                { width: 172px; }
+
+    .container .one-third.column                { width: 300px; }
+    .container .two-thirds.column               { width: 620px; }
+
+    /* Offsets */
+    .container .offset-by-one                   { padding-left: 60px;  }
+    .container .offset-by-two                   { padding-left: 120px; }
+    .container .offset-by-three                 { padding-left: 180px; }
+    .container .offset-by-four                  { padding-left: 240px; }
+    .container .offset-by-five                  { padding-left: 300px; }
+    .container .offset-by-six                   { padding-left: 360px; }
+    .container .offset-by-seven                 { padding-left: 420px; }
+    .container .offset-by-eight                 { padding-left: 480px; }
+    .container .offset-by-nine                  { padding-left: 540px; }
+    .container .offset-by-ten                   { padding-left: 600px; }
+    .container .offset-by-eleven                { padding-left: 660px; }
+    .container .offset-by-twelve                { padding-left: 720px; }
+    .container .offset-by-thirteen              { padding-left: 780px; }
+    .container .offset-by-fourteen              { padding-left: 840px; }
+    .container .offset-by-fifteen               { padding-left: 900px; }
+
+    nav ul li a                                 { font-size: 16px; }
+
+    header .title                               { font-size: 28px }
+
+    .services.odd.half .services-header,
+    .services.odd.half .services-text           { width: 55%; margin-left: 45%; } 
+
+    .services.odd.full .services-header,
+    .services.odd.full .services-text           { width: 100%; margin-left: 0%; }   
+
+    .services.even.half .services-header,
+    .services.even.half .services-text          { width: 55%; margin-right: 45%; }
+
+    .services.even.full .services-header,
+    .services.even.full .services-text          { width: 100%; margin-right: 0%; }
+
+    .services .video-container                  { width: 40%; }
+
+    .portfolioBlock                             { width: 160px; height: 160px; }
+    .portfolioBlock.even .portfolioImage img, 
+    .portfolioBlock.odd .portfolioImage img     { float: none; }
+    .portfolioName h2                           { margin-top: 45px; font-size: 20px; }
+    .portfolioImage img                         { height: 160px; width: 160px; }
+    .portfolioOverlay                           { font-size: 80px; }
+
+    a.view-add-link                             { width: 160px; height: 160px; font-size: 80px; line-height: 160px; -webkit-box-shadow:inset 0 0 30px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 30px 0 rgba(0,0,0,0.4); }
+
+    .contactLogo                                { text-align: left; }
+    .contactInfo                                { padding: 0; }
+    .contactDetails                             { text-align: left; }
+
+    form.contact-form .five.columns             { width: 280px; }
+    form.contact-form .four.columns             { width: 220px; }
+
+    .visible-desktop                            { display: block; }
+    .visible-tablet                             { display: none; }
+    .visible-phone                              { display: none; }
+
+    .hidden-desktop                             { display: none; }
+    .hidden-tablet                              { display: block; }
+    .hidden-phone                               { display: block; }
+ }
+
+
+/* #Tablet (Portrait)
+================================================== */
+
+    /* Note: Design for a width of 768px */
+
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+        .container                                  { width: 768px; }
+        .container .column,
+        .container .columns                         { margin-left: 10px; margin-right: 10px;  }
+        .column.alpha, .columns.alpha               { margin-left: 0; margin-right: 10px; }
+        .column.omega, .columns.omega               { margin-right: 0; margin-left: 10px; }
+
+        .container .one.column                      { width: 28px; }
+        .container .two.columns                     { width: 76px; }
+        .container .three.columns                   { width: 124px; }
+        .container .four.columns                    { width: 172px; }
+        .container .five.columns                    { width: 220px; }
+        .container .six.columns                     { width: 268px; }
+        .container .seven.columns                   { width: 316px; }
+        .container .eight.columns                   { width: 364px; }
+        .container .nine.columns                    { width: 412px; }
+        .container .ten.columns                     { width: 460px; }
+        .container .eleven.columns                  { width: 508px; }
+        .container .twelve.columns                  { width: 556px; }
+        .container .thirteen.columns                { width: 604px; }
+        .container .fourteen.columns                { width: 652px; }
+        .container .fifteen.columns                 { width: 700px; }
+        .container .sixteen.columns                 { width: 748px; }
+		
+		.container .one-fifth.column                { width: 133px; }
+
+        .container .one-third.column                { width: 236px; }
+        .container .two-thirds.column               { width: 492px; }
+
+        /* Offsets */
+        .container .offset-by-one                   { padding-left: 48px; }
+        .container .offset-by-two                   { padding-left: 96px; }
+        .container .offset-by-three                 { padding-left: 144px; }
+        .container .offset-by-four                  { padding-left: 192px; }
+        .container .offset-by-five                  { padding-left: 240px; }
+        .container .offset-by-six                   { padding-left: 288px; }
+        .container .offset-by-seven                 { padding-left: 336px; }
+        .container .offset-by-eight                 { padding-left: 348px; }
+        .container .offset-by-nine                  { padding-left: 432px; }
+        .container .offset-by-ten                   { padding-left: 480px; }
+        .container .offset-by-eleven                { padding-left: 528px; }
+        .container .offset-by-twelve                { padding-left: 576px; }
+        .container .offset-by-thirteen              { padding-left: 624px; }
+        .container .offset-by-fourteen              { padding-left: 672px; }
+        .container .offset-by-fifteen               { padding-left: 720px; }
+
+        nav ul li a                                 { font-size: 12px; }
+
+        header .title                               { font-size: 20px }
+
+        .services-header h1                         { margin-bottom: 0; }
+
+        .services.odd.half .services-header,
+        .services.odd.half .services-text,
+        .services.odd.full .services-header,
+        .services.odd.full .services-text           { width: 100%; margin-left: 0; clear: both; }
+
+        .services.even.half .services-header,
+        .services.even.half .services-text,
+        .services.even.full .services-header,
+        .services.even.full .services-text          { width: 100%; margin-right: 0; clear: both; }
+
+        .services.even .video-container             { float: right; text-align: left; }
+        .services.odd .video-container              { float: left; text-align: left; }
+
+        .services .video-container                  { margin-top: 0; margin-bottom: 10px; width: 50%; }  
+
+        .portfolioBlock                             { width: 192px; height: 192px; }
+        .portfolioBlock.even .portfolioImage img, 
+        .portfolioBlock.odd .portfolioImage img     { float: none; }
+        .portfolioName h2                           { margin-top: 65px; font-size: 24px; }
+        .portfolioImage img                         { height: 192px; width: 192px; }
+        .portfolioOverlay                           { font-size: 90px; }
+
+        a.view-add-link                             { width: 192px; height: 192px; font-size: 96px; line-height: 192px; -webkit-box-shadow:inset 0 0 45px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 45px 0 rgba(0,0,0,0.4); }
+
+        .contactLogo                                { text-align: center; }
+        .contactInfo                                { padding: 0; }
+        .contactDetails                             { text-align: left; }
+
+        form.contact-form .five.columns             { width: 220px; }
+        form.contact-form .four.columns             { width: 172px; }
+
+        .visible-desktop                            { display: none; }
+        .visible-tablet                             { display: block; }
+        .visible-phone                              { display: none; }
+
+        .hidden-desktop                             { display: block; }
+        .hidden-tablet                              { display: none; }
+        .hidden-phone                               { display: block; }
+    }
+
+
+/*  #Mobile (Portrait)
+================================================== */
+
+    /* Note: Design for a width of 320px */
+
+    @media only screen and (max-width: 767px) {
+        .container { width: 300px; }
+        .columns, .column { margin: 0; }
+
+        .container .one.column,
+        .container .two.columns,
+        .container .three.columns,
+        .container .four.columns,
+        .container .five.columns,
+        .container .six.columns,
+        .container .seven.columns,
+        .container .eight.columns,
+        .container .nine.columns,
+        .container .ten.columns,
+        .container .eleven.columns,
+        .container .twelve.columns,
+        .container .thirteen.columns,
+        .container .fourteen.columns,
+        .container .fifteen.columns,
+        .container .sixteen.columns,
+		.container .one-fifth.column,
+        .container .one-third.column,
+        .container .two-thirds.column { width: 300px; }
+
+        /* Offsets */
+        .container .offset-by-one,
+        .container .offset-by-two,
+        .container .offset-by-three,
+        .container .offset-by-four,
+        .container .offset-by-five,
+        .container .offset-by-six,
+        .container .offset-by-seven,
+        .container .offset-by-eight,
+        .container .offset-by-nine,
+        .container .offset-by-ten,
+        .container .offset-by-eleven,
+        .container .offset-by-twelve,
+        .container .offset-by-thirteen,
+        .container .offset-by-fourteen,
+        .container .offset-by-fifteen { padding-left: 0; }
+
+        nav { height: auto; }
+        nav ul li { float: none; }
+
+        .page { padding-top: 60px; }
+
+        .servicesContainer .block .content > a { padding-top: 60px; }
+
+        .services-header h1 { margin-bottom: 0; }
+
+        .services.odd.half .services-header,
+        .services.odd.half .services-text,
+        .services.odd.full .services-header,
+        .services.odd.full .services-text { width: 100%; margin-left: 0; clear: both; }
+
+        .services.even.half .services-header,
+        .services.even.half .services-text,
+        .services.even.full .services-header,
+        .services.even.full .services-text { width: 100%; margin-right: 0; clear: both; }
+
+        .services.even .video-container { float: none; text-align: left; }
+        .services.odd .video-container { float: none; text-align: left; }
+
+        .services .video-container { margin-top: 0; margin-bottom: 10px; width: 100%; }
+
+        .portfolioBlock { width: calc(100%/3); height: 100px; }
+        .portfolioBlock.even .portfolioImage img { float: none; }
+        .portfolioBlock.odd .portfolioImage img { float: none; }
+        .portfolioName h2 { margin-top: 3px; font-size: 16px; }
+        .portfolioImage img { height: 100px; width: 100%; }
+        .portfolioOverlay { font-size: 60px; }
+
+        a.view-add-link { width: calc(100%/3); height: 100px; font-size: 50px; line-height: 100px; -webkit-box-shadow:inset 0 0 25px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 25px 0 rgba(0,0,0,0.4); }
+
+        .return { text-align: center; }
+
+        .contactLogo { text-align: center; }
+        .contactInfo { padding: 0 20px; }
+        .contactDetails { text-align: left; margin-top: 20px; margin-bottom: 20px; }
+        .contactDetails ul { padding: 0 20px; }
+
+        .googlemap-wrap { margin-left: 20px !important; }
+
+        form.contact-form .five.columns { width: 280px; margin: 0 10px; }
+        form.contact-form .four.columns { width: 280px; margin: 0 10px; }
+
+        .visible-desktop    { display: none; }
+        .visible-tablet     { display: none; }
+        .visible-phone      { display: block; }
+
+        .hidden-desktop     { display: block; }
+        .hidden-tablet      { display: block; }
+        .hidden-phone       { display: none; }
+    }
+
+
+/* #Mobile (Landscape)
+================================================== */
+
+    /* Note: Design for a width of 480px */
+
+    @media only screen and (min-width: 480px) and (max-width: 767px) {
+        .container { width: 420px; }
+        .columns, .column { margin: 0; }
+
+        .container .one.column,
+        .container .two.columns,
+        .container .three.columns,
+        .container .four.columns,
+        .container .five.columns,
+        .container .six.columns,
+        .container .seven.columns,
+        .container .eight.columns,
+        .container .nine.columns,
+        .container .ten.columns,
+        .container .eleven.columns,
+        .container .twelve.columns,
+        .container .thirteen.columns,
+        .container .fourteen.columns,
+        .container .fifteen.columns,
+        .container .sixteen.columns,
+		.container .one-fifth.column,
+        .container .one-third.column,
+        .container .two-thirds.column { width: 420px; }
+
+        .portfolioBlock { width: calc(100%/3); height: 140px; }
+        .portfolioBlock.even .portfolioImage img { float: left; }
+        .portfolioBlock.odd .portfolioImage img { float: right; }
+        .portfolioName h2 { margin-top: 20px; font-size: 24px; }
+        .portfolioImage img { height: 140px; width: 100%; }
+        .portfolioOverlay { font-size: 70px; }
+
+        a.view-add-link { width: calc(100%/3); height: 140px; font-size: 70px; line-height: 140px; -webkit-box-shadow:inset 0 0 35px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 35px 0 rgba(0,0,0,0.4); }
+
+        form.contact-form .five.columns { width: 400px; margin: 0 10px;}
+        form.contact-form .four.columns { width: 400px; margin: 0 10px;}
+
+        .block-social-media-links { text-align: center; }
+
+        .visible-desktop    { display: none; }
+        .visible-tablet     { display: none; }
+        .visible-phone      { display: block; }
+
+        .hidden-desktop     { display: block; }
+        .hidden-tablet      { display: block; }
+        .hidden-phone       { display: none; }
+    }
+
+
+/* #Clearing
+================================================== */
+
+    /* Self Clearing Goodness */
+    .container:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
+
+    /* Use clearfix class on parent to clear nested columns,
+    or wrap each row of columns in a <div class="row"> */
+    .clearfix:before,
+    .clearfix:after,
+    .row:before,
+    .row:after {
+      content: '\0020';
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0; }
+    .row:after,
+    .clearfix:after {
+      clear: both; }
+    .row,
+    .clearfix {
+      zoom: 1; }
+
+    /* You can also use a <br class="clear" /> to clear columns */
+    .clear {
+      clear: both;
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
+
+

@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for Mediasite.
+ */
+ 
+/**
+ * Implementation of hook_requirements().
+ */
+function mediasite_requirements($phase) {
+  $requirements = array();
+
+  $t = get_t();
+  
+  if ($phase == 'runtime') {
+    // Check cURL library.
+    $requirements['soap']['title'] = t('SOAP extension');
+    if (class_exists('SoapClient')) {
+      $requirements['soap']['severity'] = REQUIREMENT_OK;
+      $requirements['soap']['value'] = t('Enabled');
+    }
+    else {
+      $requirements['soap']['severity'] = REQUIREMENT_ERROR;
+      $requirements['soap']['value'] = t('Disabled');
+      $requirements['soap']['description'] = t('The SOAP extension for PHP is disabled. Please check the <a href="@url">PHP SOAP documentation</a> for information on how to correct this.', array('@url' => 'http://www.php.net/manual/en/soap.setup.php'));
+    }
+    _mediasite_requirements_library_installed($requirements);
+  }
+  
+  return $requirements;
+}
+
+/**
+ * Check if the library is available
+ *
+ * @param array $requirements
+ *  Requirements definition
+ */
+function _mediasite_requirements_library_installed(&$requirements) {
+  $t = get_t();
+
+  $path = libraries_get_path('mediasite');
+  $installed = file_exists($path . '/edasproxy_client.php');
+
+  if (!$installed) {
+    $requirements['edasclient'] = array(
+      'title' => $t('EDAS Client'),
+      'severity' => REQUIREMENT_ERROR,
+      'value' => $t('Disabled'),
+      'description' => $t('EDAS Library not installed correctly'),
+    );
+    return;
+  }
+}

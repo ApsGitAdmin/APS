@@ -1,0 +1,53 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for the field_example module.
+ */
+
+/**
+ * Implements hook_field_schema().
+ *
+ * Defines the database schema of the field, using the format used by the
+ * Schema API.
+ *
+ *
+ * All implementations of hook_field_schema() must be in the module's
+ * .install file.
+ *
+ * @see http://drupal.org/node/146939
+ * @see schemaapi
+ * @see hook_field_schema()
+ * @ingroup field_example
+ */
+function slide_sync_field_schema($field) {
+  $columns = array(
+    'time' => array(
+      'description' => t('Time after 00:00 when the slide occurs'),
+      'type' => 'varchar',
+      'length' => 8,
+      'not null' => TRUE,
+    ),
+    'comment' => array(
+      'description' => t('Any comment relating to the slide'),
+      'type' => 'varchar',
+      'length' => 256,
+    ),
+    'image' => array(
+      'description' => t('The {file_managed}.fid being referenced'),
+      'type' => 'int',
+      'not null' => TRUE,
+      'unsigned' => TRUE,
+    ),
+  );
+  $foreign_keys = array(
+    'image_fid' => array(
+      'table' => 'file_managed',
+      'columns' => array('image' => 'fid'),
+    ),
+  );
+
+  return array(
+    'columns' => $columns,
+    'foreign keys' => $foreign_keys,
+  );
+}

@@ -1,0 +1,162 @@
+.copyright > p {
+    margin-top: 20px;
+    text-align: center;
+	margin-bottom:10px;
+}
+
+.space40 {
+	clear: both;
+    display: block;
+    height: 40px;	
+}
+.space30 {
+    clear: both;
+    display: block;
+    height: 30px;   
+}
+.space20 {
+    clear: both;
+    display: block;
+    height: 20px;   
+}
+.space10 {
+	clear: both;
+    display: block;
+    height: 10px;	
+}
+
+.marginBottom {
+	margin-top: 30px;
+}
+
+form.contact-form .form-actions.form-wrapper {
+    float: right;
+    margin-right: -5px !important;
+}
+
+form.contact-form .form-item.form-type-checkbox.form-item-copy {
+    float: left;
+}
+
+form.contact-form input[type="text"], 
+form.contact-form input[type="password"], 
+form.contact-form input[type="email"], 
+form.contact-form textarea, 
+form.contact-form select {
+    width: 95%;
+    padding: 4px 2.5%;
+}
+ 
+.wdays {
+    margin-left: 17px;
+    margin-top: -21px;
+}
+	
+.date-month, .tags {
+	text-transform:uppercase;	
+}
+
+
+.item-list .pager li {
+    background-image: none;
+    display: inline;
+    list-style-type: none;
+    padding: 0.4em;
+}
+.item-list .pager ul li {
+    margin: 0 0 0.25em 1.5em;
+    padding: 0;
+}
+.pager-current {
+    font-weight: bold;
+}
+
+.pager {
+    background: none repeat scroll 0 0 #F4F4F4;
+    text-align: center;
+	
+}
+
+.element-invisible {
+	display:none;
+}
+
+/* Comments */
+.comment-title .permalink {
+	font-weight: 700;
+	color: #222222;
+}
+
+#comments li {
+    float: left;
+}
+
+.links.inline a{color: #FFFFFF;}
+
+.comment {
+    display: inherit;	
+}
+
+#comments .comment-delete, #comments .comment-reply, #comments .comment-edit  {
+ 	background-color: #7B133C;
+    color: #FFFFFF !important;
+    font-size: 10px;
+    padding: 5px 12px;
+	margin-right:4px;
+    text-shadow: none;
+    text-transform: uppercase;
+}
+#comments .comment-delete:hover, #comments .comment-reply:hover, #comments .comment-edit:hover  {
+ 	background-color: #222222;
+    color: #FFFFFF !important;
+}
+
+#comments input[type="text"], #comments input[type="password"],#comments  input[type="email"], #comments  textarea, select {
+	width:100%;	
+}
+
+
+.indented {
+    margin-left: 25px;
+}
+
+
+/*Blocks */
+
+.widget_search input[type="text"] {
+	width: 74% !important;
+	 padding: 0px 10px !important;
+}
+
+.widget_search .form-submit {
+	margin-right:-15px;
+    padding: 6px 12px !important;
+}
+
+.widget_search a.button, .widget_search button, .widget_search input[type="submit"], .widget_search input[type="reset"], .widget_search input[type="button"] {
+    margin: 0 -37px 10px 0 !important;
+}
+
+
+.search-result {
+    border-bottom: 1px solid #F2F2F2;
+    padding-top: 25px;
+}
+
+.alert-box {
+		color:#555;
+		font-family:Tahoma,Geneva,Arial,sans-serif;font-size:14px;
+		margin:10px;
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+	form#contact-site-form {
+		padding-left: 0px;
+	}
+
+}
+
+
+
+

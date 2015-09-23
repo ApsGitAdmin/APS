@@ -1,0 +1,15 @@
+name = Mediasite
+description = Mediasite External Data Access Service (EDAS).
+core = 7.x
+package = Custom
+
+dependencies[] = libraries (2.x)
+
+files[] = mediasite.install
+files[] = mediasite.admin.inc
+files[] = mediasite.module
+files[] = mediasite.theme.inc
+files[] = mediasite.js
+
+version = "7.x-1.x-dev"
+project = "Mediasite"
