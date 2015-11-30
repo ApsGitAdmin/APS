@@ -301,24 +301,6 @@ nav ul li a:hover {
 	margin-top: 50px;
 }
 
-/* XMAS Entry
---------------------------------------------------------*/
-#xmas {
-	position: fixed;
-	z-index: 10000;
-	top: 100px;
-	right: 0;
-}
-#xmas-phone {
-	text-align: center;
-	padding: 2em 0;
-	background: url('../images/background.jpg') repeat-x scroll 50% 50%;
-}
-#xmas a img,
-#xmas-phone a img {
-	border: none;
-}
-
 /* supersized slideshow
 --------------------------------------------------------*/
 .slider-text {
