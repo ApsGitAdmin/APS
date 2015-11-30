@@ -464,6 +464,21 @@ div.status a {
 	display: none;
 }
 
+/* XMAS Photo entry frame
+--------------------------------------------------------*/
+#xmas-frame {
+	position: relative;
+}
+#xmas-frame > img {
+	width: 100%;
+	height: auto;
+}
+#xmas-frame > div {
+	position: absolute;
+	top: 0;
+	padding: 16% 15%;
+}
+
 /* supersized slideshow
 --------------------------------------------------------*/
 .slider-text {
