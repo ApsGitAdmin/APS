@@ -478,9 +478,21 @@ div.status a {
 }
 #xmas-frame .form-item label {
 	display: block;
+	margin-bottom: 10px;
+	font-size: 12pt;
+	color: #e30613;
 }
 #xmas-frame .form-item input {
 	display: initial;
+}
+#xmas-frame .form-item input[type=text] {
+	width: 65%;
+	outline: solid 1px #000;
+	-webkit-box-shadow: 0 0 15px 0 #65b32e;
+	box-shadow: 0 0 15px 0 #65b32e;
+}
+#xmas-frame .form-item div.image-widget-data {
+	float: none;
 }
 
 /* supersized slideshow

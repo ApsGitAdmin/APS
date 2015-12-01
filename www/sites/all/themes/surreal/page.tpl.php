@@ -27,8 +27,8 @@
 <!-- End Navigation --> 
 <div id="page">
     <!-- XMAS LINK BLOCK -->
-    <div id="xmas" class="hidden-phone"><a href="http://www.thinkaps.com/christmas-photo-entries" title="Christmas Photo Entry!"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/Xmas-Frame.png" /></a></div>
-    <div id="xmas-phone" class="visible-phone"><a href="http://www.thinkaps.com/christmas-photo-entries" title="Christmas Photo Entry!"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/Xmas-Frame-Mobile.png" /></a></div>
+    <div id="xmas" class="hidden-phone"><a href="<?php global $base_url; print $base_url; ?>/christmas-photo-entries" title="Christmas Photo Entry!"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/Xmas-Frame.png" /></a></div>
+    <div id="xmas-phone" class="visible-phone"><a href="<?php global $base_url; print $base_url; ?>/christmas-photo-entries" title="Christmas Photo Entry!"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/Xmas-Frame-Mobile.png" /></a></div>
     <!-- XMAS LINK BLOCK -->
     
   <div id="homepage" class="homepage section">
