@@ -108,6 +108,8 @@
     form.contact-form .five.columns             { width: 355px; }
     form.contact-form .four.columns             { width: 280px; }
 
+    #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
+
     .visible-desktop                            { display: block; }
     .visible-tablet                             { display: none; }
     .visible-phone                              { display: none; }
@@ -199,6 +201,8 @@
 
     form.contact-form .five.columns             { width: 280px; }
     form.contact-form .four.columns             { width: 220px; }
+
+    #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
 
     .visible-desktop                            { display: block; }
     .visible-tablet                             { display: none; }
@@ -297,6 +301,8 @@
 
         form.contact-form .five.columns             { width: 220px; }
         form.contact-form .four.columns             { width: 172px; }
+
+        #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
 
         .visible-desktop                            { display: none; }
         .visible-tablet                             { display: block; }
@@ -399,6 +405,8 @@
         form.contact-form .five.columns { width: 280px; margin: 0 10px; }
         form.contact-form .four.columns { width: 280px; margin: 0 10px; }
 
+        #xmas-frame > div.region { position: static; top: 0; text-align: left; padding: 0; width: 100%; }
+
         .visible-desktop    { display: none; }
         .visible-tablet     { display: none; }
         .visible-phone      { display: block; }
@@ -451,6 +459,8 @@
         form.contact-form .four.columns { width: 400px; margin: 0 10px;}
 
         .block-social-media-links { text-align: center; }
+
+        #xmas-frame > div.region { position: static; top: 0; text-align: left; padding: 0; width: 100%; }
 
         .visible-desktop    { display: none; }
         .visible-tablet     { display: none; }

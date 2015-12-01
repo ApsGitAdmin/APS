@@ -469,14 +469,18 @@ div.status a {
 #xmas-frame {
 	position: relative;
 }
-#xmas-frame > img {
+#xmas-frame > div > img {
 	width: 100%;
 	height: auto;
 }
-#xmas-frame > div {
-	position: absolute;
-	top: 0;
-	padding: 16% 15%;
+#xmas-frame .form-item {
+	margin-bottom: 1em;
+}
+#xmas-frame .form-item label {
+	display: block;
+}
+#xmas-frame .form-item input {
+	display: initial;
 }
 
 /* supersized slideshow

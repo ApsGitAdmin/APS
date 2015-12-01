@@ -52,7 +52,12 @@
     <?php endif;?>
 
     <div id="xmas-frame">
-      <img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'aps'); ?>/images/Frame-BG.png" />
+      <div class="visible-desktop">
+        <img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'aps'); ?>/images/Frame-BG.png" />
+      </div>
+      <div class="visible-tablet">
+        <img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'aps'); ?>/images/Frame-BG-Tall.png" />
+      </div>
       <?php print render($page['content']); ?>
     </div>
        
