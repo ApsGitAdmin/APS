@@ -494,6 +494,9 @@ div.status a {
 #xmas-frame .form-item div.image-widget-data {
 	float: none;
 }
+#xmas-frame .form-item div.image-preview {
+	float: none;
+}
 
 /* supersized slideshow
 --------------------------------------------------------*/
