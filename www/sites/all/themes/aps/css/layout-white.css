@@ -486,7 +486,6 @@ div.status a {
 	display: initial;
 }
 #xmas-frame .form-item input[type=text] {
-	width: 65%;
 	outline: solid 1px #000;
 	-webkit-box-shadow: 0 0 15px 0 #65b32e;
 	box-shadow: 0 0 15px 0 #65b32e;
