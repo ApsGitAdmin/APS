@@ -68,7 +68,8 @@
 	    directionNav: false,
 		slideshowSpeed: 5000, 
 		pauseOnAction: false,
-		itemWidth: 600,
+		itemWidth: 360,
+		minItems: 1,
 	});
   });
 </script> 

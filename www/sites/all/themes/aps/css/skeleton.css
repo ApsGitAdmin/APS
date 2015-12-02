@@ -109,6 +109,7 @@
     form.contact-form .four.columns             { width: 280px; }
 
     #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
+    #xmas-frame .form-item input[type=text]     { width: 65%; }
 
     .visible-desktop                            { display: block; }
     .visible-tablet                             { display: none; }
@@ -203,6 +204,7 @@
     form.contact-form .four.columns             { width: 220px; }
 
     #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
+    #xmas-frame .form-item input[type=text]     { width: 65%; }
 
     .visible-desktop                            { display: block; }
     .visible-tablet                             { display: none; }
@@ -303,6 +305,7 @@
         form.contact-form .four.columns             { width: 172px; }
 
         #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
+        #xmas-frame .form-item input[type=text]     { width: 65%; }
 
         .visible-desktop                            { display: none; }
         .visible-tablet                             { display: block; }
@@ -406,6 +409,7 @@
         form.contact-form .four.columns { width: 280px; margin: 0 10px; }
 
         #xmas-frame > div.region { position: static; top: 0; text-align: left; padding: 0; width: 100%; }
+        #xmas-frame .form-item input[type=text] { width: 100%; }
 
         .visible-desktop    { display: none; }
         .visible-tablet     { display: none; }
@@ -461,6 +465,7 @@
         .block-social-media-links { text-align: center; }
 
         #xmas-frame > div.region { position: static; top: 0; text-align: left; padding: 0; width: 100%; }
+        #xmas-frame .form-item input[type=text] { width: 100%; }
 
         .visible-desktop    { display: none; }
         .visible-tablet     { display: none; }
