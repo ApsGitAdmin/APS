@@ -498,6 +498,18 @@ div.status a {
 	float: none;
 }
 
+.view-xmas-slideshow {
+
+}
+.view-xmas-slideshow .view-footer {
+
+}
+.view-xmas-slideshow .view-footer h2 {
+	text-align: center;
+	font-size: 26px;
+	margin: 2em 0 1em;
+}
+
 /* supersized slideshow
 --------------------------------------------------------*/
 .slider-text {

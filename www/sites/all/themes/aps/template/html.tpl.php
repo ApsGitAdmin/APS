@@ -63,13 +63,12 @@
   $(window).load(function(){
 	$('.flexslider').flexslider({
 		animation: "slide",
-		direction: "horizontal",
-		reverse: true,
 		directionNav: false,
-	    prevText: "",
-	    nextText: "",   
-		slideshowSpeed: 3000, 
-		animationSpeed: 600,  
+	    controlNav: false,
+	    directionNav: false,
+		slideshowSpeed: 5000, 
+		pauseOnAction: false,
+		itemWidth: 600,
 	});
   });
 </script> 
