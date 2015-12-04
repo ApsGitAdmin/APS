@@ -464,6 +464,57 @@ div.status a {
 	display: none;
 }
 
+/* XMAS Photo entry frame
+--------------------------------------------------------*/
+#xmas-frame {
+	position: relative;
+}
+#xmas-frame > div > img {
+	width: 100%;
+	height: auto;
+}
+#xmas-frame .form-item {
+	margin-bottom: 1em;
+}
+#xmas-frame .form-item label {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 12pt;
+	color: #e30613;
+}
+#xmas-frame .form-item input {
+	display: initial;
+}
+#xmas-frame .form-item input[type=text] {
+	outline: solid 1px #000;
+	-webkit-box-shadow: 0 0 15px 0 #65b32e;
+	box-shadow: 0 0 15px 0 #65b32e;
+	margin: 0 auto;
+}
+#xmas-frame .form-item div.image-widget-data {
+	float: none;
+}
+#xmas-frame .form-item div.image-preview {
+	float: none;
+}
+#xmas-frame fieldset legend {
+	width: 100%;
+	text-align: center;
+}
+
+.view-xmas-slideshow {
+
+}
+.view-xmas-slideshow .view-footer {
+
+}
+.view-xmas-slideshow .view-footer h2 {
+	text-align: center;
+	padding: 0 5%;
+	text-transform: none;
+	color: #e30613;
+}
+
 /* supersized slideshow
 --------------------------------------------------------*/
 .slider-text {

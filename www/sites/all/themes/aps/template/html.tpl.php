@@ -59,6 +59,21 @@
 		$('html,body').animate({ scrollTop: goPosition}, 'slow');
 	}
 </script> 
+<script type="text/javascript">
+  $(window).load(function(){
+	$('.flexslider').flexslider({
+		animation: "slide",
+		directionNav: false,
+	    controlNav: false,
+	    directionNav: false,
+		slideshowSpeed: 6000,
+		animationSpeed: 1200,
+		pauseOnAction: false,
+		itemWidth: 480,
+		minItems: 1,
+	});
+  });
+</script> 
 <script type="text/javascript" charset="utf-8">
 	$("a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'normal',slideshow:6000});
 	
