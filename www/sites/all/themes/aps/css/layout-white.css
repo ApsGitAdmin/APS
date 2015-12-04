@@ -489,12 +489,17 @@ div.status a {
 	outline: solid 1px #000;
 	-webkit-box-shadow: 0 0 15px 0 #65b32e;
 	box-shadow: 0 0 15px 0 #65b32e;
+	margin: 0 auto;
 }
 #xmas-frame .form-item div.image-widget-data {
 	float: none;
 }
 #xmas-frame .form-item div.image-preview {
 	float: none;
+}
+#xmas-frame fieldset legend {
+	width: 100%;
+	text-align: center;
 }
 
 .view-xmas-slideshow {
@@ -505,9 +510,9 @@ div.status a {
 }
 .view-xmas-slideshow .view-footer h2 {
 	text-align: center;
-	font-size: 26px;
-	margin: 2em 0 1em;
-	padding: 0 15%;
+	padding: 0 5%;
+	text-transform: none;
+	color: #e30613;
 }
 
 /* supersized slideshow

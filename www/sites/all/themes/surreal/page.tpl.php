@@ -42,7 +42,7 @@
   </div>
 
   <?php if($messages): ?>
-    <div id="drupal_messages"><div class="alert-box message"><?php print $messages; ?></div></div>
+    <!--<div id="drupal_messages"><div class="alert-box message"><?php print $messages; ?></div></div>-->
   <?php endif;?>
 
   <!-- Region #1 -->

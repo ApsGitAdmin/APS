@@ -110,6 +110,7 @@
 
     #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
     #xmas-frame .form-item input[type=text]     { width: 65%; }
+    .view-xmas-slideshow .view-footer h2        { margin: 1em 0 0.5em; font-size: 44px; }
 
     .visible-desktop                            { display: block; }
     .visible-tablet                             { display: none; }
@@ -205,6 +206,7 @@
 
     #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
     #xmas-frame .form-item input[type=text]     { width: 65%; }
+    .view-xmas-slideshow .view-footer h2        { margin: 1em 0 0.5em; font-size: 44px; }
 
     .visible-desktop                            { display: block; }
     .visible-tablet                             { display: none; }
@@ -306,6 +308,7 @@
 
         #xmas-frame > div.region                    { position: absolute; top: 0; text-align: center; padding: 16% 15%; width: 69%; }
         #xmas-frame .form-item input[type=text]     { width: 65%; }
+        .view-xmas-slideshow .view-footer h2        { margin: 1em 0 0.5em; font-size: 36px; }
 
         .visible-desktop                            { display: none; }
         .visible-tablet                             { display: block; }
@@ -410,6 +413,7 @@
 
         #xmas-frame > div.region { position: static; top: 0; text-align: left; padding: 0; width: 100%; }
         #xmas-frame .form-item input[type=text] { width: 100%; }
+        .view-xmas-slideshow .view-footer h2 { margin: 0 0 2em; font-size: 26px; }
 
         .visible-desktop    { display: none; }
         .visible-tablet     { display: none; }
@@ -466,6 +470,7 @@
 
         #xmas-frame > div.region { position: static; top: 0; text-align: left; padding: 0; width: 100%; }
         #xmas-frame .form-item input[type=text] { width: 100%; }
+        .view-xmas-slideshow .view-footer h2 { margin: 0 0 2em; font-size: 26px; }
 
         .visible-desktop    { display: none; }
         .visible-tablet     { display: none; }
