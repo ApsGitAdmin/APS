@@ -1067,7 +1067,7 @@ p.percent {
 .careersContainer {
 
 }
-.careersContainer .content > a {
+.careersContainer .content .careers {
 	display: inline-block;
 	margin-bottom: 20px;
 }
@@ -1103,6 +1103,8 @@ p.percent {
 	text-decoration: none;
 	color: #FFF;
 	font-size: 14pt;
+	display: block;
+	padding: 7px 10px 3px 10px;
 }
 
 .careers .careers-footer {
