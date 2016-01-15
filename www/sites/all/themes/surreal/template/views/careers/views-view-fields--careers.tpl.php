@@ -3,6 +3,7 @@
   $Title = $fields['title'];
   $Tagline = $fields['field_tagline']->content; 
   $Body = $fields['body']->content;
+  $Link = $fields['field_workable']->content;
   
   $Anchor = str_replace(' ', '-', strtolower($fields['title']->raw)).'-anchor';
 ?>
@@ -22,6 +23,9 @@
     </div>
     <div class="careers-text">
       <?php print $Body; ?>
+      <p class="workable" style='color: <?php print $Colour; ?>'>
+        <?php print $Link; ?>
+      </p>
     </div>
   </div>
 </a>

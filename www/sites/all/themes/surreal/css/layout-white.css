@@ -1064,6 +1064,13 @@ p.percent {
 /* Careers
 --------------------------------------------------------*/
 
+.careersContainer {
+
+}
+.careersContainer .content > a {
+	display: inline-block;
+	margin-bottom: 20px;
+}
 .careers .tagline {
 	font-size: 20px;
 }
@@ -1098,6 +1105,14 @@ p.percent {
 .careers .careers-footer .careers-text {
 	font-size: 18px;
 	margin-top: 20px;
+}
+.careers .careers-footer .careers-text .workable {
+	display: inline-block;
+	margin: 15px 0 5px;
+}
+.careers .careers-footer .careers-text .workable a {
+	text-decoration: none;
+	color: #FFF;
 }
 
 /* Features
