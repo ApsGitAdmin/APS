@@ -1095,6 +1095,15 @@ p.percent {
 .careers .careers-header h1 span {
 	margin-right: 10px;
 }
+.careers .careers-text .workable {
+	display: inline-block;
+	margin: 15px 0 5px;
+}
+.careers .careers-text .workable a {
+	text-decoration: none;
+	color: #FFF;
+	font-size: 14pt;
+}
 
 .careers .careers-footer {
 	margin-top: 30px;
@@ -1105,14 +1114,6 @@ p.percent {
 .careers .careers-footer .careers-text {
 	font-size: 18px;
 	margin-top: 20px;
-}
-.careers .careers-footer .careers-text .workable {
-	display: inline-block;
-	margin: 15px 0 5px;
-}
-.careers .careers-footer .careers-text .workable a {
-	text-decoration: none;
-	color: #FFF;
 }
 
 /* Features
