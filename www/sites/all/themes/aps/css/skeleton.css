@@ -66,16 +66,22 @@
     .servicesContainer > div                    { display: block; margin-bottom: 60px; }
 
     .services-header h1                         { margin-bottom: 10px; font-size: 50px; }
-    .services-header h1 span                    { color: #939393; font-size: 50px; display: inline-block; }
+    .services-header h1 span                    { font-size: 50px; display: inline-block; }
+
+    .services.odd.half .services-container      { margin-left: 5%; }
+    .services.even.half .services-container     { margin-right: 5%; }
+
+    .services .services-container               { width: 45%; display: inline-block; height: 340px; line-height: 340px; }
+    .services .services-container > span        { display: inline-block; vertical-align: middle; line-height: 18px; }
 
     .services.odd.half .services-header,
-    .services.odd.half .services-text           { width: 45%; margin-left: 55%; clear: none; }
+    .services.odd.half .services-text           { clear: none; }
 
     .services.odd.full .services-header,
     .services.odd.full .services-text           { width: 100%; margin-left: 0%; clear: both; }
 
     .services.even.half .services-header,
-    .services.even.half .services-text          { width: 45%; margin-right: 55%; clear: none; }
+    .services.even.half .services-text          { clear: none; }
 
     .services.even.full .services-header,
     .services.even.full .services-text          { width: 100%; margin-right: 0%; clear: both; }
@@ -83,7 +89,16 @@
     .services.even .video-container             { float: right; text-align: left; }
     .services.odd .video-container              { float: left; text-align: left; }
 
-    .services .video-container                  { margin-top: -35px; margin-bottom: 0; width: 50%; }
+    .services .video-container                  { margin-bottom: 0; width: 50%; }
+
+    .client-portfolio-block                     { margin: 10px; }
+
+    .client-portfolio-block,
+    .client-portfolio-image                     { height: 220px; }
+
+    .client-portfolio-overlay                   { top: 220px; bottom: initial; }
+
+    .client-portfolio-name                      { width: 75%; padding: 10px 2.5%; }
 
     .portfolio                                  { margin-top: 20px; }
 
@@ -94,7 +109,7 @@
     .portfolioImage img                         { height: 200px; width: 200px; }
     .portfolioOverlay                           { font-size: 100px; }
 
-    a.view-add-link                             { width: 200px; height: 200px; font-size: 100px; line-height: 200px; -webkit-box-shadow:inset 0 0 50px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 50px 0 rgba(0,0,0,0.4); }
+    a.view-add-link                             { font-size: 100px; }
 
     .return                                     { text-align: right; }
 
@@ -174,19 +189,31 @@
 
     header .title                               { font-size: 28px }
 
+    .services.odd.half .services-container      { margin-left: 5%; }
+    .services.even.half .services-container     { margin-right: 5%; }
+
     .services.odd.half .services-header,
-    .services.odd.half .services-text           { width: 55%; margin-left: 45%; } 
+    .services.odd.half .services-text           {  } 
 
     .services.odd.full .services-header,
     .services.odd.full .services-text           { width: 100%; margin-left: 0%; }   
 
     .services.even.half .services-header,
-    .services.even.half .services-text          { width: 55%; margin-right: 45%; }
+    .services.even.half .services-text          {  }
 
     .services.even.full .services-header,
     .services.even.full .services-text          { width: 100%; margin-right: 0%; }
 
-    .services .video-container                  { width: 40%; }
+    .services .video-container                  { width: 50%; }
+
+    .client-portfolio-block                     { margin: 10px; }
+
+    .client-portfolio-block,
+    .client-portfolio-image                     { height: 220px; }
+
+    .client-portfolio-overlay                   { top: 220px; bottom: initial; }
+
+    .client-portfolio-name                      { width: 75%; padding: 10px 2.5%; }
 
     .portfolioBlock                             { width: 160px; height: 160px; }
     .portfolioBlock.even .portfolioImage img, 
@@ -195,7 +222,7 @@
     .portfolioImage img                         { height: 160px; width: 160px; }
     .portfolioOverlay                           { font-size: 80px; }
 
-    a.view-add-link                             { width: 160px; height: 160px; font-size: 80px; line-height: 160px; -webkit-box-shadow:inset 0 0 30px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 30px 0 rgba(0,0,0,0.4); }
+    a.view-add-link                             { font-size: 80px; }
 
     .contactLogo                                { text-align: left; }
     .contactInfo                                { padding: 0; }
@@ -288,7 +315,16 @@
         .services.even .video-container             { float: right; text-align: left; }
         .services.odd .video-container              { float: left; text-align: left; }
 
-        .services .video-container                  { margin-top: 0; margin-bottom: 10px; width: 50%; }  
+        .services .video-container                  { width: 50%; }  
+
+        .client-portfolio-block                     { margin: 10px; }
+
+        .client-portfolio-block,
+        .client-portfolio-image                     { height: 180px; }
+
+        .client-portfolio-overlay                   { top: initial; bottom: 0; }
+
+        .client-portfolio-name                      { width: 70%; padding: 10px 5%; }
 
         .portfolioBlock                             { width: 192px; height: 192px; }
         .portfolioBlock.even .portfolioImage img, 
@@ -297,7 +333,7 @@
         .portfolioImage img                         { height: 192px; width: 192px; }
         .portfolioOverlay                           { font-size: 90px; }
 
-        a.view-add-link                             { width: 192px; height: 192px; font-size: 96px; line-height: 192px; -webkit-box-shadow:inset 0 0 45px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 45px 0 rgba(0,0,0,0.4); }
+        a.view-add-link                             { font-size: 96px; }
 
         .contactLogo                                { text-align: center; }
         .contactInfo                                { padding: 0; }
@@ -375,6 +411,8 @@
 
         .services-header h1 { margin-bottom: 0; }
 
+        .services .services-container { width: 100%; margin: 0 !important; }
+
         .services.odd.half .services-header,
         .services.odd.half .services-text,
         .services.odd.full .services-header,
@@ -388,7 +426,16 @@
         .services.even .video-container { float: none; text-align: left; }
         .services.odd .video-container { float: none; text-align: left; }
 
-        .services .video-container { margin-top: 0; margin-bottom: 10px; width: 100%; }
+        .services .video-container { width: 100%; }
+
+        .client-portfolio-block { margin: 10px 0; }
+
+        .client-portfolio-block, 
+        .client-portfolio-image { height: 220px; }
+
+        .client-portfolio-overlay { top: initial; bottom: 0; }
+
+        .client-portfolio-name { width: 70%; padding: 10px 5%; }
 
         .portfolioBlock { width: calc(100%/3); height: 100px; }
         .portfolioBlock.even .portfolioImage img { float: none; }
@@ -397,7 +444,7 @@
         .portfolioImage img { height: 100px; width: 100%; }
         .portfolioOverlay { font-size: 60px; }
 
-        a.view-add-link { width: calc(100%/3); height: 100px; font-size: 50px; line-height: 100px; -webkit-box-shadow:inset 0 0 25px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 25px 0 rgba(0,0,0,0.4); }
+        a.view-add-link { font-size: 50px; }
 
         .return { text-align: center; }
 
@@ -454,6 +501,15 @@
         .container .one-third.column,
         .container .two-thirds.column { width: 420px; }
 
+        .client-portfolio-block { margin: 10px 0; }
+
+        .client-portfolio-block, 
+        .client-portfolio-image { height: 220px; }
+
+        .client-portfolio-overlay { top: initial; bottom: 0; }
+
+        .client-portfolio-name { width: 70%; padding: 10px 5%; }
+
         .portfolioBlock { width: calc(100%/3); height: 140px; }
         .portfolioBlock.even .portfolioImage img { float: left; }
         .portfolioBlock.odd .portfolioImage img { float: right; }
@@ -461,7 +517,7 @@
         .portfolioImage img { height: 140px; width: 100%; }
         .portfolioOverlay { font-size: 70px; }
 
-        a.view-add-link { width: calc(100%/3); height: 140px; font-size: 70px; line-height: 140px; -webkit-box-shadow:inset 0 0 35px 0 rgba(0,0,0,0.4); box-shadow:inset 0 0 35px 0 rgba(0,0,0,0.4); }
+        a.view-add-link { font-size: 70px; }
 
         form.contact-form .five.columns { width: 400px; margin: 0 10px;}
         form.contact-form .four.columns { width: 400px; margin: 0 10px;}

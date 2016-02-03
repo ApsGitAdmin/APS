@@ -2,33 +2,13 @@
 <?php if ($page['header']): ?>
 <!-- Start Menu -->
 <nav>
-  <table class="header container" cellpadding="0" cellspacing="0">
-    <tr>
-    <!-- Start aps Logo -->
-      <td class="aps">
-        <?php if ($logo): ?>
-          <a href="<?php print $front_page; ?>" title="<?php print t('aps'); ?>"><img src="<?php print $aps_client_logo; ?>" alt="<?php print t('aps'); ?>" /></a>
-        <?php endif; ?>
-      </td>
-    <!-- End aps Logo --> 
-
-    <!-- Start Nav Menu -->
-    <td class="title">
-      <div class="hidden-phone">
-        <?php print render($page["header"]); ?>
-      </div>
-    </td>
-    <!-- End Nav Menu --> 
-
-    <!-- Start Branding -->
-    <td class="branding">
-      <?php if ($page['branding']): ?>
-        <?php print render($page["branding"]); ?>
-      <?php endif; ?>
-    </td>
-    <!-- End Branding --> 
-    </tr>
-  </table>
+  <!-- Start Nav Menu -->
+  <div class="title">
+    <div class="hidden-phone">
+      <?php print render($page["header"]); ?>
+    </div>
+  </div>
+  <!-- End Nav Menu --> 
 </nav>
 <!-- End Menu --> 
 <?php endif; ?>
@@ -46,14 +26,12 @@
 
   <!-- Content Page -->
   <div class="container">
-
     <?php if($messages): ?>
       <div id="drupal_messages"><div class="alert-box message"><?php print $messages; ?></div></div>
     <?php endif;?>
-
-    <?php print render($page['content']); ?>
-       
   </div>
+
+  <?php print render($page['content']); ?>
   <!-- End of Content Page -->
 
   <!-- Return to aps -->
