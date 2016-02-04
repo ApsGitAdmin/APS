@@ -10,7 +10,7 @@
   $vimeo = $fields['field_vimeo']->content;
   $counter = $fields['counter']->content;
 
-  $format = new NumberFormatter("en", NumberFormatter::SPELLOUT);
+  $numbers = array(1 => 'one', 2 => 'two', 3 => 'three', 4 => 'four', 5 => 'five', 6 => 'six');
   $spacing = $view->spacing;
 
   if ($output == 'video' && !empty($vimeo)) {
@@ -21,11 +21,11 @@
     $link = l(t('<i class="icon-camera"></i>'), array_pop($image), array('html' => true, 'attributes' => array('title' => t($title), 'alt' => t($body), 'class' => array('thumbLink'), 'rel' => array('prettyPhoto'))));
   }
 ?>
-<div class="client-portfolio-block <?php print $format->format($spacing[$counter]); ?> columns <?php print $zebra; ?>" style="background-color:<?php print $colour;?>">
+<div class="client-portfolio-block <?php print $numbers[$spacing[$counter]]; ?> columns <?php print $zebra; ?>" style="background-color:<?php print $colour;?>">
   <div class="client-portfolio-image">
     <?php print $thumb; ?>
   </div>
-  <div class="client-portfolio-overlay fractal-<?php print $format->format(rand(1,5)); ?>">
+  <div class="client-portfolio-overlay fractal-<?php print $numbers[rand(1,5)]; ?>">
     <div class="client-portfolio-name">
       <span>
         <h3><?php print $tagline; ?></h3>
