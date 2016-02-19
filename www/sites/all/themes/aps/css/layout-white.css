@@ -391,6 +391,13 @@ nav table.header td.aps {
 nav table.header td.branding {
 	text-align: right;
 }
+nav table.header td.menu-text {
+	padding-right: 4px;
+}
+nav table.header td span {
+	display: block;
+	margin-bottom: -8px;
+}
 .dropmenu {
 	display: none;
 }	

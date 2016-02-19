@@ -57,7 +57,7 @@
     .container .offset-by-fifteen               { padding-left: 1130px; }
 
     nav                                         { height: 130px; }
-    nav ul li a                                 { font-size: 14px; }
+    nav ul li a                                 { font-size: 9pt; }
 
     .menuContainer                              { width: 100%; }
 
@@ -185,7 +185,7 @@
     .container .offset-by-fourteen              { padding-left: 840px; }
     .container .offset-by-fifteen               { padding-left: 900px; }
 
-    nav ul li a                                 { font-size: 14px; }
+    nav ul li a                                 { font-size: 8pt; }
 
     header .title                               { font-size: 28px }
 
@@ -296,7 +296,7 @@
         .container .offset-by-fourteen              { padding-left: 672px; }
         .container .offset-by-fifteen               { padding-left: 720px; }
 
-        nav ul li a                                 { font-size: 12px; }
+        nav ul li a                                 { font-size: 8pt; }
 
         header .title                               { font-size: 20px }
 

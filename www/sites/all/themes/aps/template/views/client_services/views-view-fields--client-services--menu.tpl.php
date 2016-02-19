@@ -3,8 +3,8 @@
 
 	$anchor = preg_replace("/[^a-z]/", '', strtolower($fields['title']->raw)) . '-parallax';
 	$title = explode(" ", $fields['title']->raw);
-	$fancy_title = "<span class='minimo-light'>" . array_shift($title) . "</span> " . implode(" ", $title);
-	$link = l($fancy_title, '', array('fragment' => $anchor, 'external' => TRUE, 'html' => TRUE));
+	$fancy_title = "<span class='minimo-bold'>" . array_shift($title) . "</span> " . implode(" ", $title);
+	$link = l($fancy_title, '', array('fragment' => $anchor, 'external' => TRUE, 'html' => TRUE, 'attributes' => array('class' => array('minimo-light'))));
 ?>
 <div class="menu-link">
 	<table cellspacing="0" cellpadding="0" class="header">
