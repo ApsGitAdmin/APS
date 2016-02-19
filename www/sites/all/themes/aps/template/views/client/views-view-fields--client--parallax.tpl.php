@@ -1,5 +1,5 @@
-<div class="listWrap">
-    <div class="list">
+<div class="clientWrap">
+    <div class="client">
         <div class="container">
             <div class="sixteen columns"> 
                 <?php print $fields['field_client_logo']->content; ?>

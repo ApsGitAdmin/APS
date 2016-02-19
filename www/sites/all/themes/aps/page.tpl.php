@@ -3,9 +3,17 @@
 <!-- Start Menu -->
 <nav>
   <!-- Start Nav Menu -->
-  <div class="title">
-    <div class="hidden-phone">
-      <?php print render($page["header"]); ?>
+  <div class="container">
+    <div class="title clearfix">
+      <!-- logo & slogan -->
+      <div class="three columns alpha">
+        <?php $theme = drupal_get_path('theme', 'aps'); $svg = $theme . '/images/logo.svg'; ?>
+        <object class="header aps-logo" type="image/svg+xml" data="<?php print base_path() . $svg; ?>"></object>
+      </div>
+      <!-- End logo & slogan --> 
+      <div class="hidden-phone thirteen columns omega">
+        <?php print render($page["header"]); ?>
+      </div>
     </div>
   </div>
   <!-- End Nav Menu --> 
@@ -51,9 +59,10 @@
     <div class="container contactForm">
       <?php if (theme_get_setting('contact-info', 'surreal')): ?>
       <div class="five columns offset-by-one minimo-light uppercase">
-        <?php if ($logo): ?>
-          <div class="contactLogo"><img height="100" width="186" src="<?php print $logo; ?>" alt="<?php print $site_name; ?>" /></div>
-        <?php endif; ?>
+        <div class="contactLogo">
+          <?php $theme = drupal_get_path('theme', 'aps'); $svg = $theme . '/images/logo.svg'; ?>
+          <object class="aps-logo" type="image/svg+xml" data="<?php print base_path() . $svg; ?>"></object>
+        </div>
         <div class="contactInfo">
           <?php print theme_get_setting('contact-info', 'surreal'); ?>
         </div>

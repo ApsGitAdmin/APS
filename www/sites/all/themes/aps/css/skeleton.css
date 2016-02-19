@@ -57,7 +57,7 @@
     .container .offset-by-fifteen               { padding-left: 1130px; }
 
     nav                                         { height: 130px; }
-    nav ul li a                                 { font-size: 20px; }
+    nav ul li a                                 { font-size: 14px; }
 
     .menuContainer                              { width: 100%; }
 
@@ -185,7 +185,7 @@
     .container .offset-by-fourteen              { padding-left: 840px; }
     .container .offset-by-fifteen               { padding-left: 900px; }
 
-    nav ul li a                                 { font-size: 16px; }
+    nav ul li a                                 { font-size: 14px; }
 
     header .title                               { font-size: 28px }
 
@@ -322,7 +322,7 @@
         .client-portfolio-block,
         .client-portfolio-image                     { height: 180px; }
 
-        .client-portfolio-overlay                   { top: initial; bottom: 0; }
+        .client-portfolio-overlay                   { top: initial !important; bottom: 0; }
 
         .client-portfolio-name                      { width: 70%; padding: 10px 5%; }
 
@@ -433,7 +433,7 @@
         .client-portfolio-block, 
         .client-portfolio-image { height: 220px; }
 
-        .client-portfolio-overlay { top: initial; bottom: 0; }
+        .client-portfolio-overlay { top: initial !important; bottom: 0; }
 
         .client-portfolio-name { width: 70%; padding: 10px 5%; }
 
@@ -506,7 +506,7 @@
         .client-portfolio-block, 
         .client-portfolio-image { height: 220px; }
 
-        .client-portfolio-overlay { top: initial; bottom: 0; }
+        .client-portfolio-overlay { top: initial !important; bottom: 0; }
 
         .client-portfolio-name { width: 70%; padding: 10px 5%; }
 

@@ -1,5 +1,5 @@
 <?php if ($header): ?>
-	<div class="parallax fixed" style="background: url('<?php print file_create_url($header); ?>')">
+	<div style="background: url('<?php print file_create_url($header); ?>') center center transparent repeat">
 		<?php if ($rows): ?>
 		   	<?php print $rows; ?>
 		<?php endif; ?>

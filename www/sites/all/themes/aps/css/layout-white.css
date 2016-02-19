@@ -195,11 +195,19 @@ img.scale-with-grid {
 	text-shadow: 0px 0px 5px #222;
 	color: #fff;
 }	
+.clientWrap {
+
+}
+.clientWrap .client {
+	text-align: center;
+	padding: 25px 0;
+}
 .cutout {
 	max-width: 50%;
 	min-width: 320px;
 	height: auto;
 }	
+
 
 /* Typography
 --------------------------------------------------------*/
@@ -331,7 +339,7 @@ blockquote:after {
 	background-attachment:scroll;
 }
 .node {
-	margin-top: 40px;
+	
 }
 .node p {
 	font-size: 24px;
@@ -358,10 +366,9 @@ nav ul {
 nav ul li {
 	display: table-cell;
 	vertical-align: middle;
-	text-align: center;
+	text-align: left;
 	position: relative;
 	margin: 0;
-	padding: 0 15px !important;
 }
 nav ul li a {
 	color: #656565;
@@ -373,7 +380,7 @@ nav ul li a:hover {
 	transition: color 0.5s;
 }
 nav table.header {
-	height: 130px;
+
 }
 nav table.header td {
 	vertical-align: middle;
@@ -390,10 +397,16 @@ nav table.header td.branding {
 #homepage .container {
     height: 100%;
 }
+.aps-logo {
+
+}
+.header.aps-logo {
+	width: 80%;
+	height: auto;
+	margin-top: 25px;
+}
 .logo {
-	float: left;
-	margin-top: 12px;
-	margin-left: 0;
+	margin: 0;
 }
 
 div.messages {
@@ -1251,10 +1264,11 @@ p.percent {
 }
 .contactLogo {
 	margin-bottom: 23px;
-	
 }
-.contactLogo img {
+.contactLogo object {
 	margin-top: 30px;
+	width: 60%;
+	height: auto;
 }
 .contactDetails li span {
     padding-right: 5px;
@@ -1451,13 +1465,20 @@ button.close {
 	overflow:hidden; 
 	padding:30px 0 50px 0; 
 	z-index:1;
-	background:#fff;
+	background:#3C3C3C;
 }
-#footer p.copyright{
+#footer .copyright{
 	margin-bottom:0;
 	margin-top: 20px;
 	text-align: center;
-	color: #888888;
+	color: #FFF;
+}
+#footer object {
+	height: 20px;
+    margin-bottom: -6px;
+    margin-right: 2px;
+    display: inline;
+    width: auto;
 }
 #footer .copyright .minimo-bold {
 	font-size: 26px;
