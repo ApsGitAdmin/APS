@@ -27,7 +27,7 @@ $(document).ready(function () {
 //MENU --------------------------------------------------------------------------------/
 	$(".menu a").click(function () {
         $("html, body").animate({
-            scrollTop: ($($(this).attr("href")).offset().top - 150) + "px"
+            scrollTop: ($($(this).attr("href")).offset().top - $('nav').height()) + "px"
         }, {
             duration: Math.abs(($(document).scrollTop() - $($(this).attr("href")).offset().top) / 2),
             easing: "swing"
