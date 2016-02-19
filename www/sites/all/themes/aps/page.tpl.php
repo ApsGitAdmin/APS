@@ -2,33 +2,21 @@
 <?php if ($page['header']): ?>
 <!-- Start Menu -->
 <nav>
-  <table class="header container" cellpadding="0" cellspacing="0">
-    <tr>
-    <!-- Start aps Logo -->
-      <td class="aps">
-        <?php if ($logo): ?>
-          <a href="<?php print $front_page; ?>" title="<?php print t('aps'); ?>"><img src="<?php print $aps_client_logo; ?>" alt="<?php print t('aps'); ?>" /></a>
-        <?php endif; ?>
-      </td>
-    <!-- End aps Logo --> 
-
-    <!-- Start Nav Menu -->
-    <td class="title">
-      <div class="hidden-phone">
+  <!-- Start Nav Menu -->
+  <div class="container">
+    <div class="title clearfix">
+      <!-- logo & slogan -->
+      <div class="three columns alpha">
+        <?php $theme = drupal_get_path('theme', 'aps'); $svg = $theme . '/images/logo.svg'; ?>
+        <object class="header aps-logo" type="image/svg+xml" data="<?php print base_path() . $svg; ?>"></object>
+      </div>
+      <!-- End logo & slogan --> 
+      <div class="hidden-phone thirteen columns omega">
         <?php print render($page["header"]); ?>
       </div>
-    </td>
-    <!-- End Nav Menu --> 
-
-    <!-- Start Branding -->
-    <td class="branding">
-      <?php if ($page['branding']): ?>
-        <?php print render($page["branding"]); ?>
-      <?php endif; ?>
-    </td>
-    <!-- End Branding --> 
-    </tr>
-  </table>
+    </div>
+  </div>
+  <!-- End Nav Menu --> 
 </nav>
 <!-- End Menu --> 
 <?php endif; ?>
@@ -46,14 +34,12 @@
 
   <!-- Content Page -->
   <div class="container">
-
     <?php if($messages): ?>
       <div id="drupal_messages"><div class="alert-box message"><?php print $messages; ?></div></div>
     <?php endif;?>
-
-    <?php print render($page['content']); ?>
-       
   </div>
+
+  <?php print render($page['content']); ?>
   <!-- End of Content Page -->
 
   <!-- Return to aps -->
@@ -73,9 +59,10 @@
     <div class="container contactForm">
       <?php if (theme_get_setting('contact-info', 'surreal')): ?>
       <div class="five columns offset-by-one minimo-light uppercase">
-        <?php if ($logo): ?>
-          <div class="contactLogo"><img height="100" width="186" src="<?php print $logo; ?>" alt="<?php print $site_name; ?>" /></div>
-        <?php endif; ?>
+        <div class="contactLogo">
+          <?php $theme = drupal_get_path('theme', 'aps'); $svg = $theme . '/images/logo.svg'; ?>
+          <object class="aps-logo" type="image/svg+xml" data="<?php print base_path() . $svg; ?>"></object>
+        </div>
         <div class="contactInfo">
           <?php print theme_get_setting('contact-info', 'surreal'); ?>
         </div>

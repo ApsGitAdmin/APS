@@ -1,16 +1,8 @@
-<?php 
-	$body = $fields['body']->content;
-	$menu = $fields['view'];
-?>
-
-<div class="listWrap">
-    <div class="list">
+<div class="clientWrap">
+    <div class="client">
         <div class="container">
             <div class="sixteen columns"> 
-                <p>
-                    <?php print ($body); ?>
-                </p>
-            	<?php print ($menu->content); ?>
+                <?php print $fields['field_client_logo']->content; ?>
             </div>
         </div>
     </div>

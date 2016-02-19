@@ -30,7 +30,6 @@ Table of Contents:
 
 /* #Reset & Basics (Inspired by E. Meyers)
 --------------------------------------------------------*/
-	
 html, body {
     height: 100%;
 }
@@ -196,11 +195,19 @@ img.scale-with-grid {
 	text-shadow: 0px 0px 5px #222;
 	color: #fff;
 }	
+.clientWrap {
+
+}
+.clientWrap .client {
+	text-align: center;
+	padding: 25px 0;
+}
 .cutout {
 	max-width: 50%;
 	min-width: 320px;
 	height: auto;
 }	
+
 
 /* Typography
 --------------------------------------------------------*/
@@ -332,7 +339,7 @@ blockquote:after {
 	background-attachment:scroll;
 }
 .node {
-	margin-top: 40px;
+	
 }
 .node p {
 	font-size: 24px;
@@ -359,10 +366,9 @@ nav ul {
 nav ul li {
 	display: table-cell;
 	vertical-align: middle;
-	text-align: center;
+	text-align: left;
 	position: relative;
 	margin: 0;
-	padding: 0 15px !important;
 }
 nav ul li a {
 	color: #656565;
@@ -374,7 +380,7 @@ nav ul li a:hover {
 	transition: color 0.5s;
 }
 nav table.header {
-	height: 130px;
+
 }
 nav table.header td {
 	vertical-align: middle;
@@ -391,10 +397,16 @@ nav table.header td.branding {
 #homepage .container {
     height: 100%;
 }
+.aps-logo {
+
+}
+.header.aps-logo {
+	width: 80%;
+	height: auto;
+	margin-top: 25px;
+}
 .logo {
-	float: left;
-	margin-top: 12px;
-	margin-left: 0;
+	margin: 0;
 }
 
 div.messages {
@@ -991,6 +1003,9 @@ p.percent {
 .ie8 .serviceItem:hover .serviceInfoBack {
     display: block;
 }
+.services {
+	margin: 2.5% 0;
+}
 .services .tagline {
 	font-size: 20px;
 }
@@ -1001,27 +1016,39 @@ p.percent {
 .services.odd {
 
 }
-.services.odd.half .services-header *,
-.services.odd.half .services-text {
+.services.odd.half .services-header * {
 	text-align: left;
 }
-.services.odd.full .services-header *,
-.services.odd.full .services-text {
+.services.odd.full .services-header * {
 	text-align: right;
 }
 .services.even {
 
 }
-.services.even.half .services-header *,
-.services.even.half .services-text {
+.services.even.half .services-header * {
 	text-align: right;
 }
-.services.even.full .services-header *,
-.services.even.full .services-text {
+.services.even.full .services-header *  {
 	text-align: left;
+}
+.services .services-text {
+	text-align: justify;
+	color: #FFF;
+}
+.services p.tagline {
+	background-color: #FFF;
+	display: block;
+}
+.services p.tagline span {
+	display: inline-block;
+}
+.services .services-header h1 {
+	padding-top: 0;
+	color: #FFF;
 }
 .services .services-header h1 span {
 	margin-right: 10px;
+	color: #FFF;
 }
 
 .services-view-header {
@@ -1029,7 +1056,47 @@ p.percent {
 }
 
 .services-view-footer {
+	margin-top: 20px;
+	text-align: center;
+}
 
+
+/* Client Portfolio
+--------------------------------------------------------*/
+.client-portfolio-block {
+	overflow: hidden;
+	position: relative;
+}
+.client-portfolio-image {
+
+}
+.client-portfolio-overlay {
+	position: absolute;
+	display: table;
+	width: 100%;
+	background: #000;
+}
+.client-portfolio-overlay .client-portfolio-name {
+	display: table-cell;
+	vertical-align: middle;
+}
+.client-portfolio-overlay .client-portfolio-name h2 {
+	font-size: 14pt;
+	color: #FFF;
+}
+.client-portfolio-overlay .client-portfolio-icon {
+	width: 20%;
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+.client-portfolio-overlay .client-portfolio-icon a {
+	color: #FFF;
+	font-size: 20pt;
+}
+.portfolio-view-footer {
+	margin-top: 20px;
+	text-align: center;
 }
 
 
@@ -1091,12 +1158,19 @@ p.percent {
 --------------------------------------------------------*/
 
 .view-add-link {
-	margin: 0 !important;
-	outline: solid 1px #FFF;
+	width: 80px;
+	height: 80px;
+	line-height: 65px;
+	margin: 10px;
 	overflow: hidden;
 	display: inline-block;
 	text-align: center;
 	font-weight: bold;
+	color: #aaa;
+	text-shadow: 0 0 10px #5f5f5f;
+}
+.view-add-link:hover {
+	color: #959595;
 }
 
 
@@ -1190,10 +1264,11 @@ p.percent {
 }
 .contactLogo {
 	margin-bottom: 23px;
-	
 }
-.contactLogo img {
+.contactLogo object {
 	margin-top: 30px;
+	width: 60%;
+	height: auto;
 }
 .contactDetails li span {
     padding-right: 5px;
@@ -1390,13 +1465,20 @@ button.close {
 	overflow:hidden; 
 	padding:30px 0 50px 0; 
 	z-index:1;
-	background:#fff;
+	background:#3C3C3C;
 }
-#footer p.copyright{
+#footer .copyright{
 	margin-bottom:0;
 	margin-top: 20px;
 	text-align: center;
-	color: #888888;
+	color: #FFF;
+}
+#footer object {
+	height: 20px;
+    margin-bottom: -6px;
+    margin-right: 2px;
+    display: inline;
+    width: auto;
 }
 #footer .copyright .minimo-bold {
 	font-size: 26px;

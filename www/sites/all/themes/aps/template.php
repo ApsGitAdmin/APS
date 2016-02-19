@@ -108,6 +108,30 @@ if ( $user->uid ) {
 	variable_set('inspiro_admin_css',$admin_css);
 }
 
+function aps_preprocess_image_spacing($amount) {
+    $remaining = 16;
 
+    for ($i=0; $i < $amount; $i++) { 
+        $remaining = ($remaining == 0)? 16 : $remaining;
 
-	
+        if ($remaining %4 == 0) {
+            $using = (mt_rand(2,3) * 2);
+            if (($remaining - $using) < 0 || ($remaining - $using) == 2) {
+                $using = 4;
+            }
+            $spacing[$i] = $using;
+        } else {
+            $spacing[$i] = $using = 6;
+        }
+        $remaining -= $using;
+    }
+    return $spacing;
+}
+
+function aps_preprocess_views_view_fields(&$vars) {
+    if ($vars['view']->name == 'client_portfolio') {
+        if (!isset($vars['view']->spacing)) {
+            $vars['view']->spacing = aps_preprocess_image_spacing(count($vars['view']->result));
+        }
+    }
+}

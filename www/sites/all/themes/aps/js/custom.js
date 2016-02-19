@@ -26,7 +26,6 @@ $(document).ready(function () {
 
 //MENU --------------------------------------------------------------------------------/
 	$(".menu a").click(function () {
-		console.log($(this));
         $("html, body").animate({
             scrollTop: ($($(this).attr("href")).offset().top - 150) + "px"
         }, {
@@ -43,10 +42,38 @@ $(document).ready(function () {
 
 	function parallaxInit() {
 		if (isMobile == true) return false;
-		$('#client-parallax').parallax();
+		$('.parallax').parallax();
+		$('.inner-parallax').inner_parallax();
 		/*add as necessary*/
 	}
 
+
+// Client Portfolio -------------------------------------------------------------------/
+
+	$(".client-portfolio-block").hover(function() {
+		client_block = $(this);
+		client_overlay = $(this).find(".client-portfolio-overlay");
+		height_diff = client_block.height() - client_overlay.height();
+		if ($(window).width() >= 960) {
+			client_overlay.stop(true, false).animate({ 'top': height_diff + "px" }, "normal", "swing", function() {
+				client_overlay.addClass("block-open");
+			});
+		}
+	}, function() {
+		client_block = $(this);
+		client_overlay = $(this).find(".client-portfolio-overlay");
+		if ($(window).width() >= 960) {
+			if (client_overlay.hasClass("block-open")) {
+				client_overlay.stop(true, false).delay(500).animate({ 'top': client_block.height() + "px" }, "normal", "swing", function() {
+					client_overlay.removeClass("block-open");
+				});
+			} else {
+				client_overlay.stop(true, false).animate({ 'top': client_block.height() + "px" }, "normal", "swing", function() {
+					client_overlay.removeClass("block-open");
+				});
+			}
+		}
+    });
 
 //	Accordion  ------------------------------------------------------------------------/
 

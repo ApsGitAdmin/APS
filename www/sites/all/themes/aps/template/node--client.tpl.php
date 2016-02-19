@@ -13,7 +13,6 @@ hide($content['author']);
             </div>
         </div>
     </div>
-    blah
     <?php if (render($content['field_tags'])): ?>
     <div class="tags">
         <?php print render($content[ 'field_tags']); ?>

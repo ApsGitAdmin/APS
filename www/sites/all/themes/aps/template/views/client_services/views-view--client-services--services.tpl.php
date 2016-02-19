@@ -15,8 +15,8 @@
 
   <?php if ($footer): ?>
     <?php if (user_access('Client Services: Create new content')): ?>
-      <div class="services-view-footer">
-        <h3>Create new Service</h3>
+      <div class="services-view-footer clearfix">
+        <h3 class="minimo-light uppercase">Create new Service</h3>
         <?php print $footer; ?>
       </div>
     <?php endif; ?>
