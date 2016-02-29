@@ -36,6 +36,8 @@
     <!--end Hero--> 
   </div>
 
+  <div id="virtual-meeting"><a href="http://vimeo.com/155992387" rel="prettyPhoto"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/video-popup.png" /></a></div>
+
   <?php if($messages): ?>
     <!--<div id="drupal_messages"><div class="alert-box message"><?php print $messages; ?></div></div>-->
   <?php endif;?>
