@@ -331,6 +331,19 @@ nav ul li a:hover {
 	height: auto;
 }
 
+/* Virtual Meeting Popup
+--------------------------------------------------------*/
+#virtual-meeting { 
+	 z-index: 9000;
+}
+#virtual-meeting a img {
+	border: none;
+	width: 100%;
+	height: auto;
+}
+
+
+
 /* supersized slideshow
 --------------------------------------------------------*/
 .slider-text {

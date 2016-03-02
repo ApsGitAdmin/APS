@@ -103,9 +103,6 @@ $(document).ready(function () {
 	})();
 
 
-
-
-
 //WINDOW EVENTS ---------------------------------------------------------------------/	
 	 
 	$(window).bind('resize',function () {
