@@ -2834,6 +2834,11 @@ html body.adminimal-theme.page-admin-reports-updates .overflow-fix {
   background: #fff;
 }
 
+.adminimal-theme table tr.draggable td > div.form-item {
+  display: table-cell;
+  padding-right: 2em;
+}
+
 .adminimal-theme .rules-elements-table .tabledrag-toggle-weight-wrapper {
   position: absolute;
   right: 48px;
