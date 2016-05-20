@@ -1,0 +1,5 @@
+name = aps Simple Weather
+description = "Simple Weather widget that creates a current weather block."
+core = 7.x
+package = aps
+dependencies[] = libraries

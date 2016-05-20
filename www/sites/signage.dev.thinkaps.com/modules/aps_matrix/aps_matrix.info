@@ -1,0 +1,7 @@
+name = aps Matrix
+description = Creates a Matrix Layout based on a view.
+core = 7.x
+package = aps
+
+dependencies[] = views
+files[] = aps_matrix_views_plugin_style_schedule.inc

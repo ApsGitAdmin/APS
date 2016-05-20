@@ -1,0 +1,157 @@
+<?php
+/**
+ * @file
+ *
+ * Defines a custom field for creating a theme per event
+ */
+
+function aps_themer_views_pre_render(&$view) {
+  switch ($view->name) {
+    case 'cluster_display':
+      $node = node_load(array_pop($view->args));
+      if ($node->event_ref) {
+        $event_node = node_load($node->event_ref[LANGUAGE_NONE][0]['target_id']);
+        $fc = field_collection_item_load($event_node->field_styling[LANGUAGE_NONE][0]['value']);
+
+        //Knockout
+        $color = ($fc->field_h2_colour)? 'background-color:' . ($fc->field_h2_colour[LANGUAGE_NONE][0]['rgb']) : '';
+        $ko = '.knockout > div {' . $color . '}';
+          
+        //H2
+        $color = ($fc->field_h2_colour)? 'color:' . ($fc->field_h2_colour[LANGUAGE_NONE][0]['rgb']) : '';
+        $font = ($fc->field_h2_font)? fontyourface_get_font($fc->field_h2_font[LANGUAGE_NONE][0]['fid']) : NULL;
+        $font_family = ($font)? fontyourface_font_css($font) : '';
+        $h2 = 'h2 {' . $font_family . $color . '}';
+
+        //H3
+        $color = ($fc->field_h3_colour)? 'color:' . ($fc->field_h3_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+        $font = ($fc->field_h3_font)? fontyourface_get_font($fc->field_h3_font[LANGUAGE_NONE][0]['fid']) : NULL;
+        $font_family = ($font)? fontyourface_font_css($font) : NULL;
+        $h3 = 'h3 {' . $font_family . $color . '}';
+
+        //SPAN
+        $color = ($fc->field_span_colour)? 'color:' . ($fc->field_span_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+        $font = ($fc->field_span_font)? fontyourface_get_font($fc->field_span_font[LANGUAGE_NONE][0]['fid']) : NULL;
+        $font_family = ($font)? fontyourface_font_css($font) : NULL;
+        $span = 'span {' . $font_family . $color . '}';
+
+        //TD
+        $color = ($fc->field_td_colour)? 'color:' . ($fc->field_td_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+        $td = 'td {' . $font_family . $color . '}';
+
+        //footer
+        $bg_color = ($fc->field_footer_bg_colour)? 'background-color:' . ($fc->field_footer_bg_colour[LANGUAGE_NONE][0]['rgb']) .';' : NULL;
+        $color = ($fc->field_footer_colour)? 'color:' . $fc->field_footer_colour[LANGUAGE_NONE][0]['rgb'] : NULL;
+        $font = ($fc->field_footer_font)? fontyourface_get_font($fc->field_footer_font[LANGUAGE_NONE][0]['fid']) : NULL;
+        $font_family = ($font)? fontyourface_font_css($font) : NULL;
+        $footer = '#zone-footer-wrapper {' . $font_family . $bg_color . $color . '}';
+
+        $css = $ko . $h2 . $h3 . $span . $td;
+      } else $css = '';
+      break;
+    
+    default:
+      $css = '';
+      break;
+  }
+  drupal_add_css($css, array('type' => 'inline', 'group' => CSS_THEME, 'media' => 'screen', 'preprocess' => FALSE, 'weight' => 1));
+}
+
+function aps_themer_node_view($node, $view_mode, $langcode) {
+  if (menu_get_object() == $node) {
+    switch ($node->type) {
+      case 'event':
+        $fc = field_collection_item_load($node->field_styling[LANGUAGE_NONE][0]['value']);
+
+        //footer
+        $bg_color = ($fc->field_footer_bg_colour)? 'background-color:' . ($fc->field_footer_bg_colour[LANGUAGE_NONE][0]['rgb']) .';' : NULL;
+        $color = ($fc->field_footer_colour)? 'color:' . $fc->field_footer_colour[LANGUAGE_NONE][0]['rgb'] : NULL;
+        $font = ($fc->field_footer_font)? fontyourface_get_font($fc->field_footer_font[LANGUAGE_NONE][0]['fid']) : NULL;
+        $font_family = ($font)? fontyourface_font_css($font) : NULL;
+        $footer = '#zone-footer-wrapper {' . $font_family . $bg_color . $color . '}';
+
+        $css = $footer;
+        break;
+      case 'screen':
+        if ($node->event_ref) {
+          $event_node = node_load($node->event_ref[LANGUAGE_NONE][0]['target_id']);
+          $fc = field_collection_item_load($event_node->field_styling[LANGUAGE_NONE][0]['value']);
+          
+          //H2
+          $color = ($fc->field_h2_colour)? 'color:' . ($fc->field_h2_colour[LANGUAGE_NONE][0]['rgb']) : '';
+          $font = ($fc->field_h2_font)? fontyourface_get_font($fc->field_h2_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : '';
+          $h2 = 'h2 {' . $font_family . $color . '}';
+
+          //H3
+          $color = ($fc->field_h3_colour)? 'color:' . ($fc->field_h3_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+          $font = ($fc->field_h3_font)? fontyourface_get_font($fc->field_h3_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : NULL;
+          $h3 = 'h3 {' . $font_family . $color . '}';
+
+          //SPAN
+          $color = ($fc->field_span_colour)? 'color:' . ($fc->field_span_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+          $font = ($fc->field_span_font)? fontyourface_get_font($fc->field_span_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : NULL;
+          $span = 'span {' . $font_family . $color . '}';
+
+          //TD
+          $color = ($fc->field_td_colour)? 'color:' . ($fc->field_td_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+          $td = 'td {' . $font_family . $color . '}';
+
+          //footer
+          $bg_color = ($fc->field_footer_bg_colour)? 'background-color:' . ($fc->field_footer_bg_colour[LANGUAGE_NONE][0]['rgb']) .';' : NULL;
+          $color = ($fc->field_footer_colour)? 'color:' . $fc->field_footer_colour[LANGUAGE_NONE][0]['rgb'] : NULL;
+          $font = ($fc->field_footer_font)? fontyourface_get_font($fc->field_footer_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : NULL;
+          $footer = '#zone-footer-wrapper {' . $font_family . $bg_color . $color . '}';
+
+          $css = $h2 . $h3 . $span . $td;
+        } else $css = '';
+        break;
+      
+      case 'room':
+        if ($node->event_ref) {
+          $event_node = node_load($node->event_ref[LANGUAGE_NONE][0]['target_id']);
+          $fc = field_collection_item_load($event_node->field_styling[LANGUAGE_NONE][0]['value']);
+          
+          //H2
+          $color = ($fc->field_h2_colour)? 'color:' . ($fc->field_h2_colour[LANGUAGE_NONE][0]['rgb']) : '';
+          $font = ($fc->field_h2_font)? fontyourface_get_font($fc->field_h2_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : '';
+          $h2 = 'h2 {' . $font_family . $color . '}';
+
+          //H3
+          $color = ($fc->field_h3_colour)? 'color:' . ($fc->field_h3_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+          $font = ($fc->field_h3_font)? fontyourface_get_font($fc->field_h3_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : NULL;
+          $h3 = 'h3 {' . $font_family . $color . '}';
+
+          //SPAN
+          $color = ($fc->field_span_colour)? 'color:' . ($fc->field_span_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+          $font = ($fc->field_span_font)? fontyourface_get_font($fc->field_span_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : NULL;
+          $span = 'span {' . $font_family . $color . '}';
+
+          //TD
+          $color = ($fc->field_td_colour)? 'color:' . ($fc->field_td_colour[LANGUAGE_NONE][0]['rgb']) : NULL;
+          $td = 'td {' . $font_family . $color . '}';
+
+          //footer
+          $bg_color = ($fc->field_footer_bg_colour)? 'background-color:' . ($fc->field_footer_bg_colour[LANGUAGE_NONE][0]['rgb']) .';' : NULL;
+          $color = ($fc->field_footer_colour)? 'color:' . $fc->field_footer_colour[LANGUAGE_NONE][0]['rgb'] : NULL;
+          $font = ($fc->field_footer_font)? fontyourface_get_font($fc->field_footer_font[LANGUAGE_NONE][0]['fid']) : NULL;
+          $font_family = ($font)? fontyourface_font_css($font) : NULL;
+          $footer = '#zone-footer-wrapper {' . $font_family . $bg_color . $color . '}';
+
+          $css = $h2 . $h3 . $span . $td;
+        } else $css = '';
+        break;
+      
+      default:
+        $css = '';
+        break;
+    }
+    drupal_add_css($css, array('type' => 'inline', 'group' => CSS_THEME, 'media' => 'screen', 'preprocess' => FALSE, 'weight' => 1));
+  }
+}

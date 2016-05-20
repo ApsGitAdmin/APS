@@ -1,0 +1,58 @@
+<?php
+/**
+ * @file
+ * Creating a Simple Weather block that display current weather data provided by
+ * Yahoo Weather.
+ *
+ * Implementation of the simpleWeather jQuery Plugin by James Fleeting
+ * http://simpleweatherjs.com
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function aps_simpleweather_theme() {
+  return array(
+    'aps_simpleweather_output' => array(
+      'variables' => array(),
+    ),
+  );
+}
+
+/**
+ * Theme output function for simple weather content.
+ */
+function theme_aps_simpleweather_output(&$variables) {
+  return '<div id="simple-weather"></div>';
+}
+
+/**
+ * Validate simpleWeather jQuery Plugin.
+ */
+function aps_simpleweather_file_required() {
+  $library = libraries_load('simpleWeather');
+  if ($library['loaded'] == FALSE) {
+    $msg = t('The file jquery.simpleWeather.min.js is missing and required by the Simple Weather module. Download the <a href="@download_url" target="_blank">SimpleWeather</a> jQuery plugin and read the README.txt file found inside the aps_simpleweather.module file for installation instructions.', array('@download_url' => url('https://github.com/monkeecreate/jquery.simpleWeather/zipball/master')));
+    drupal_set_message($msg, 'error', TRUE);
+  }
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function aps_simpleweather_libraries_info() {
+  $libraries['simpleWeather'] = array(
+    'name' => 'simpleWeather jQuery Plugin',
+    'vendor url' => 'http://simpleweatherjs.com',
+    'download url' => 'https://github.com/monkeecreate/jquery.simpleWeather/zipball/master',
+    'version arguments' => array(
+      'file' => 'jquery.simpleWeather.min.js',
+      'pattern' => '/v(\d+\.+\d+.+\d+)/',
+      'lines' => 1,
+    ),
+    'files' => array(
+      'js' => array('jquery.simpleWeather.min.js'),
+    ),
+  );
+  return $libraries;
+}
