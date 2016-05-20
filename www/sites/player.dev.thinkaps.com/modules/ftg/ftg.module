@@ -1,0 +1,1068 @@
+<?php
+
+/**
+ * @file
+ * ftg module.
+ * Code Generator for custom field types.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function ftg_menu() {
+  $items['admin/config/development/ftg'] = array(
+    'title' => 'Field Type Generator',
+    'description' => 'Basic form to generate a custom field type module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ftg_basic_form'),
+    'access arguments' => array('use ftg'),
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function ftg_permission() {
+  return array(
+    'use ftg' => array(
+      'title' => t('Use field type generator'),
+      'description' => t('Generates modules to create custom field types.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_admin_paths().
+ */
+function ftg_admin_paths() {
+  $paths = array(
+    'ftg' => TRUE,
+  );
+  return $paths;
+}
+
+/**
+ *  Basic form to generate a module for a custom field type.
+ */
+function ftg_basic_form($form, &$form_state) {
+  $form['#tree'] = TRUE;
+  $form['module_info'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Module Info'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#attached' => array(
+      'css' => array(
+        drupal_get_path('module', 'ftg') . '/ftg.css',
+      ),
+    ),
+  );
+  $form['module_info']['name'] = array(
+    '#type' => 'machine_name',
+    '#title' => t('Name'),
+    '#default_value' => 'module_name',
+    '#machine_name' => array(
+      'exists' => 'module_exists',
+    ),
+  );
+  $form['module_info']['human_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Human name'),
+    '#default_value' => 'Module Name',
+  );
+  $form['module_info']['description'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Description'),
+    '#default_value' => 'Module Description',
+  );
+  $form['module_info']['dependencies'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Dependencies'),
+    '#description' => t('A comma-separated list of dependencies'),
+    '#default_value' => 'ctools, views',
+  );
+  $form['module_info']['package'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Package'),
+    '#default_value' => 'Module Package',
+  );
+  $form['field_details'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Field details'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  $form['field_details']['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Field name'),
+    '#default_value' => 'field_name',
+  );
+  $form['field_details']['description'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Field description'),
+    '#default_value' => t('The field description'),
+  );
+  $form['field_details']['column_wrapper'] = array(
+    '#tree' => FALSE,
+    '#prefix' => '<div class="clearfix" id="field-column-wrapper">',
+    '#suffix' => '</div>',
+  );
+  $form['field_details']['column_wrapper']['#tree'] = TRUE;
+
+  // Get the number of columns
+  if (empty($form_state['column_number'])) {
+    $form_state['column_number'] = 1;
+  }
+
+  for ($i = 0; $i < $form_state['column_number']; $i++) {
+    $form['field_details']['column_wrapper'][$i]['column_name'] = array(
+      '#type' => 'machine_name',
+      '#title' => t('Column Name'),
+      '#machine_name' => array(
+        // Use the 'exists' callback for custom validation of column names.
+        'exists' => 'ftg_invalid_field_column_name',
+      ),
+      '#maxlength' => '32',
+      '#size' => '32',
+      '#prefix' => '<div style="overflow:auto;"><div style="width:250px;float:left;">',
+      '#suffix' => '</div>',
+    );
+    $form['field_details']['column_wrapper'][$i]['column_type'] = array(
+      '#type' => 'select',
+      '#title' => t('Type'),
+      '#options' => ftg_drupal_schema_column_types(),
+      '#prefix' => '<div style="float:left;margin-right:25px">',
+      '#suffix' => '</div>',
+    );
+    $form['field_details']['column_wrapper'][$i]['column_size'] = array(
+      '#type' => 'select',
+      '#title' => t('Size'),
+      '#options' => ftg_drupal_schema_column_sizes(NULL),
+      '#prefix' => '<div style="float:left;" class="column-size-dropdown">',
+      '#suffix' => '</div>',
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="field_details[column_wrapper][' . $i . '][column_type]"]' => array('value' => 'datetime'),
+        ),
+      ),
+    );
+    $form['field_details']['column_wrapper'][$i]['required'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Required'),
+      '#prefix' => '<div style="float:left;padding-top: 15px;margin-left: 10px;">',
+      '#suffix' => '</div>',
+      '#default_value' => TRUE,
+    );
+    $form['field_details']['column_wrapper'][$i]['use_text_format'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Format Selection'),
+      '#prefix' => '<div style="float:left;padding-top: 15px;margin-left: 10px;">',
+      '#suffix' => '</div>',
+      '#states' => array(
+        'visible' => array(
+          ':input[name="field_details[column_wrapper][' . $i . '][column_type]"]' => array('value' => 'text'),
+        ),
+      ),
+    );
+    $form['field_details']['column_wrapper'][$i]['is_entityreference'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Entity Ref?'),
+      '#prefix' => '<div style="float:left;padding-top: 15px;margin-left: 10px;">',
+      '#suffix' => '</div>',
+      '#states' => array(
+        'visible' => array(
+          ':input[name="field_details[column_wrapper][' . $i . '][column_type]"]' => array('value' => 'int'),
+        ),
+      ),
+    );
+    $form['field_details']['column_wrapper'][$i]['entityreference_type'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Entity Ref Type'),
+      '#size' => 10,
+      '#prefix' => '<div style="float:left;margin-left:10px">',
+      '#suffix' => '</div>',
+      '#states' => array(
+        'visible' => array(
+          ':input[name="field_details[column_wrapper][' . $i . '][is_entityreference]"]' => array('checked' => TRUE),
+          ':input[name="field_details[column_wrapper][' . $i . '][column_type]"]' => array('value' => 'int'),
+        ),
+      ),
+    );
+    $form['field_details']['column_wrapper'][$i]['entityreference_cardinality'] = array(
+      '#type' => 'select',
+      '#title' => t('Card'),
+      '#options' => array(
+        'ERA_CARDINALITY_UNLIMITED' => 'Unl',
+        1 => 1,
+        2 => 2,
+        3 => 3,
+        4 => 4,
+        5 => 5,
+        6 => 6,
+        7 => 7,
+        8 => 8,
+        9 => 9,
+        10 => 10,
+      ),
+      '#default_value' => 1,
+      '#prefix' => '<div style="float:left;margin-left:10px;">',
+      '#suffix' => '</div>',
+      '#states' => array(
+        'visible' => array(
+          ':input[name="field_details[column_wrapper][' . $i . '][is_entityreference]"]' => array('checked' => TRUE),
+          ':input[name="field_details[column_wrapper][' . $i . '][column_type]"]' => array('value' => 'int'),
+        ),
+      ),
+    );
+    $form['field_details']['column_wrapper'][$i]['use_date_popup'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use Date Popup'),
+      '#prefix' => '<div style="float:left;padding-top: 15px;margin-left: 10px;">',
+      '#suffix' => '</div>',
+      '#states' => array(
+        'visible' => array(
+          ':input[name="field_details[column_wrapper][' . $i . '][column_type]"]' => array('value' => 'datetime'),
+        ),
+      ),
+    );
+    $form['field_details']['column_wrapper'][$i]['show_time_input'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show time input'),
+      '#prefix' => '<div style="float:left;padding-top: 15px;margin-left: 10px;">',
+      '#suffix' => '</div></div>',
+      '#states' => array(
+        'visible' => array(
+          ':input[name="field_details[column_wrapper][' . $i . '][use_date_popup]"]' => array('checked' => TRUE),
+          ':input[name="field_details[column_wrapper][' . $i . '][column_type]"]' => array('value' => 'datetime'),
+        ),
+      ),
+    );
+  }
+  $form['field_details']['column_wrapper']['add_column'] = array(
+    '#type' => 'submit',
+    '#submit' => array('ftg_basic_form_add_column_submit'),
+    '#value' => t('Add column'),
+    '#ajax' => array(
+      'callback' => 'ftg_basic_form_add_another_column',
+      'wrapper' => 'field-column-wrapper',
+      'method' => 'replace',
+      'effect' => 'fade',
+    ),
+    '#prefix' => '<div style="clear:both;">',
+    '#suffix' => '</div>',
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Download module'),
+  );
+  return $form;
+}
+
+/**
+ * Submit callback for the field type generator form.
+ *
+ * Prepares the module info and field details arrays, by passing them through
+ * a preprocess function to add any dependencies needed by specific field types,
+ * and calls the function in charge to return the compressed module.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function ftg_basic_form_submit($form, &$form_state) {
+  $module_info = $form_state['values']['module_info'];
+  $field_details = $form_state['values']['field_details'];
+
+  if (!empty($field_details)) {
+    ftg_preprocess_module_and_fields_info($module_info, $field_details);
+    ftg_return_field_type_module_compressed($module_info, $field_details);
+  }
+}
+
+/**
+ * Submit callback for the "add column" button of the ftg build form.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function ftg_basic_form_add_column_submit($form, &$form_state) {
+  // Increment column number by one, and rebuild form so that the new column
+  // appears in the UI.
+  $form_state['column_number']++;
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * AJAX callback for the "add column" button of the ftg build form.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function ftg_basic_form_add_another_column($form, &$form_state) {
+  // Return all the tree for a field column, which will replace the current
+  // 'add column' button pressed.
+  return $form['field_details']['column_wrapper'];
+}
+
+/**
+ * Checks whether a column name for the field type is considered not valid.
+ *
+ * @param $column_name
+ * @return bool
+ */
+function ftg_invalid_field_column_name($column_name) {
+  // TODO: Check that is not a mysql / db engine reserved word.
+  return FALSE;
+}
+
+/**
+ * Returns the column types that can be used in a Drupal schema.
+ *
+ * @return array
+ */
+function ftg_drupal_schema_column_types() {
+  return array(
+    'serial' => 'serial',
+    'int' => 'int',
+    'float' => 'float',
+    'numeric' => 'numeric',
+    'varchar' => 'varchar',
+    'char' => 'char',
+    'text' => 'text',
+    'blob' => 'blob',
+    'datetime' => 'datetime',
+  );
+}
+
+/**
+ * Returns the possible column sizes for each schema column type.
+ *
+ * @see ftg_drupal_schema_column_types().
+ * @see https://www.drupal.org/node/159605.
+ *
+ * @return array
+ */
+function ftg_drupal_schema_column_sizes($column_type = NULL) {
+  $type_sizes = array(
+    'serial' => array(
+      array('label' => 'tiny'),
+      array('label' => 'small'),
+      array('label' => 'medium'),
+      array('label' => 'big'),
+      array('label' => 'normal'),
+    ),
+    'int' => array(
+      array('label' => 'tiny'),
+      array('label' => 'small'),
+      array('label' => 'medium'),
+      array('label' => 'big'),
+      array('label' => 'normal'),
+    ),
+    'float' => array(
+      array('label' => 'tiny'),
+      array('label' => 'small'),
+      array('label' => 'medium'),
+      array('label' => 'big'),
+      array('label' => 'normal'),
+    ),
+    'numeric' => array(
+      array('label' => 'normal'),
+    ),
+    'varchar' => array(
+      array('label' => '32'),
+      array('label' => '64'),
+      array('label' => '128'),
+      array('label' => '255'),
+    ),
+    'char' => array(
+      array('label' => 'normal'),
+    ),
+    'text' => array(
+      array('label' => 'tiny'),
+      array('label' => 'small'),
+      array('label' => 'medium'),
+      array('label' => 'big'),
+      array('label' => 'normal'),
+    ),
+    'blob' => array(
+      array('label' => 'big'),
+      array('label' => 'normal'),
+    ),
+    'datetime' => array(
+      array('label' => 'mysql_type:datetime'),
+      array('label' => 'pgsql_type:timestamp without time zone'),
+      array('label' => 'sqlite_type:varchar'),
+      array('label' => 'sqlsrv_type:smalldatetime'),
+    ),
+  );
+
+  if (is_null($column_type)) {
+    $plain_sizes = array();
+    foreach ($type_sizes as $type => $sizes) {
+      foreach ($sizes as $size) {
+        $plain_sizes[$type][$type . ':' . $size['label']] = $size['label'];
+      }
+    }
+    return $plain_sizes;
+  }
+  else if (isset($type_sizes[$column_type])) {
+    return $type_sizes[$column_type];
+  }
+  return array();
+}
+
+/**
+ * Corner of shame: This function is taken from features.
+ *
+ * @param $name
+ *   Filename of the file to be tarred.
+ * @param $contents
+ *   String contents of the file.
+ *
+ * @return
+ *   A string of the tar file contents.
+ */
+function ftg_tar_create($name, $contents) {
+  /* http://www.mkssoftware.com/docs/man4/tar.4.asp */
+  /* http://www.phpclasses.org/browse/file/21200.html */
+  $tar = '';
+  $bigheader = $header = '';
+  if (strlen($name) > 100) {
+    $bigheader = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12",
+      '././@LongLink', '0000000', '0000000', '0000000',
+      sprintf("%011o", strlen($name)), '00000000000',
+      '        ', 'L', '', 'ustar ', '0',
+      '', '', '', '', '', '');
+
+    $bigheader .= str_pad($name, floor((strlen($name) + 512 - 1) / 512) * 512, "\0");
+
+    $checksum = 0;
+    for ($i = 0; $i < 512; $i++) {
+      $checksum += ord(substr($bigheader, $i, 1));
+    }
+    $bigheader = substr_replace($bigheader, sprintf("%06o", $checksum)."\0 ", 148, 8);
+  }
+  $header = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12", // book the memorie area
+    substr($name,0,100),  //  0     100     File name
+    '100644 ',            // File permissions
+    '   765 ',            // UID,
+    '   765 ',            // GID,
+    sprintf("%11s ", decoct(strlen($contents))), // Filesize,
+    sprintf("%11s", decoct(REQUEST_TIME)),       // Creation time
+    '        ',        // 148     8         Check sum for header block
+    '',                // 156     1         Link indicator / ustar Type flag
+    '',                // 157     100     Name of linked file
+    'ustar ',          // 257     6         USTAR indicator "ustar"
+    ' ',               // 263     2         USTAR version "00"
+    '',                // 265     32         Owner user name
+    '',                // 297     32         Owner group name
+    '',                // 329     8         Device major number
+    '',                // 337     8         Device minor number
+    '',                // 345     155     Filename prefix
+    '');               // 500     12         ??
+
+  $checksum = 0;
+  for ($i = 0; $i < 512; $i++) {
+    $checksum += ord(substr($header, $i, 1));
+  }
+  $header = substr_replace($header, sprintf("%06o", $checksum)."\0 ", 148, 8);
+  $tar = $bigheader.$header;
+
+  $buffer = str_split($contents, 512);
+  foreach ($buffer as $item) {
+    $tar .= pack("a512", $item);
+  }
+  return $tar;
+}
+
+/**
+ * Preprocess the module info and field details before they're passed to the
+ * generate function.
+ *
+ * This is done to add certain dependencies based on the present field types
+ * included in the field type.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ */
+function ftg_preprocess_module_and_fields_info(&$module_info, &$field_details) {
+  $module_info['dependencies'] = (!empty($module_info['dependencies'])) ? explode(',', str_replace(' ', '', $module_info['dependencies'])) : array();
+  foreach ($field_details['column_wrapper'] as $field_column) {
+    if (isset($field_column['is_entityreference']) && ((bool) $field_column['is_entityreference']) && !in_array('entityreference_autocomplete', $module_info['dependencies'])) {
+      $module_info['dependencies'][] = 'entityreference_autocomplete';
+      continue;
+    }
+    else if (isset($field_column['use_date_popup']) && ((bool) $field_column['use_date_popup'])
+      && !in_array('date', $module_info['dependencies']) && !in_array('date_popup', $module_info['dependencies'])) {
+      $module_info['dependencies'][] = 'date';
+      $module_info['dependencies'][] = 'date_popup';
+      continue;
+    }
+  }
+}
+
+/**
+ * Triggers the creation and compression of the module folder, and returns it.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ */
+function ftg_return_field_type_module_compressed($module_info, $field_details) {
+  // Clear out output buffer to remove any garbage from tar output.
+  if (ob_get_level()) {
+    ob_end_clean();
+  }
+
+  $filename = $module_info['name'];
+  // Set headers for the tar file.
+  drupal_add_http_header('Content-type', 'application/x-tar');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename="' . $filename . '.tar"');
+
+  // Assemble ".info", ".module", and ".install" files.
+  $file_types = array(
+    'info' => 'info',
+    'module' => 'module',
+    'install' => 'install'
+  );
+
+  // Generate and print the .tar content of the different files.
+  foreach ($file_types as $extension => $contents) {
+    $file_render_function = 'ftg_generate_' . $extension . '_file';
+
+    if (function_exists($file_render_function)) {
+      $file_contents = $file_render_function($module_info, $field_details);
+      print ftg_tar_create("{$filename}.{$extension}", $file_contents);
+    }
+    else {
+      watchdog('ftg module', '.@extension file couldn\'t be generated, because
+        @function() was not found.',
+        array(
+          '@extension' => $extension,
+          '@function' => $file_render_function,
+        ), WATCHDOG_ERROR);
+    }
+  }
+
+  // Print this. I think it's black magic, but I've no fucking clue. I should
+  // probably search what's exactly doing in Stack Overflow. Or in some place of
+  // smart people.
+  print pack("a1024","");
+  exit;
+}
+
+
+/**
+ * Assembles the contents of the .info file for the module generated.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ *
+ * @return string
+ *   The contents of the .info file.
+ */
+function ftg_generate_info_file($module_info, $field_details) {
+  $output = array();
+
+  // Generate Boilerplate.
+  $output[] = 'name = ' . $module_info['human_name'];
+  $output[] = 'description = "' . $module_info['description'] . '"';
+  $output[] = 'package = ' . $module_info['package'];
+  $output[] = 'core = ' . '7.x';
+  $output[] = "";
+  $output[] = "; Dependencies";
+
+  // Add dependencies.
+  if (isset($module_info['dependencies']) && !empty($module_info['dependencies'])) {
+    foreach ($module_info['dependencies'] as $dependency) {
+      $output[] = 'dependencies[] = ' . $dependency;
+    }
+  }
+  // Empty line.
+  $output[] = "";
+  return implode("\n", $output);
+}
+
+/**
+ * Assembles the contents of the .module file.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ */
+function ftg_generate_module_file($module_info, $field_details) {
+  $field_name = $field_details['name'];
+  $field_description = $field_details['description'];
+  $field_columns = array_filter($field_details['column_wrapper'], 'is_array');
+
+  $output = array();
+  $output[] = "<?php";
+  $output[] = "";
+  $output[] = "/**";
+  $output[] = " * @file";
+  $output[] = " * {$module_info['name']} module.";
+  $output[] = " * {$module_info['description']}.";
+  $output[] = " */";
+  $output[] = "";
+
+  // Hook field info.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_info().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_info() {";
+  $output[] = "  return array(";
+  $output[] = "    '{$field_name}' => array(";
+  $output[] = "      'label' => t('" . ucwords(str_replace('_', ' ', $field_name)) . "'),";
+  $output[] = "      'description' => t('{$field_description}'),";
+  $output[] = "      'default_widget' => '{$field_name}_widget_default',";
+  $output[] = "      'default_formatter' => '{$field_name}_formatter_default',";
+  $output[] = "    ),";
+  $output[] = "  );";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field widget info.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_widget_info().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_widget_info() {";
+  $output[] = "  return array(";
+  $output[] = "    '{$field_name}_widget_default' => array(";
+  $output[] = "      'label' => t('Default widget'),";
+  $output[] = "      'field types' => array('{$field_name}'),";
+  $output[] = "      'behaviors' => array(";
+  $output[] = "        'multiple values' => FIELD_BEHAVIOR_DEFAULT,";
+  $output[] = "        'default value' => FIELD_BEHAVIOR_DEFAULT,";
+  $output[] = "      ),";
+  $output[] = "    ),";
+  $output[] = "  );";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field widget form.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_widget_form().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_widget_form(&\$form, &\$form_state, \$field, \$instance, \$langcode, \$items, \$delta, \$element) {";
+  $output[] = "  switch (\$instance['widget']['type']) {";
+  $output[] = "    case '{$field_name}_widget_default':";
+
+  foreach ($field_columns as $column) {
+    // For special field types that generate their own form code.
+    if ($column_widget_render = ftg_column_widget_render_decorator($column)) {
+      $column_output = $column_widget_render($module_info, $field_details, $column);
+      $output = array_merge($output, $column_output);
+    }
+    // Standard fields.
+    else {
+      $output[] = "      \$element['{$field_name}']['{$column['column_name']}'] = array(";
+      $output[] = "        '#type' => 'textfield',";
+      $output[] = "        '#title' => t('" . ucwords(str_replace('_', ' ', $column['column_name'])) . "'),";
+      // Add maxlength for varchar types.
+      if ($column['column_type'] == 'varchar') {
+        $column_size_chunks = preg_split('/:/', $column['column_size'], 2);
+        $output[] = "        '#maxlength' => " . array_pop($column_size_chunks) . ",";
+      }
+      $output[] = "        '#default_value' => isset(\$items[\$delta]['{$column['column_name']}']) ? \$items[\$delta]['{$column['column_name']}'] : NULL,";
+      $output[] = "      );";
+    }
+  }
+
+  $output[] = "    // Collapse existing entries, for some UX.";
+  $output[] = "    if ((\$delta < sizeof(\$items))) {";
+  $output[] = "      \$fieldset_title = t(\"{\$instance['label']} #{\$delta}\");";
+  $output[] = "    }";
+  $output[] = "    else {";
+  $output[] = "      \$fieldset_title = t(\"New entry for {\$instance['label']}\");";
+  $output[] = "    }";
+
+  $output[] = "    \$element += array('#type' => 'fieldset');";
+  $output[] = "    \$element['#title'] = t('@fieldset_title', array('@fieldset_title' => \$fieldset_title));";
+  $output[] = "    \$element += array(";
+  $output[] = "      '#collapsible' => TRUE,";
+  $output[] = "      '#collapsed' => (\$delta < sizeof(\$items)),";
+  $output[] = "    );";
+
+  $output[] = "    break;";
+  $output[] = "  }";
+  $output[] = "  return \$element;";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field validate.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_validate().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_validate(\$entity_type, \$entity, \$field, \$instance, \$langcode, \$items, &\$errors) {";
+  $output[] = "  if (\$field['type'] == '{$field_name}') {";
+  $output[] = "    foreach (\$items as \$delta => \$item) {";
+  $output[] = "      // If field is not considered empty, validate its data.";
+  $output[] = "      if (!{$module_info['name']}_field_is_empty(\$item, \$field)) {";
+  $output[] = "      }";
+  $output[] = "    }";
+  $output[] = "  }";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field presave.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_presave().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_presave(\$entity_type, \$entity, \$field, \$instance, \$langcode, &\$items) {";
+  $output[] = "  // Structure the field data as expected by the database. Only act when the";
+  $output[] = "  // elements come nested as 'publisher_reference'. Otherwise, no change needed.";
+  $output[] = "  if (!empty(\$items) && \$field['type'] == '{$field_name}' && array_key_exists('{$field_name}', \$items[0])) {";
+  $output[] = "    foreach (\$items as \$delta => \$item) {";
+  foreach ($field_columns as $column) {
+    if ((bool) $column['is_entityreference']) {
+      if ($column['entityreference_cardinality'] == 1) {
+        $output[] = "      \$items[\$delta]['{$column['column_name']}'] = \$item['{$field_name}']['{$column['column_name']}']['entity_id'];";
+      }
+      else {
+        $output[] = "      \$items[\$delta]['{$column['column_name']}'] = serialize(array_keys(\$item['{$field_name}']['{$column['column_name']}']));";
+      }
+    }
+    else if ((bool) $column['use_text_format']) {
+      $output[] = "      \$items[\$delta]['{$column['column_name']}'] = \$item['{$field_name}']['{$column['column_name']}']['value'];";
+      $output[] = "      \$items[\$delta]['{$column['column_name']}_format'] = \$item['{$field_name}']['{$column['column_name']}']['format'];";
+    }
+    else {
+      $output[] = "      \$items[\$delta]['{$column['column_name']}'] = \$item['{$field_name}']['{$column['column_name']}'];";
+    }
+  }
+  $output[] = "    }";
+  $output[] = "  }";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field formatter info.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_formatter_info().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_formatter_info() {";
+  $output[] = "  return array(";
+  $output[] = "    '{$field_name}_formatter_default' => array(";
+  $output[] = "      'label' => t('Default formatter'),";
+  $output[] = "      'field types' => array('{$field_name}'),";
+  $output[] = "    ),";
+  $output[] = "  );";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field formatter view.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_formatter_view().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_formatter_view(\$entity_type, \$entity, \$field, \$instance, \$langcode, \$items, \$display) {";
+  $output[] = "  \$element = array();";
+  $output[] = "";
+  $output[] = "  switch (\$display['type']) {";
+  $output[] = "    case '{$field_name}_formatter_default':";
+  $output[] = "    foreach (\$items as \$delta => \$item) {";
+  $output[] = "      \$item_output = '';";
+  $output[] = "      foreach (\$item as \$column => \$value) {";
+  foreach ($field_columns as $column) {
+    $output[] = "        if (\$column == '{$column['column_name']}') {";
+    if ((bool) $column['is_entityreference']) {
+      if ($column['entityreference_cardinality'] == 1) {
+        $output[] = "          \$item_output .= '<strong>' . \$column . ':</strong>' . ' ' . entity_label('" . $column['entityreference_type'] . "', entity_load_single('" . $column['entityreference_type'] . "', \$value)) . '<br>';";
+      }
+      else {
+        $output[] = "          \$value_ids = unserialize(\$value);";
+        $output[] = "          \$entity_labels = array();";
+        $output[] = "          foreach (\$value_ids as \$entity_id) {";
+        $output[] = "          \$entity_labels[] = entity_label('" . $column['entityreference_type'] . "', entity_load_single('" . $column['entityreference_type'] . "', \$entity_id));";
+        $output[] = "          }";
+        $output[] = "          \$item_output .= '<strong>' . \$column . ':</strong>' . ' ' . implode(', ', \$entity_labels) . '<br>';";
+      }
+    }
+    else if ($column['use_date_popup']) {
+      $date_format = ($column['show_time_input']) ? 'DATE_FORMAT_DATETIME' : 'DATE_FORMAT_DATE';
+      $output[] = "          \$item_output .= '<strong>' . \$column . ':</strong>' . ' ' . date($date_format, strtotime(\$value)) . '<br>';";
+    }
+    else if (($column['column_type'] == 'text') && (bool) $column['use_text_format']) {
+      $output[] = "          \$item_output .= '<strong>' . \$column . ':</strong>' . ' ' . check_markup(\$item['" . "{$column['column_name']}'], \$item['{$column['column_name']}_format']) . '<br>';";
+    }
+    else {
+      $output[] = "          \$item_output .= '<strong>' . \$column . ':</strong>' . ' ' . \$value . '<br>';";
+    }
+    $output[] = "        }";
+  }
+  $output[] = "      }";
+  $output[] = "      \$element[\$delta]['{$field_name}_row'] = array(";
+  $output[] = "        '#type' => 'fieldset',";
+  $output[] = "      );";
+  $output[] = "      \$element[\$delta]['{$field_name}_row']['content'] = array(";
+  $output[] = "        '#markup' => \$item_output,";
+  $output[] = "      );";
+  $output[] = "    }";
+  $output[] = "    break;";
+  $output[] = "  }";
+  $output[] = "  return \$element;";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field is empty.
+  // Assume there are no required columns.
+  $required_columns = FALSE;
+  $all_required = TRUE;
+  foreach ($field_columns as $column) {
+    if ($column['required']) {
+      $required_columns = TRUE;
+    }
+    else {
+      $all_required = FALSE;
+    }
+  }
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_is_empty().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_is_empty(\$item, \$field) {";
+  $output[] = "  if (\$field['type'] == '{$field_name}') {";
+  if ($required_columns && !$all_required) {
+    $first_iteration = TRUE;
+    foreach ($field_columns as $column) {
+      $is_empty_markup = "    if (";
+      if ($column['required']) {
+        if ($first_iteration) {
+          $is_empty_markup .= "empty(\$item['{$field_name}']['{$column['column_name']}'])";
+          $output[] = $is_empty_markup;
+          $first_iteration = FALSE;
+        }
+        else {
+          $output[] = "      || empty(\$item['{$field_name}']['{$column['column_name']}'])";
+        }
+      }
+    }
+    $output[] = array_pop($output) . ') {';
+    $output[] = "        return TRUE;";
+    $output[] = "    }";
+    $output[] = "    return FALSE;";
+    $output[] = "  }";
+    $output[] = "}";
+  }
+  else if ($all_required) {
+    $output[] = "    // If a single column is empty, consider the field empty.";
+    $output[] = "    if (sizeof(\$item['{$field_name}']) > sizeof(array_filter(\$item['{$field_name}']))) {";
+    $output[] = "      return TRUE;";
+    $output[] = "    }";
+    $output[] = "    return FALSE;";
+    $output[] = "  }";
+    $output[] = "}";
+  }
+  else {
+    $output[] = "    return FALSE;";
+    $output[] = "  }";
+    $output[] = "}";
+  }
+  $output[] = "";
+  return implode("\n", $output);
+}
+
+/**
+ * Assembles the contents of the .install file.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ */
+function ftg_generate_install_file($module_info, $field_details) {
+  $field_name = $field_details['name'];
+  $field_columns = array_filter($field_details['column_wrapper'], 'is_array');
+
+  $output = array();
+  $output[] = "<?php";
+  $output[] = "";
+  $output[] = "/**";
+  $output[] = " * @file";
+  $output[] = " * Install, update, and uninstall functions for the {$module_info['name']} module.";
+  $output[] = " */";
+  $output[] = "";
+
+  // Hook install.
+  $output[] = "/**";
+  $output[] = " * Implements hook_install().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_install() {";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook field schema.
+  $output[] = "/**";
+  $output[] = " * Implements hook_field_schema().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_field_schema(\$field) {";
+  // Contents of hook_field_schema.
+  $output[] = "  switch (\$field['type']) {";
+  $output[] = "    case '{$field_name}':";
+  $output[] = "      \$columns = array(";
+
+  // Columns data.
+  $indentation = "        "; // -> 4 tabs indentation.
+  foreach ($field_columns as $column) {
+    if ($column['column_type'] == 'datetime') {
+      $output[] = "$indentation'{$column['column_name']}' => array(";
+      $output[] = "$indentation  'type' => '{$column['column_type']}',";
+      $output[] = "$indentation  'mysql_type' => 'datetime',";
+      $output[] = "$indentation  'pgsql_type' => 'timestamp without time zone',";
+      $output[] = "$indentation  'sqlite_type' => 'varchar',";
+      $output[] = "$indentation  'sqlsrv_type' => 'smalldatetime',";
+    }
+    else {
+      $output[] = "$indentation'{$column['column_name']}' => array(";
+      $output[] = "$indentation  'type' => '{$column['column_type']}',";
+
+      // For 'varchar' type, the size is property is 'length'.
+      $size_type = ($column['column_type'] == 'varchar') ? 'length' : 'size';
+      $size = preg_split('/:/', $column['column_size'], 2);
+      $output[] = "$indentation  '$size_type' => '{$size[1]}',";
+    }
+    $not_null = ((bool) $column['required']) ? 'TRUE' : 'FALSE';
+    $output[] = "$indentation  'not null' => $not_null,";
+    $output[] = "$indentation  'description' => 'Generated by Field Type Generator.',";
+    $output[] = "$indentation),";
+    if (($column['column_type'] == 'text') && ((bool) $column['use_text_format'])) {
+      $output[] = "$indentation'{$column['column_name']}_format' => array(";
+      $output[] = "$indentation  'type' => 'varchar',";
+      $output[] = "$indentation  'length' => '32',";
+      $output[] = "$indentation  'not null' => $not_null,";
+      $output[] = "$indentation),";
+    }
+  }
+
+  $output[] = "      );";
+  $output[] = "    break;";
+  $output[] = "  }";
+  $output[] = "  return array(";
+  $output[] = "    'columns' => \$columns,";
+  $output[] = "  );";
+  $output[] = "}";
+  $output[] = "";
+
+  // Hook uninstall.
+  $output[] = "/**";
+  $output[] = " * Implements hook_uninstall().";
+  $output[] = " */";
+  $output[] = "function {$module_info['name']}_uninstall() {";
+  $output[] = "}";
+  $output[] = "";
+
+  return implode("\n", $output);
+}
+
+/**
+ * Returns the name of the function that should add the widget form for a given
+ * column, based on the column info.
+ *
+ * @param $column
+ *
+ * @return null|string
+ *   The name of the function that should render the widget for that column, or
+ *   NULL if the standard output should be applied.
+ */
+function ftg_column_widget_render_decorator($column) {
+  if ((bool) $column['is_entityreference']) {
+    return 'ftg_column_widget_render_entityreference';
+  }
+  else if (($column['column_type'] == 'datetime') && (bool) $column['use_date_popup']) {
+    return 'ftg_column_widget_render_datetime_popup';
+  }
+  else if (($column['column_type'] == 'text') && (bool) $column['use_text_format']) {
+    return 'ftg_column_widget_render_text_text_with_format';
+  }
+  return NULL;
+}
+
+/**
+ * Returns the Form API array definition needed for an 'entityreference' field.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ * @param array $column
+ *   Array with info about the field type column that will hold the data for
+ *   the entityreference field.
+ */
+function ftg_column_widget_render_entityreference($module_info, $field_details, $column) {
+  $field_name = $field_details['name'];
+
+  $output = array();
+  $output[] = "      \$element['{$field_name}']['{$column['column_name']}'] = array(";
+  $output[] = "        '#type' => 'entityreference',";
+  $output[] = "        '#era_entity_type' => '{$column['entityreference_type']}',";
+  $output[] = "        '#era_cardinality' => {$column['entityreference_cardinality']},";
+  $output[] = "        '#title' => t('" . ucwords(str_replace('_', ' ', $column['column_name'])) . "'),";
+  if ($column['entityreference_cardinality'] == 1) {
+    $output[] = "        '#default_value' => isset(\$items[\$delta]['{$column['column_name']}']) ? \$items[\$delta]['{$column['column_name']}'] : NULL,";
+  }
+  else {
+    $output[] = "        '#default_value' => isset(\$items[\$delta]['{$column['column_name']}']) ? unserialize(\$items[\$delta]['{$column['column_name']}']) : NULL,";
+  }
+  $output[] = "      );";
+  return $output;
+}
+
+/**
+ * Returns the Form API array definition needed for an 'date' field.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ * @param array $column
+ *   Array with info about the field type column that will hold the data for
+ *   the entityreference field.
+ */
+function ftg_column_widget_render_datetime_popup($module_info, $field_details, $column) {
+  $field_name = $field_details['name'];
+
+  $output = array();
+  $output[] = "      \$element['{$field_name}']['{$column['column_name']}'] = array(";
+  $output[] = "        '#type' => 'date_popup',";
+  $output[] = "        '#description' => t('" . ucwords(str_replace('_', ' ', $column['column_name'])) . "'),";
+  $output[] = "        '#date_type' => DATE_DATETIME,";
+  $output[] = "        '#date_timezone' => date_default_timezone(),";
+  if ((bool) $column['show_time_input']) {
+    $output[] = "        '#date_format' => DATE_FORMAT_DATETIME,";
+  }
+  else {
+    $output[] = "        '#date_format' => DATE_FORMAT_DATE,";
+  }
+  $output[] = "        '#date_increment' => 1,";
+  $output[] = "        '#date_year_range' => '-5:+10',";
+  $output[] = "        '#default_value' => isset(\$items[\$delta]['{$column['column_name']}']) ? \$items[\$delta]['{$column['column_name']}'] : '',";
+  $output[] = "      );";
+  return $output;
+}
+
+/**
+ * Returns the Form API array definition needed for an 'text_format' field.
+ *
+ * @param array $module_info
+ *   An array with the basic module info usually contained in an .info file.
+ * @param array $field_details
+ *   Array with details about the fields included in the field type.
+ * @param array $column
+ *   Array with info about the field type column that will hold the data for
+ *   the entityreference field.
+ */
+function ftg_column_widget_render_text_text_with_format($module_info, $field_details, $column) {
+  $field_name = $field_details['name'];
+  $output = array();
+  $output[] = "      \$element['{$field_name}']['{$column['column_name']}'] = array(";
+  $output[] = "        '#type' => 'text_format',";
+  $output[] = "        '#title' => t('" . ucwords(str_replace('_', ' ', $column['column_name'])) . "'),";
+  $output[] = "        '#format' => isset(\$items[\$delta]['{$column['column_name']}_format']) ? \$items[\$delta]['{$column['column_name']}_format'] : NULL,";
+  $output[] = "        '#default_value' => isset(\$items[\$delta]['{$column['column_name']}']) ? \$items[\$delta]['{$column['column_name']}'] : '',";
+  $output[] = "      );";
+  return $output;
+}

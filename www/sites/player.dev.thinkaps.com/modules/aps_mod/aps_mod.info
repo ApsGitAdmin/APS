@@ -1,0 +1,8 @@
+name = Media on Demand
+description = "Creates a new field for slide and timing"
+package = aps
+core = 7.x
+
+; Dependencies
+dependencies[] = flexslider
+dependencies[] = file

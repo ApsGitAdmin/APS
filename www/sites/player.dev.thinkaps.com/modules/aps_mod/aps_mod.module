@@ -1,0 +1,308 @@
+<?php
+
+/**
+ * @file
+ * aps_mod module.
+ * Creates a new field for slide and timing.
+ */
+
+/**
+ * Implements hook_field_info().
+ */
+function aps_mod_field_info() {
+  return array(
+    'slide_sync' => array(
+      'label' => t('Slide Sync'),
+      'description' => t('Slide Sync'),
+      'settings' => array(
+        'uri_scheme' => variable_get('file_default_scheme', 'public'),
+      ),
+      'instance_settings' => array(
+        'file_extensions' => 'jpg jpeg png',
+        'file_directory' => '',
+      ),
+      'default_widget' => 'slide_sync_widget_default',
+      'default_formatter' => 'slide_sync_formatter_default',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function aps_mod_field_widget_info() {
+  return array(
+    'slide_sync_widget_default' => array(
+      'label' => t('Default widget'),
+      'field types' => array('slide_sync'),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+        'default value' => FIELD_BEHAVIOR_DEFAULT,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function aps_mod_field_settings_form($field, $instance, $has_data) {
+  $defaults = field_info_field_settings($field['type']);
+  $settings = array_merge($defaults, $field['settings']);
+
+  $form['#attached']['js'][] = drupal_get_path('module', 'file') . '/file.js';
+
+  $scheme_options = array();
+  foreach (file_get_stream_wrappers(STREAM_WRAPPERS_WRITE_VISIBLE) as $scheme => $stream_wrapper) {
+    $scheme_options[$scheme] = $stream_wrapper['name'];
+  }
+  $form['uri_scheme'] = array(
+    '#type' => 'radios',
+    '#title' => t('Upload destination'),
+    '#options' => $scheme_options,
+    '#default_value' => $settings['uri_scheme'],
+    '#description' => t('Select where the final files should be stored. Private file storage has significantly more overhead than public files, but allows restricted access to files within this field.'),
+    '#disabled' => $has_data,
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function aps_mod_field_instance_settings_form($field, $instance) {
+  $settings = $instance['settings'];
+  // Add your instance settings fields here.
+  $form['file_directory'] = array(
+    '#type' => 'textfield',
+    '#title' => t('File directory'),
+    '#default_value' => $settings['file_directory'],
+    '#description' => t('Optional subdirectory within the upload destination where files will be stored. Do not include preceding or trailing slashes.'),
+    '#element_validate' => array('_file_generic_settings_file_directory_validate'),
+    '#weight' => 3,
+  );
+
+  // Make the extension list a little more human-friendly by comma-separation.
+  $extensions = str_replace(' ', ', ', $settings['file_extensions']);
+  $form['file_extensions'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Allowed file extensions'),
+    '#default_value' => $extensions,
+    '#description' => t('Separate extensions with a space or comma and do not include the leading dot.'),
+    '#element_validate' => array('_file_generic_settings_extensions'),
+    '#weight' => 1,
+    // By making this field required, we prevent a potential security issue
+    // that would allow files of any type to be uploaded.
+    '#required' => TRUE,
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function aps_mod_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    case 'slide_sync_widget_default':
+      $element['slide_sync']['fid'] = array(
+        '#type' => 'managed_file',
+        '#title' => t('Slide'),
+        '#upload_location' => file_field_widget_uri($field, $instance),
+        '#upload_validators' => file_field_widget_upload_validators($field, $instance),
+        '#default_value' => isset($items[$delta]['fid']) ? $items[$delta]['fid'] : NULL,
+      );
+      $element['slide_sync']['time'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Time'),
+        '#default_value' => isset($items[$delta]['time']) ? $items[$delta]['time'] : NULL,
+        '#size' => 12,
+        '#maxlength' => 8,
+        '#description' => t('Must be in the format HH:MM:SS'),
+      );
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function aps_mod_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  if ($field['type'] == 'slide_sync') {
+    foreach ($items as $delta => $item) {
+      // If field is not considered empty, validate its data.
+      if (!aps_mod_field_is_empty($item, $field)) {
+        if (substr_count($item['slide_sync']['time'], ':') != 2) {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'aps_mediaondemand_time_setup_invalid',
+            'message' => t('Time values must contain 3 segments'),
+          );
+        } 
+        else {
+          list($hours, $mins, $secs) = explode(':', $item['slide_sync']['time']);
+          if ((int) $mins > 60 || (int) $secs > 60) {
+            $errors[$field['field_name']][$langcode][$delta][] = array(
+              'error' => 'aps_mediaondemand_time_value_invalid',
+              'message' => t('Minutes and Seconds must be less than 60'),
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_widget_error().
+ */
+function aps_mod_field_widget_error($element, $error, $form, &$form_state) {
+  switch ($error['error']) {
+    case 'aps_mediaondemand_time_setup_invalid':
+      form_error($element, $error['message']);
+      break;
+    case 'aps_mediaondemand_time_value_invalid':
+      form_error($element, $error['message']);
+      break;
+  }
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function aps_mod_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  // Structure the field data as expected by the database. Only act when the
+  // elements come nested as 'publisher_reference'. Otherwise, no change needed.
+  if (!empty($items) && $field['type'] == 'slide_sync' && array_key_exists('slide_sync', $items[0])) {
+    foreach ($items as $delta => $item) {
+      $items[$delta]['fid'] = $item['slide_sync']['fid'];
+      $items[$delta]['time'] = $item['slide_sync']['time'];
+
+      if (empty($item['fid'])) {
+        unset($items[$delta]);
+        continue;
+      }
+      $file = file_load($item['fid']);
+      if (empty($file)) {
+        unset($items[$delta]);
+        continue;
+      }
+      if (!$file->status) {
+        $file->status = FILE_STATUS_PERMANENT;
+        $id = (isset($entity->nid)) ? $entity->nid : 0;
+        file_usage_add($file, $field['module'], $entity_type, $id);
+        // Save
+        file_save($file);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function aps_mod_field_formatter_info() {
+  return array(
+    'slide_sync_formatter_default' => array(
+      'label' => t('Default formatter'),
+      'field types' => array('slide_sync'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function aps_mod_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'slidesync_formatter_default':
+      foreach ($items as $delta => $item) {
+       if ($file = file_load($item['image'])) {
+          list($hours, $mins, $secs) = explode(':', $item['time']);
+          $time = ((3600 * $hours) + (60 * $mins) + $secs);
+          $element[$delta] = array(
+            '#theme' => 'mediaondemand_formatter',
+            '#image' => (array) $file,
+            '#image_style' => 'thumbnail',
+            '#data_tag' => array(
+              'time' => $time,
+            ),
+          );
+        }
+      }
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function aps_mod_field_is_empty($item, $field) {
+  if ($field['type'] == 'slide_sync') {
+    // If a single column is empty, consider the field empty.
+    if (sizeof($item['slide_sync']) > sizeof(array_filter($item['slide_sync']))) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function aps_mediaondemand_theme() {
+  return array(
+    'mediaondemand_formatter' => array(
+      'variables' => array(
+        'image' => NULL,
+        'image_style' => NULL,
+        'link' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Returns HTML for a MediaPlayer.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - item: Associative array of image data, which may include "uri", "alt",
+ *     "width", "height", "title" and "attributes".
+ *   - attributes: An array containing attributes to add onto the link
+ *
+ * @ingroup themeable
+ */
+function theme_mediaondemand_formatter($variables) {
+  $item = $variables['image'];
+  $image = array(
+    'path' => $item['uri'],
+  );
+
+  if (isset($item['attributes'])) {
+    $image['attributes'] = $item['attributes'];
+  }
+
+  if (isset($variables['image_style'])) {
+    $image['style_name'] = $variables['image_style'];
+    $output = theme('image_style', $image);
+  }
+  else {
+    $output = theme('image', $image);
+  }
+
+  // The link path and link options are both optional, but for the options to be
+  // processed, the link path must at least be an empty string.
+  if (isset($variables['link'])) {
+    $path = $variables['link']['path'];
+    $options = isset($variables['link']['options']) ? $variables['link']['options'] : array();
+    // When displaying an image inside a link, the html option must be TRUE.
+    $options['html'] = TRUE;
+    $output = l($output, $path, $options);
+  }
+
+  return $output;
+}

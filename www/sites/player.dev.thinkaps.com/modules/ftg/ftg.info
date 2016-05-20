@@ -1,0 +1,11 @@
+name = Field Type Generator
+description = "Code Generator for custom field types"
+package = TIM
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2016-02-26
+version = "7.x-1.3"
+core = "7.x"
+project = "ftg"
+datestamp = "1456501301"
+

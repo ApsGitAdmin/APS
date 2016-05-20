@@ -1,0 +1,4 @@
+name = Litebox
+description = Menu Page Litebox integration for Drupal
+package = aps
+core = 7.x

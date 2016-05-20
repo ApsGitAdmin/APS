@@ -1,0 +1,11 @@
+/* This file will hold styles for all layouts using the alpha grid (i.e. not the mobile layout). */
+.admin-content {
+	-moz-border-radius: 0 0 20px 20px;
+  	-webkit-border-radius: 0 0 20px 20px;
+  	border-radius: 0 0 20px 20px;
+}
+#zone-admin {
+  	position: absolute;
+  	left: 50%;
+  	z-index: 110;
+}

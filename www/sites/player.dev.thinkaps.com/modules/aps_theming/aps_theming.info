@@ -1,0 +1,8 @@
+name = Menu Page Theming
+description = "Field type to select and enable themes per content"
+package = aps
+core = 7.x
+
+; Dependencies
+dependencies[] = ctools
+dependencies[] = delta

@@ -1,0 +1,7 @@
+name = Font Selector
+description = "Connect fonts to CSS tags"
+package = aps
+core = 7.x
+
+; Dependencies
+dependencies[] = fontyourface

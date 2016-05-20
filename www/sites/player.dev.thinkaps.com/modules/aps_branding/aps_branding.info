@@ -1,0 +1,4 @@
+name = Branding Injector
+description = Injects the branding styling into the applicable Menu Page.
+package = aps
+core = 7.x
