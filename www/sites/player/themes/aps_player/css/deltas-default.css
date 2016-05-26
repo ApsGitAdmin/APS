@@ -1,0 +1,30 @@
+/* CSS stylesheet specific to the different Menu Page Deltas. */
+
+/* ROCHE DEFAULT */
+.delta-roche-default #zone-branding { text-align: center; }
+.delta-roche-default #zone-branding img { width: auto; height: 48px; margin: 24px 0; }
+
+.delta-roche-default #zone-header { padding: 1.5em 0; text-align: center; }
+.delta-roche-default #zone-header h1 { text-transform: initial; line-height: 1em; margin-bottom: 0.25em; font-size: 36pt; }
+.delta-roche-default #zone-header h2 { text-transform: initial; line-height: 1em; margin-bottom: 0.25em; font-size: 18pt; }
+.delta-roche-default #zone-header h3 { text-transform: initial; line-height: 1em; margin-bottom: 0.25em; font-size: 14pt; }
+.delta-roche-default #zone-header h4 { text-transform: initial; line-height: 1em; margin-bottom: 0.25em; font-size: 12pt; }
+.delta-roche-default #zone-header div, #zone-header span, #zone-header p { }
+.delta-roche-default #zone-header a { } 
+
+.delta-roche-default #zone-content { padding: 1% 0; }
+.delta-roche-default #zone-content .field-name-body { }
+.delta-roche-default #zone-content .menu-page-list { }
+.delta-roche-default #zone-content .menu-page-list .menu-list { padding: 1.5em 0; }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item { transition:All 0.5s ease; -webkit-transition:All 0.5s ease; -moz-transition:All 0.5s ease; -o-transition:All 0.5s ease; transform: rotate(0deg) scale(1) skew(1deg) translate(0px); -webkit-transform: rotate(0deg) scale(1) skew(1deg) translate(0px); -moz-transform: rotate(0deg) scale(1) skew(1deg) translate(0px); -o-transform: rotate(0deg) scale(1) skew(1deg) translate(0px); -ms-transform: rotate(0deg) scale(1) skew(1deg) translate(0px); margin-bottom: 0.5em; }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item:last-child { margin-bottom: 0; }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item:hover { transform: rotate(0deg) scale(1.025) skew(1deg) translate(0px); -webkit-transform: rotate(0deg) scale(1.025) skew(1deg) translate(0px); -moz-transform: rotate(0deg) scale(1.025) skew(1deg) translate(0px); -o-transform: rotate(0deg) scale(1.025) skew(1deg) translate(0px); -ms-transform: rotate(0deg) scale(1.025) skew(1deg) translate(0px); }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item a { text-decoration: none; display: block; }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item a:hover { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle p { margin-bottom: 5px; }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle > *:last-child { margin-bottom: 0 }
+
+.delta-roche-default #zone-footer { padding: 1em 0; font-size: 9pt; }
+.delta-roche-default #zone-footer div, #zone-footer span, #zone-header p { margin-bottom: 0; }
+.delta-roche-default #zone-footer a { } 

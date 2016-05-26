@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ * aps Custom tracking module, connects to the onBeforeUnload API.
+ */
+
+/**
+ * Implements hook_form_FORMID_alter().
+ */
+function aps_ui_form_protected_node_enterpassword_alter(&$form, &$form_state, $form_id) {
+  drupal_set_title(t('Enter Password'));
+
+  $form['protected_node_enterpassword']['#description'] = t('The page you are trying to view is password protected. Please enter the password to proceed.');
+  $form['protected_node_enterpassword']['submit']['#value'] = t('Submit');
+  unset($form['protected_node_enterpassword']['password']['#title']);
+}

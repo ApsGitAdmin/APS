@@ -1,0 +1,4 @@
+name = Player UI Amends
+description = UI Amendments.
+package = aps
+core = 7.x
