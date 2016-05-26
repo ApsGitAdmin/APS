@@ -18,7 +18,7 @@ $sites['signage.dev.thinkaps.com'] = 'signage';
 
 # Player.
 $sites['player.master.aps-app1.codeenigma.net'] = 'player';
-$sites['aps.player.master.aps-app1.codeenigma.net'] = 'player';
+$sites['player.aps.master.aps-app1.codeenigma.net'] = 'player';
 
 # Signage.
 $sites['signage.master.aps-app1.codeenigma.net'] = 'signage';
