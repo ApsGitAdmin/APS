@@ -1,0 +1,33 @@
+/* This file will hold styles that are loaded using the same media query as the narrow grid. */
+/* If you are using the default media queries provided by Omega, these styles will also
+ *  apply to the normal and widescreen layouts. You may override these styles in the normal 
+ *  and widescreen CSS files as appropriate. */
+
+ /* ROCHE DEFAULT */
+.delta-roche-default #zone-branding { text-align: right; }
+.delta-roche-default #zone-branding img { margin: 48px; }
+
+.delta-roche-default #zone-header { padding: 1% 0; text-align: left; }
+.delta-roche-default #zone-header h1 { }
+.delta-roche-default #zone-header h2 { }
+.delta-roche-default #zone-header h3 { }
+.delta-roche-default #zone-header h4 { }
+.delta-roche-default #zone-header div, #zone-header span, #zone-header p { }
+.delta-roche-default #zone-header a { } 
+
+.delta-roche-default #zone-content { }
+.delta-roche-default #zone-content .field-name-body { }
+.delta-roche-default #zone-content .menu-page-list { }
+.delta-roche-default #zone-content .menu-page-list .menu-list { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item:last-child { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item:hover { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item a { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item a:hover { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle p { }
+.delta-roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle > *:last-child { }
+
+.delta-roche-default #zone-footer { }
+.delta-roche-default #zone-footer div, #zone-footer span, #zone-footer p { }
+.delta-roche-default #zone-footer a { } 

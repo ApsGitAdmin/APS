@@ -1,0 +1,31 @@
+/* This file will hold styles that are loaded using the same media query as the normal grid. */
+/* If you are using the default media queries provided by Omega, these styles will also
+ *  apply to the widescreen layout unless they are overridden by the widescreen styles. */
+.roche-default #zone-branding { }
+.roche-default #zone-branding img { }
+
+.roche-default #zone-header { }
+.roche-default #zone-header h1 { }
+.roche-default #zone-header h2 { }
+.roche-default #zone-header h3 { }
+.roche-default #zone-header h4 { }
+.roche-default #zone-header div, #zone-header span, #zone-header p { }
+.roche-default #zone-header a { } 
+
+.roche-default #zone-content { }
+.roche-default #zone-content .field-name-body { }
+.roche-default #zone-content .menu-page-list { }
+.roche-default #zone-content .menu-page-list .menu-list { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item:last-child { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item > div { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item > div:hover { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item a { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item a:hover { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle p { }
+.roche-default #zone-content .menu-page-list .menu-list .list-item .link-subtitle > *:last-child { }
+
+.roche-default #zone-footer { }
+.roche-default #zone-footer div, #zone-footer span, #zone-header p { }
+.roche-default #zone-footer a { } 
