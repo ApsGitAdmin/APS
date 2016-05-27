@@ -17,27 +17,7 @@ function aps_player_preprocess_html(&$variables) {
 	   	'weight' => '15', 
 	));
 
-	if (isset($variables['node'])) {
-	    // Ref suggestions cuz it's stupid long.
-	    $suggests = &$variables['theme_hook_suggestions'];
-
-	    // Get path arguments.
-	    $args = arg();
-	    // Remove first argument of "node".
-	    unset($args[0]);
-
-	    // Set type.
-	    $type = "page__type_{$variables['node']->type}";
-
-	    // Bring it all together.
-	    $suggests = array_merge(
-	      	$suggests,
-	      	array($type),
-	      	theme_get_suggestions($args, $type)
-	    );
-  	}
-
-  	// Adding in Delta class to body
+  // Adding in Delta class to body
 	if (module_exists('delta')){
 		$deltaname = delta_get_current($GLOBALS['theme']);
 		$deltaname = str_replace('_', '-', $deltaname);
@@ -72,6 +52,29 @@ function aps_player_preprocess_html(&$variables) {
 			drupal_add_css(drupal_get_path('theme', 'aps_player') . '/css/deltas-default-' . $keys[$i] . '.css', array('group' => CSS_THEME, 'weight' => (120 - $i), 'media' => $layouts[$keys[$i]]['media']));
 		}
 	}
+}
+
+function aps_player_preprocess_page(&$variables) {
+  if (isset($variables['node'])) {
+    // Ref suggestions cuz it's stupid long.
+    $suggests = &$variables['theme_hook_suggestions'];
+
+    // Get path arguments.
+    $args = arg();
+    
+    // Remove first argument of "node".
+    unset($args[0]);
+
+    // Set type.
+    $type = "page__type_{$variables['node']->type}";
+
+    // Bring it all together.
+    $suggests = array_merge(
+      $suggests,
+      array($type),
+      theme_get_suggestions($args, $type)
+    );
+  }
 }
 
 /**
