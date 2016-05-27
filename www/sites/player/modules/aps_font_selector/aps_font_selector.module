@@ -143,9 +143,11 @@ function aps_theming_get_fonts() {
 
   $fonts = array();
   foreach ($result as $fid => $family) {
-    $fonts[drupal_strtoupper(drupal_substr($family, 0, 1))][$fid] = $family;
+    $group = strstr($family, ' ')? strstr($family, ' ', TRUE) : $family; 
+    $fonts[drupal_strtoupper($group)][$fid] = $family;
   }
-  $fonts = array('None' => array(NULL => t('None'))) + $fonts;
+  $fonts = array(NULL => t('None')) + $fonts;
+  ksort($fonts);
 
   return ($result)? $fonts : array();
 }

@@ -24,9 +24,14 @@
  * @ingroup views_templates
  */
 ?>
-<div class="<?php if (array_key_exists('field_additional_classes', $fields)) print $fields['field_additional_classes']->content; ?> alpha omega">
+<?php $classes = (array_key_exists('field_additional_classes', $fields))? $fields['field_additional_classes']->content : 'alpha grid-16 clearfix omega'; ?>
+<div class="<?php print $classes ?> list-item">
 	<?php print $fields['edit_node']->content; ?>
-	<a class="litebox" data-litebox-ratio="sixteen-nine" data-litebox-group="group-<?php print $fields['field_menu_page']->content; ?>" data-litebox-text="<?php print $fields['title']->content; ?>" href="<?php print $fields['url']; ?>">
+	<?php if ($fields['url'] != '#'): ?>
+		<a class="litebox" data-litebox-ratio="sixteen-nine" data-litebox-group="group-<?php print $fields['field_menu_page']->content; ?>" data-litebox-text="<?php print $fields['title']->content; ?>" href="<?php print $fields['url']; ?>">
+	<?php else: ?>
+		<a href="<?php print $fields['url']; ?>">
+	<?php endif; ?>
 	    <?php print $fields['title']->content; ?>
 	    <?php if (array_key_exists('field_subtitle', $fields)) print $fields['field_subtitle']->content; ?>
 	</a>

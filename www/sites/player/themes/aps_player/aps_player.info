@@ -57,9 +57,9 @@ css[global.css][name] = Global stylesheet
 css[global.css][description] = This file holds all the globally active custom CSS of your theme.
 css[global.css][options][weight] = 10
 
-css[deltas.css][name] = Deltas CSS
-css[deltas.css][description] = CSS stylesheet specifically designed to be used for Delta specific changes.
-css[deltas.css][options][weight] = 11
+css[deltas-default.css][name] = Deltas CSS
+css[deltas-default.css][description] = CSS stylesheet specifically designed to be used for Delta specific changes.
+css[deltas-default.css][options][weight] = 11
 
 ; OPTIONAL JAVASCRIPT
 

@@ -29,187 +29,132 @@ function aps_branding_node_view($node, $view_mode, $langcode) {
           $css .= '.font-' . convert_number_to_words($key + 1) . ' { ' . fontyourface_font_css($font_family) . ' }' . "\n";
         }
       }
+
+      if ($branding_wrapper->field_css->value()) {
+        $branding_css = replace_css_tokens($branding_wrapper->field_css->value(), $branding_node, TRUE);
+        if ($branding_css) drupal_add_css($branding_css, array('group' => CSS_THEME, 'type' => 'inline', 'preprocess' => FALSE, 'weight' => '200'));
+      }
     }
 
-    drupal_add_css($css, array('group' => CSS_THEME, 'type' => 'inline', 'media' => 'screen', 'preprocess' => FALSE));
+    drupal_add_css($css, array('group' => CSS_THEME, 'type' => 'inline', 'preprocess' => FALSE));
 
     // Check the additional CSS box
     if ($node_wrapper->field_css->value()) {
-      $additional_css = '';
-      $additional_css_rows = explode(PHP_EOL, $node_wrapper->field_css->value());
-      foreach ($additional_css_rows as $row => $text) {
-        // Are there any tokens included in the CSS code
-        if ($tokens = token_scan($text, array('node' => $node))) {
-          foreach ($tokens as $type => $array) {
-            switch ($type) {
-              case 'bg-colour':
-                if ($branding_node = $node_wrapper->field_branding->value()) {
-                  $branding_wrapper = entity_metadata_wrapper('node', $branding_node);
-                  foreach ($array as $key => $item) {
-                    if ($bg_colour = $branding_wrapper->field_background_colours[$key - 1]->value()) {
-                      $replacement = 'background-color: ' . $bg_colour . ';';
-                      $text = str_replace($item, $replacement, $text);
-                    }
-                    else {
-                      $text = str_replace($item, '', $text);
-                    }
-                  }
-                }
-                break;
-
-              case 'font-colour':
-                if ($branding_node = $node_wrapper->field_branding->value()) {
-                  $branding_wrapper = entity_metadata_wrapper('node', $branding_node);
-                  foreach ($array as $key => $item) {
-                    if ($font_colour = $branding_wrapper->field_font_colours[$key - 1]->value()) {
-                      $replacement = 'color: ' . $font_colour . ';';
-                      $text = str_replace($item, $replacement, $text);
-                    }
-                    else {
-                      $text = str_replace($item, '', $text);
-                    }
-                  }
-                }
-                break;
-
-              case 'font':
-                if ($branding_node = $node_wrapper->field_branding->value()) {
-                  foreach ($array as $key => $item) {
-                    if (array_key_exists(($key - 1), $branding_node->field_font[LANGUAGE_NONE])) {
-                      $font = $branding_node->field_font[LANGUAGE_NONE][$key - 1];
-                      $font_family = fontyourface_get_font($font['font_face']);
-                      $replacement = fontyourface_font_css($font_family);
-                      $text = str_replace($item, $replacement, $text);
-                    }
-                    else {
-                      $text = str_replace($item, '', $text);
-                    }
-                  }
-                }
-                break;
-
-              case 'image':
-                foreach ($array as $key => $item) {
-                  // Replace images text with the path to the file
-                  $image = '[node:field-images:' . ($key - 1) . ':file:url]';
-                  $text = token_replace(str_replace($item, $image, $text), array('node' => $node));
-                }
-                break;
-
-              default:
-                $text = token_replace($text, array('node' => $node));
-                break;
-            }
-          }
-        }
-        $additional_css .= $text . "\n";
-      }
-      if ($additional_css) drupal_add_css($additional_css, array('group' => CSS_THEME, 'type' => 'inline', 'media' => 'screen', 'preprocess' => FALSE, 'weight' => '9999'));
+      $additional_css = replace_css_tokens($node_wrapper->field_css->value(), $node);
+      if ($additional_css) drupal_add_css($additional_css, array('group' => CSS_THEME, 'type' => 'inline', 'preprocess' => FALSE, 'weight' => '9999'));
     }
   }
 }
 
-function convert_number_to_words($number) {
-  $hyphen      = '-';
-  $conjunction = '-and-';
-  $separator   = ', ';
-  $negative    = 'negative-';
-  $decimal     = '-point-';
-  $dictionary  = array(
-    0 => 'zero',
-    1 => 'one',
-    2 => 'two',
-    3 => 'three',
-    4 => 'four',
-    5 => 'five',
-    6 => 'six',
-    7 => 'seven',
-    8 => 'eight',
-    9 => 'nine',
-    10 => 'ten',
-    11 => 'eleven',
-    12 => 'twelve',
-    13 => 'thirteen',
-    14 => 'fourteen',
-    15 => 'fifteen',
-    16 => 'sixteen',
-    17 => 'seventeen',
-    18 => 'eighteen',
-    19 => 'nineteen',
-    20 => 'twenty',
-    30 => 'thirty',
-    40 => 'fourty',
-    50 => 'fifty',
-    60 => 'sixty',
-    70 => 'seventy',
-    80 => 'eighty',
-    90 => 'ninety',
-    100 => 'hundred'
-  );
+function replace_css_tokens($css, $node, $branding = FALSE) {
+  // Setup necessary variables
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+  $branding_node = ($branding) ? $node : $node_wrapper->field_branding->value();
+  $branding_wrapper = entity_metadata_wrapper('node', $branding_node);
+  $css_rows = explode(PHP_EOL, $css);
 
-    if (!is_numeric($number)) {
-      return FALSE;
+  // Add the prefix for the branding class or the default page class
+  $branding_prefix = preg_replace('/[^\da-z]/i', '-', drupal_strtolower($branding_node->title));
+  preg_match_all('!\d+!', $branding_prefix, $numbers);
+  foreach ($numbers[0] as $key => $num) {
+    $prefix = str_replace($num, convert_number_to_words($num), $branding_prefix);
+  }
+  $branding_prefix = '.branding-' . $branding_prefix . ' ';
+  $prefix = ($branding)? $branding_prefix : '.page-node ';
+
+  // Add the CSS as required
+  $additional_css = '';
+  foreach($css_rows as $row => $text) {
+    if (drupal_strlen(trim($text)) < 1 || strpos($text, '/*') || strpos($text, '*/')) {
+      continue;
     }
 
-    if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
-      // overflow
-      trigger_error(
-        'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
-            E_USER_WARNING
-      );
-      return FALSE;
-    }
+    $text = $prefix . $text;
+    // Are there any tokens included in the CSS code
+    if ($tokens = token_scan($text, array('node' => $node))) {
+      foreach($tokens as $type => $array) {
+        switch ($type) {
+        case 'bg-colour':
+          foreach($array as $key => $item) {
+            if ($bg_colour = $branding_wrapper->field_background_colours[$key - 1]->value()) {
+              $replacement = 'background-color: ' . $bg_colour . ';';
+              $text = str_replace($item, $replacement, $text);
+            }
+            else {
+              $text = str_replace($item, '', $text);
+            }
+          }
 
-    if ($number < 0) {
-      return $negative . convert_number_to_words(abs($number));
-    }
+          break;
 
-    $string = $fraction = NULL;
+        case 'font-colour':
+          foreach($array as $key => $item) {
+            if ($font_colour = $branding_wrapper->field_font_colours[$key - 1]->value()) {
+              $replacement = 'color: ' . $font_colour . ';';
+              $text = str_replace($item, $replacement, $text);
+            }
+            else {
+              $text = str_replace($item, '', $text);
+            }
+          }
 
-    if (strpos($number, '.') !== FALSE) {
-      list($number, $fraction) = explode('.', $number);
-    }
+          break;
 
-    switch (TRUE) {
-      case $number < 21:
-        $string = $dictionary[$number];
-        break;
-      case $number < 100:
-        $tens   = ((int) ($number / 10)) * 10;
-        $units  = $number % 10;
-        $string = $dictionary[$tens];
-        if ($units) {
-          $string .= $hyphen . $dictionary[$units];
+        case 'font':
+          foreach($array as $key => $item) {
+            if (array_key_exists(($key - 1) , $branding_node->field_font[LANGUAGE_NONE])) {
+              $font = $branding_node->field_font[LANGUAGE_NONE][$key - 1];
+              $font_family = fontyourface_get_font($font['font_face']);
+              $replacement = fontyourface_font_css($font_family);
+              $text = str_replace($item, $replacement, $text);
+            }
+            else {
+              $text = str_replace($item, '', $text);
+            }
+          }
+
+          break;
+
+        case 'image':
+          foreach($array as $key => $item) {
+            // Replace images text with the path to the file
+            if (strstr($key, ':')) {
+              $args = explode(':', $key);
+
+              $img_id = $args[0] - 1;
+              $style = $args[1];
+
+              $token = '[node:field-images:' . $img_id . ':file:fid]';
+              $image = file_load(token_replace($token , array('node' => $node)));
+              $uri = image_style_path($style, $image->uri);
+              if (file_exists($uri)) {
+                $url = file_create_url($uri);
+                $text = str_replace($item, $url, $text);
+              }
+              else {
+                $url = file_create_url($image->uri);
+                $text = str_replace($item, $url, $text);
+              }
+            } 
+            else {
+              $img_id = $key - 1;
+
+              $token = '[node:field-images:' . $img_id . ':file:url]';
+              $text = token_replace(str_replace($item, $token, $text), array('node' => $node));
+            }
+          }
+
+          break;
+
+        default:
+          $text = token_replace($text, array('node' => $node));
+          break;
         }
-        break;
-      case $number < 1000:
-        $hundreds  = $number / 100;
-        $remainder = $number % 100;
-        $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
-        if ($remainder) {
-          $string .= $conjunction . convert_number_to_words($remainder);
-        }
-        break;
-      default:
-        $baseUnit = pow(1000, floor(log($number, 1000)));
-        $numBaseUnits = (int) ($number / $baseUnit);
-        $remainder = $number % $baseUnit;
-        $string = convert_number_to_words($numBaseUnits) . ' ' . $dictionary[$baseUnit];
-        if ($remainder) {
-          $string .= $remainder < 100 ? $conjunction : $separator;
-          $string .= convert_number_to_words($remainder);
-        }
-        break;
-    }
-
-    if (NULL !== $fraction && is_numeric($fraction)) {
-      $string .= $decimal;
-      $words = array();
-      foreach (str_split((string) $fraction) as $number) {
-        $words[] = $dictionary[$number];
       }
-      $string .= implode(' ', $words);
     }
 
-  return $string;
+    $additional_css .= $text . "\n";
+  }
+
+  return $additional_css;
 }

@@ -1,7 +1,7 @@
 /* This file will hold styles for the mobile version of your website (mobile first). */
 /* This also can include ANY global CSS that applies site-wide. Unless overwritten by a more specific style rule, CSS declarations in global.css will apply site-wide. */
 h1, h2, h3, h4, h5, h6 {
-	color: #000;
+  font-family: initial;
   font-weight: normal;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -28,6 +28,10 @@ strong {
 sup {
   vertical-align: super;
   font-size: 0.5em;
+}
+.logo-img {
+  float: none;
+  margin: 0;
 }
 /* PREFACE */
 ul.primary {
@@ -210,7 +214,6 @@ textarea:active {
   box-shadow: none;
   z-index: 1; /* For Opera */
 }
-
 input[type="file"]:focus,
 input[type="file"]:active,
 input[type="radio"]:focus,
@@ -221,7 +224,6 @@ input[type="checkbox"]:active {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-
 select[disabled],
 textarea[disabled],
 input[type="date"][disabled],
@@ -239,7 +241,6 @@ input[type="url"][disabled],
 input[type="week"][disabled] {
   background-color: #515151;
 }
-
 button[disabled],
 input[disabled],
 select[disabled],
@@ -272,13 +273,11 @@ td, th {
   padding: 4px 8px;
   color: #000;
 }
-
 th.active {
   background: inherit;
   border-left: 1px solid #e1e6e9;
   border-right: 1px solid #e1e6e9;
 }
-
 tr.even, tr.odd {
   background: transparent;
   border-bottom: solid 1px #e1e6e9;
@@ -291,11 +290,9 @@ tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
 tr.odd td {
   background: transparent;
 }
-
 tr.even td {
   background: transparent;
 }
-
 tr.odd td.active, 
 tr.even td.active, 
 td.active {
@@ -324,10 +321,21 @@ td a.tabledrag-handle .handle {
 td a.tabledrag-handle-hover .handle {
   background-position: center -14px;
 }
+td .views-row-edit-static,
+td .views-row-edit-edit label {
+  display: none;
+}
+td .views-row-edit-edit input {
+  width: 95%;
+}
+td .clipping { 
+
+}
 
 .local-edit {
   float: left;
   padding-right: 15px;
+  text-align: left;
 }
 .local-edit a {
   background: url(../images/edit.png) center center no-repeat #fffce5;
@@ -471,6 +479,9 @@ td a.tabledrag-handle-hover .handle {
   font-size: 0.75em;
 }
 
+#zone-aps {
+  text-align: center;
+}
 #zone-aps-wrapper {
   background: transparent url(../images/aps_background.jpg) repeat-x center center;
   -webkit-box-shadow: 0px -10px 15px 15px rgba(0,0,0,0.35);
@@ -496,4 +507,11 @@ td a.tabledrag-handle-hover .handle {
 }
 .node-type-menu-page #section-footer .zone-wrapper:last-child .zone {
   border-bottom: solid 1px #E5E5E5;
+}
+
+.page-protected-node h1.title {
+  text-align: center;
+}
+.page-protected-node #protected-node-enterpassword {
+  text-align: center;
 }
