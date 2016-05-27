@@ -12,12 +12,32 @@
  */
 
 function aps_player_preprocess_html(&$variables) {
-  drupal_add_js(drupal_get_path('theme', 'aps_player') . '/js/admin-bar.js', array( 
-  	'scope' => 'footer', 
-   	'weight' => '15', 
-  ));
+	drupal_add_js(drupal_get_path('theme', 'aps_player') . '/js/admin-bar.js', array( 
+	  	'scope' => 'footer', 
+	   	'weight' => '15', 
+	));
 
-  // Adding in Delta class to body
+	if (isset($variables['node'])) {
+	    // Ref suggestions cuz it's stupid long.
+	    $suggests = &$variables['theme_hook_suggestions'];
+
+	    // Get path arguments.
+	    $args = arg();
+	    // Remove first argument of "node".
+	    unset($args[0]);
+
+	    // Set type.
+	    $type = "page__type_{$variables['node']->type}";
+
+	    // Bring it all together.
+	    $suggests = array_merge(
+	      	$suggests,
+	      	array($type),
+	      	theme_get_suggestions($args, $type)
+	    );
+  	}
+
+  	// Adding in Delta class to body
 	if (module_exists('delta')){
 		$deltaname = delta_get_current($GLOBALS['theme']);
 		$deltaname = str_replace('_', '-', $deltaname);
@@ -25,23 +45,23 @@ function aps_player_preprocess_html(&$variables) {
 		foreach ($numbers[0] as $key => $num) {
 			$deltaname = str_replace($num, convert_number_to_words($num), $deltaname);
 		}
-	  $variables['attributes_array']['class'][] = 'delta-' . ($deltaname)?  : 'delta-none';
+	  	$variables['attributes_array']['class'][] = 'delta-' . ($deltaname)?  : 'delta-none';
 	}
 
-  // Adds the Branding class to body
-  if ($menu_object = menu_get_object()) {
-    if (node_is_page($menu_object) && $menu_object->type == 'menu_page') {
-      $node_wrapper = entity_metadata_wrapper('node', $menu_object);
-      if ($branding = $node_wrapper->field_branding->value()) {
-        $brandingname = preg_replace('/[^\da-z]/i', '-', drupal_strtolower($branding->title));
-        preg_match_all('!\d+!', $brandingname, $numbers);
-        foreach ($numbers[0] as $key => $num) {
-          $brandingname = str_replace($num, convert_number_to_words($num), $brandingname);
-        }
-        $variables['attributes_array']['class'][] = 'branding-' . $brandingname;
-      }
-    }
-  }
+	// Adds the Branding class to body
+	if ($menu_object = menu_get_object()) {
+    	if (node_is_page($menu_object) && $menu_object->type == 'menu_page') {
+      	$node_wrapper = entity_metadata_wrapper('node', $menu_object);
+      		if ($branding = $node_wrapper->field_branding->value()) {
+		        $brandingname = preg_replace('/[^\da-z]/i', '-', drupal_strtolower($branding->title));
+		        preg_match_all('!\d+!', $brandingname, $numbers);
+		        foreach ($numbers[0] as $key => $num) {
+		          $brandingname = str_replace($num, convert_number_to_words($num), $brandingname);
+		        }
+	        	$variables['attributes_array']['class'][] = 'branding-' . $brandingname;
+      		}
+    	}
+  	}
 
 	// Adds the Delta responsive stylesheets
 	$theme = alpha_get_theme();
