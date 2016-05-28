@@ -1214,6 +1214,10 @@ table.aps-matrix-grid td .node-meeting h4 {
 /* SCREEN DISPLAY
 --------------------------------------------------------------------------*/
 
+#region-full {
+  float: none;
+}
+
 table.meeting-row {
   border: none;
   width: 100%;
