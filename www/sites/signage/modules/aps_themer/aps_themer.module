@@ -8,7 +8,8 @@
 function aps_themer_views_pre_render(&$view) {
   switch ($view->name) {
     case 'cluster_display':
-      $node = node_load(array_pop($view->args));
+      $title = array_pop($view->args);
+      $node = node_load_by_title($title, 'screen');
       if ($node->event_ref) {
         $event_node = node_load($node->event_ref[LANGUAGE_NONE][0]['target_id']);
         $fc = field_collection_item_load($event_node->field_styling[LANGUAGE_NONE][0]['value']);
