@@ -27,7 +27,7 @@
  * @ingroup views_templates
  */
 ?>
-<div class="screen-display clearfix">
+<div class="screen-display-page clearfix">
   <?php if ($rows): ?>
       <?php print $rows; ?>
   <?php elseif ($empty): ?>
