@@ -715,7 +715,7 @@ function media_element_process($element, &$form_state, $form) {
 
   // Append the '-upload' to the #id so the field label's 'for' attribute
   // corresponds with the textfield element.
-  $original_id = $element['#id'];
+  $original_id = $element['#original_id'] = $element['#id'];
   $element['#id'] .= '-upload';
   $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
 
