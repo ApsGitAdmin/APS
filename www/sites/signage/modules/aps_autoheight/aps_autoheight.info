@@ -1,0 +1,4 @@
+name = aps Autoheight
+description = Automatically sets the height of the display screen contents
+core = 7.x
+package = aps

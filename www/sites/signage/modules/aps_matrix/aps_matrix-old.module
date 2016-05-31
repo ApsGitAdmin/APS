@@ -1,0 +1,208 @@
+<?php
+/**
+ * @file
+ * Code for the Camp Schedule feature.
+ */
+
+include_once 'aps_matrix.features.inc';
+
+/**
+ * Creates a range of times in a specific formatting
+ */
+function hoursRange($lower = 0,$upper = 86400,$step = 3600,$format = '') {
+  $times = array();
+  if (empty($format)) {
+    $format = 'H:i';
+  }
+
+  foreach (range($lower, $upper, $step) as $increment) {
+    $time = gmdate('H:i', $increment);
+    list($hour, $minutes) = explode(':', $time);
+    $date = new DateTime( $hour . ':' . $minutes);
+    $times[$increment] = array(array('data' => $date->format($format), 'header' => TRUE, 'class' => array('time-cell')));
+  }
+  return $times;
+}
+
+/**
+ * Creates a range of times in a specific formatting
+ */
+function addMeeting($header,$times,$start,$end,$screen_id,$room_id,$room,$content) {
+  $format = 'H:i';
+  $id = $screen_id . "-" . $room_id;
+
+  // Get the amount of seconds from the start of the datestamp
+  $start = strtotime($start);
+  $start -= strtotime("midnight", $start);
+  $end = strtotime($end);
+  $end -= strtotime("midnight", $end);
+
+  // Compensate for Drupals 'all-day' method, which starts and ends on midnight of the same day (for some reason)
+  $end = ($end == 0)? 86400 : $end;
+
+  // Get a copy of the array keys to remap later on
+  $array_keys = array_keys($times);
+
+  // Create a subheader row
+  $subheader = reset($times);
+  unset($times['blank']);
+
+  $subheader[$id] = array('data' => l(t($room->title), 'node/' . $room->nid), 'header' => TRUE, 'class' => array('room', 'header'));
+  // Checks if there are multiple rooms within one screen
+  if (array_key_exists($screen_id, $header) && count($subheader) > 2) {
+    $colspan = 0;
+    foreach ($subheader as $k => $v) {
+      $colspan += (substr($k, 0, strlen($screen_id)) == $screen_id) ? 1 : 0;
+    }
+    $header[$screen_id]['colspan'] = $colspan;
+  }
+
+
+  // Render the content in teaser format
+  $cell = node_view($content, 'teaser');
+  $cell = render($cell);
+
+  $rowspan = 1;
+  // Iterates through the time fields and adds the cells as appropriate
+  foreach ($times as $increment => &$time) {
+    // Create easy to read variables for the amount of minutes until the meeting starts/ends
+    $s = ($increment - $start)/60;
+    $e = ($end - $increment)/60;
+
+    // Does the event start before time has started recording?
+    if ($start < $increment) {
+      // Set the first cell info
+      if (!isset($cell_id)) {
+        $cell_id = $increment;
+        $time[$id] = array('data' => $cell, 'rowspan' => $rowspan, 'class' => array('meeting'));
+      }
+
+      // How many cells does it take up
+      if ($end > $increment) {
+        $rowspan++;
+        // Deletes any old cells if any exist
+        if (!empty($time[$id]) && $time != $times[$cell_id]) {
+          unset($time[$id]);
+        }
+      }
+    } 
+
+    // Does it have a start within the meeting
+    if ($s > -15) {
+      // The first time the meeting starts
+      if ($s <= 0) {
+        $cell_id = $increment;
+        $time[$id] = array('data' => $cell, 'rowspan' => $rowspan, 'class' => array('meeting'));
+      }
+
+      // Add the cells after
+      if ($e <= 0) {
+        if (empty($time[$id])) {
+          // Is the cell already used by another meeting?
+          if (!$saved) {
+            $time[$id] = array('data' => NULL, 'class' => array('empty'));
+          }
+        } else $saved = array_key_exists('rowspan', $time[$id])? $time[$id]['rowspan'] : NULL;
+      }
+    } else {
+      // Add the cells before
+      if (empty($time[$id])) {
+        // Is the cell already used by another meeting?
+        if (!isset($saved)) {
+          $time[$id] = array('data' => NULL, 'class' => array('empty'));
+        }
+      } else $saved = array_key_exists('rowspan', $time[$id])? $time[$id]['rowspan'] : NULL;
+    }
+    $saved = isset($saved)? $saved-- : NULL;
+  }
+  $times[$cell_id][$id]['rowspan'] = $rowspan;
+
+  // Remap the array keys
+  array_unshift($times, $subheader);
+  $times = array_combine($array_keys, $times);
+
+  return array($header,$times);
+}
+
+function template_preprocess_aps_matrix_grid(&$vars) {
+  $view     = $vars['view'];
+
+  // We need the raw data for this grouping, which is passed in as $vars['rows'].
+  // However, the template also needs to use for the rendered fields.  We
+  // therefore swap the raw data out to a new variable and reset $vars['rows']
+  // so that it can get rebuilt.
+  // Store rows so that they may be used by further preprocess functions.
+  $result   = $vars['result'] = $vars['rows'];
+  $vars['rows'] = array();
+  $vars['field_classes'] = array();
+
+  $options  = $view->style_plugin->options;
+  $handler  = $view->style_plugin;
+
+  $row_class_special = isset($options['row_class_special']) ? $options['row_class_special'] : TRUE;
+
+  $header = array();
+  $subheader = array('blank' => array(array('data' => t('Time'), 'header' => TRUE, 'class' => array('time'))));
+  $times = $subheader + hoursRange(23400, 79200, 60 * 15);
+  // Find all possible rooms, construct a template array.
+  foreach ($result as $num => $rf) {
+    // Setup easy vars for the important info
+    $screen_id = $rf->_field_data['nid']['entity']->nid;
+    $screen = $rf->_field_data['nid']['entity'];
+    $meeting_id = $rf->_entity_properties['field_rooms_value:field_room_target_id:reverse_field_meeting_room_node:entity object']->nid;
+    $meeting = $rf->_entity_properties['field_rooms_value:field_room_target_id:reverse_field_meeting_room_node:entity object'];
+    $room_id = $meeting->field_meeting_room[LANGUAGE_NONE][0]['target_id'];
+    $room = $meeting->field_meeting_room[LANGUAGE_NONE][0]['entity'];
+    
+    $start = $meeting->field_meeting_time[LANGUAGE_NONE][0]['value'];
+    $end = $meeting->field_meeting_time[LANGUAGE_NONE][0]['value2'];
+
+    if (!array_key_exists($screen_id, $header)) {
+      $header[$screen_id] = array(
+        'data' => l(t($screen->title), 'node/' . $screen->nid),
+        'class' => array('screen', 'header'),
+        'colspan' => 1,
+      );
+    }
+
+    list($header, $times) = addMeeting($header, $times, $start, $end, $screen_id, $room_id, $room, $meeting);
+  }
+
+  $vars['headers'][] = array('blank' => array('data' => NULL, 'class' => array('empty'))) + $header;
+  $vars['headers'][] = array_shift($times);
+  $vars['rows'] = $times;
+
+  // Add the striping.
+  $count = 0;
+  foreach ($vars['rows'] as $num => $row) {
+    $vars['row_classes'][$num] = array();
+    $vars['row_classes'][$num][] = ($count++ % 2 == 0) ? 'odd' : 'even';
+  }
+
+  // Cope with an empty table
+  if (empty($vars['rows']) && !empty($options['empty_table'])) {
+    $vars['rows'][0][0] = $view->display_handler->render_area('empty');
+    // Calculate the amounts of rows with output.
+    $vars['field_attributes'][0][0]['colspan'] = count($vars['header']);
+    $vars['field_classes'][0][0] = 'views-empty';
+  }
+
+  // Add the summary to the list if set.
+  if (!empty($handler->options['summary'])) {
+    $vars['attributes_array'] = array('summary' => filter_xss_admin($handler->options['summary']));
+  }
+
+  // Add the caption to the list if set.
+  if (!empty($handler->options['caption'])) {
+    $vars['caption'] = filter_xss_admin($handler->options['caption']);
+  }
+  else {
+    $vars['caption'] = '';
+  }
+}
+
+function aps_matrix_node_view($node, $view_mode, $langcode) {
+  if (menu_get_object() == $node && $node->type == 'event') {
+    drupal_add_js(drupal_get_path('module', 'aps_matrix') . '/aps_matrix.js', array('scope' => 'footer'));
+  }
+}

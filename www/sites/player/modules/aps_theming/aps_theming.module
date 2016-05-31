@@ -1,0 +1,170 @@
+<?php
+
+/**
+ * @file
+ * aps_theming module.
+ * Field type to select and enable themes per content.
+ */
+
+/**
+ * Implements hook_field_info().
+ */
+function aps_theming_field_info() {
+  return array(
+    'delta_type' => array(
+      'label' => t('Delta Type'),
+      'description' => t(''),
+      'default_widget' => 'delta_type_widget_default',
+      'default_formatter' => 'delta_type_formatter_default',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function aps_theming_field_widget_info() {
+  return array(
+    'delta_type_widget_default' => array(
+      'label' => t('Select list'),
+      'field types' => array('delta_type'),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+        'default value' => FIELD_BEHAVIOR_DEFAULT,
+      ),
+      'settings' => array(
+        'parent' => '',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function aps_theming_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    case 'delta_type_widget_default':
+      $element['delta_type']['theme'] = array(
+        '#type' => 'select',
+        '#title' => t('Theme'),
+        '#options' => aps_theming_get_deltas($field['settings']['parent']),
+        '#default_value' => isset($items[$delta]['theme']) ? $items[$delta]['theme'] : NULL,
+      );
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function aps_theming_field_settings_form($field, $instance, $has_data) {
+  $options = aps_theming_get_parent_deltas();
+  $settings = $field['settings'];
+  $form['parent'] = array(
+    '#type' => 'select',
+    '#title' => t('Parent'),
+    '#options' => $options,
+    '#default_value' => isset($settings['parent']) ? $settings['parent'] : NULL,
+    '#required' => TRUE,
+    '#description' => t('The parent Delta which supplies the options for this field.'),
+    '#disabled' => $has_data,
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function aps_theming_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  if ($field['type'] == 'delta_type') {
+    foreach ($items as $delta => $item) {
+      // If field is not considered empty, validate its data.
+      if (!aps_theming_field_is_empty($item, $field)) {
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function aps_theming_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  // Structure the field data as expected by the database. Only act when the
+  // elements come nested as 'publisher_reference'. Otherwise, no change needed.
+  if (!empty($items) && $field['type'] == 'delta_type' && array_key_exists('delta_type', $items[0])) {
+    foreach ($items as $delta => $item) {
+      $items[$delta]['theme'] = $item['delta_type']['theme'];
+    }
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function aps_theming_field_formatter_info() {
+  return array(
+    'delta_type_formatter_default' => array(
+      'label' => t('Delta Selector'),
+      'field types' => array('delta_type'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function aps_theming_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'delta_type_formatter_default':
+    foreach ($items as $delta => $template) {
+      if (delta_enabled($template['theme'])) {
+        delta_inject($template['theme']);
+      }
+    }
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function aps_theming_field_is_empty($item, $field) {
+  if ($field['type'] == 'delta_type') {
+    // If a single column is empty, consider the field empty.
+    if (sizeof($item['delta_type']) > sizeof(array_filter($item['delta_type']))) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+}
+
+/**
+ * Code to return an array of selectable Deltas.
+ */
+function aps_theming_get_parent_deltas() {
+  $query = db_select('delta');
+
+  $query->condition('parent', '');
+  $query->fields('delta', array('machine_name', 'name'));
+  $result = $query->execute()->fetchAllKeyed();
+
+  return ($result)? $result : array();
+}
+
+/**
+ * Code to return an array of selectable Deltas.
+ */
+function aps_theming_get_deltas($parent) {
+  $query = db_select('delta');
+
+  $query->condition(db_or()->condition('delta.machine_name', $parent)->condition('parent', $parent));
+  $query->fields('delta', array('machine_name', 'name'));
+  $result = $query->execute()->fetchAllKeyed();
+
+  return ($result)? $result : array();
+}

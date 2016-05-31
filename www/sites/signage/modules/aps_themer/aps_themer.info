@@ -1,0 +1,6 @@
+name = aps Themer
+description = Creates a field to add CSS to individual sections
+core = 7.x
+package = aps
+
+files[] = aps_themer.install

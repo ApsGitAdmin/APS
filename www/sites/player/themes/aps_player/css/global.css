@@ -1,0 +1,517 @@
+/* This file will hold styles for the mobile version of your website (mobile first). */
+/* This also can include ANY global CSS that applies site-wide. Unless overwritten by a more specific style rule, CSS declarations in global.css will apply site-wide. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: initial;
+  font-weight: normal;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+h1#page-title {
+  margin-top: 0.5em;
+  font-size: 28px;
+}
+body {
+	font-size: 16px;
+  color: #000;
+}
+label {
+  font-weight: normal !important;
+  text-transform: uppercase;
+}
+label.option {
+  text-transform: initial;
+  margin-left: 5px;
+}
+strong {
+  font-weight: normal;
+}
+sup {
+  vertical-align: super;
+  font-size: 0.5em;
+}
+.logo-img {
+  float: none;
+  margin: 0;
+}
+/* PREFACE */
+ul.primary {
+  text-align: center;
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+}
+ul.primary li {
+  display: inline-block;
+  margin: 0;
+  font-size: 10pt;
+  overflow: hidden;
+}
+ul.primary li:first-child a {
+  -moz-border-radius: 20px 0 0 20px;
+  -webkit-border-radius: 20px 0 0 20px;
+  border-radius: 20px 0 0 20px;
+}
+ul.primary li:last-child a {
+  -moz-border-radius: 0 20px 20px 0;
+  -webkit-border-radius: 0 20px 20px 0;
+  border-radius: 0 20px 20px 0;
+}
+ul.primary li a {
+  display: inline-block;
+  text-transform: uppercase;
+  background: #6e6e6e;
+  background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#575757));
+  background: -moz-linear-gradient(top, #888, #575757);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#888888', endColorstr='#575757');
+  border-color: #000;
+  border-width: 1px;
+  border-style: solid;
+  padding: 5px 15px;
+  color: #FFF;
+  margin: 0;
+}
+ul.primary li.active a {
+  background: #fff;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+  background: -moz-linear-gradient(top, #fff, #ededed);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+  border: solid 1px #000;
+  color: #000;
+}
+ul.primary li a:hover {
+  background: #616161;
+  background: -webkit-gradient(linear, left top, left bottom, from(#757575), to(#4b4b4b));
+  background: -moz-linear-gradient(top, #757575, #4b4b4b);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#757575', endColorstr='#4b4b4b');
+  border: solid 1px #000;
+}
+ul.primary li.active a:hover {
+  background: #ededed;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+  background: -moz-linear-gradient(top, #fff, #dcdcdc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+
+.button-type,
+button,
+input[type="reset"],
+input[type="submit"],
+input[type="button"] {
+  -webkit-appearance: none;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+  border-radius: 4px;
+  background: #5f5f5f;
+  border: none;
+  cursor: pointer;
+  color: #FFF !important;
+  outline: 0;
+  overflow: hidden;
+  padding: 6px 14px;
+  margin: 10px 5px;
+  font: inherit;
+  font-size: 0.8em;
+  text-shadow: none;
+  width: auto;
+  *padding-top: 2px; /* IE7 */
+  *padding-bottom: 0px; /* IE7 */
+  text-transform: uppercase;
+  text-decoration: none !important;
+  display: inline-block;
+}
+.button-type:hover,
+.button-type:active,
+.button-type:focus,
+input.form-submit:hover,
+.form-actions input:hover {
+	background: #3f3f3f;
+}
+
+textarea,
+select,
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"] {
+  -webkit-appearance: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+  background-color: #fff;
+  border: 1px solid;
+  border-color: #ffc55a;
+  background: #f5f5f5;
+  color: #000;
+  outline: 0;
+  padding: 4px 6px;
+  font-size: 0.85em;
+  font-family: Tahoma, Geneva, sans-serif;
+  height: 2.5em;
+  *padding-top: 2px; /* IE7 */
+  *padding-bottom: 1px; /* IE7 */
+  *height: auto; /* IE7 */
+}
+textarea {
+  height: auto;
+  -moz-border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0;
+}
+.resizable-textarea .grippie {
+  -moz-border-radius: 0 0 6px 6px;
+  -webkit-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: "";
+  background: url(../images/Dropdown.png) no-repeat right center #f5f5f5;
+  padding-right: 25px;
+}
+
+/* Separate rule for Firefox. Cannot stack with WebKit's. */
+input.placeholder_text,
+textarea.placeholder_text,
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #888;
+}
+
+::-webkit-input-placeholder {
+  color: #888;
+}
+
+button:focus,
+button:active,
+input:focus,
+input:active,
+select:focus,
+select:active,
+textarea:focus,
+textarea:active {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  z-index: 1; /* For Opera */
+}
+input[type="file"]:focus,
+input[type="file"]:active,
+input[type="radio"]:focus,
+input[type="radio"]:active,
+input[type="checkbox"]:focus,
+input[type="checkbox"]:active {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+select[disabled],
+textarea[disabled],
+input[type="date"][disabled],
+input[type="datetime"][disabled],
+input[type="datetime-local"][disabled],
+input[type="email"][disabled],
+input[type="month"][disabled],
+input[type="number"][disabled],
+input[type="password"][disabled],
+input[type="search"][disabled],
+input[type="tel"][disabled],
+input[type="text"][disabled],
+input[type="time"][disabled],
+input[type="url"][disabled],
+input[type="week"][disabled] {
+  background-color: #515151;
+}
+button[disabled],
+input[disabled],
+select[disabled],
+select[disabled] option,
+select[disabled] optgroup,
+textarea[disabled] {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  color: #888;
+  cursor: default;
+}
+
+table {
+  border: none;
+  width: 100%;
+}
+
+thead th, th {
+  background: transparent;
+  border-bottom: 2px solid #ffc55a;
+  color: #000;
+  text-transform: uppercase;
+}
+
+td, th {
+  padding: 4px 8px;
+  color: #000;
+}
+th.active {
+  background: inherit;
+  border-left: 1px solid #e1e6e9;
+  border-right: 1px solid #e1e6e9;
+}
+tr.even, tr.odd {
+  background: transparent;
+  border-bottom: solid 1px #e1e6e9;
+}
+tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: inherit;
+}
+
+/* Odd & Even Styles */
+tr.odd td {
+  background: transparent;
+}
+tr.even td {
+  background: transparent;
+}
+tr.odd td.active, 
+tr.even td.active, 
+td.active {
+  border-left: 1px solid #CCC;
+  border-right: 1px solid #CCC;
+  background: inherit;
+}
+
+/* Active & Blocked Styles */
+tr.status-Active td.active,
+tr.status-Active:hover td.active,
+tr.status-Active td {
+  background: #f8fff0;
+}
+tr.status-Blocked td.active,
+tr.status-Blocked:hover td.active,
+tr.status-Blocked td {
+  background: #EEEEEE;
+  color: #bababa;
+  font-style: italic;
+}
+td a.tabledrag-handle .handle {
+  margin: 0;
+  background-position: center 6px;
+}
+td a.tabledrag-handle-hover .handle {
+  background-position: center -14px;
+}
+td .views-row-edit-static,
+td .views-row-edit-edit label {
+  display: none;
+}
+td .views-row-edit-edit input {
+  width: 95%;
+}
+td .clipping { 
+
+}
+
+.local-edit {
+  float: left;
+  padding-right: 15px;
+  text-align: left;
+}
+.local-edit a {
+  background: url(../images/edit.png) center center no-repeat #fffce5;
+  text-indent: -9999px;
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: solid 1px #E5D53E;
+}
+
+.feed-icon {
+  text-align: center;
+}
+.data-export-link {
+  text-decoration: none !important;
+  padding: 10px 40px;
+  display: inline-block;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  width: 10%;
+  min-width: 75px;
+  font-family: Tahoma, Geneva, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 20px;
+  background: url(../images/export.png) 15px center no-repeat #FFFDF0;
+  border: solid 1px #e1aa1e;
+  color: #e1aa1e !important;
+}
+
+.item-list ul {
+  margin: 0;
+}
+.item-list ul li {
+  margin: 0;
+}
+.item-list ul.pager {
+  border: none;
+  background: transparent;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  position: relative;
+  min-height: 25px;
+}
+.item-list ul.pager li {
+  background: transparent;
+  position: absolute;
+  float: none;
+  color: #000;
+  border: none;
+  font-weight: normal;
+  font-size: 10pt;
+}
+.item-list ul.pager li a {
+  width: auto;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  border: none;
+  padding: 4px 10px;
+  background: transparent;
+  color: #fff;
+  display: inline-block;
+}
+.item-list ul.pager li a:hover {
+  background: transparent;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+.item-list ul.pager li.pager-previous {
+  left: 0;
+}
+.item-list ul.pager li.pager-current {
+  width: 80px;
+  left: 50%;
+  padding: 4px 10px;
+  margin-left: -40px;
+  color: #FFF;
+  text-align: center;
+}
+.item-list ul.pager li.pager-next {
+  right: 0;
+}
+.item-list ul.pager li.pager-next a {
+  float: right;
+}
+.item-list ul.pager li.pager-next .throbber {
+  margin-top: 3px;
+}
+
+.ajax-progress {
+    display: inline-block;
+    vertical-align: middle;
+    *display: inline;
+    *zoom: 1;
+    color: #FFF;
+}
+.ajax-progress .throbber,
+.flag-waiting .flag-throbber {
+    background: transparent url(../images/ajax.gif) no-repeat 0px 0px;
+    float: none;
+    height: 18px;
+    width: 26px;
+    margin: 0 10px;
+    color: #FFF;
+}
+.ajax-progress .throbber {
+  display: block !important;
+}
+.ajax-progress * {
+  display: none;
+}
+.flag-wrapper {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.admin-content {
+  background: #434343;
+  background: -moz-linear-gradient(top,  #434343 0%, #252525 100%);
+  background: -webkit-linear-gradient(top,  #434343 0%,#252525 100%);
+  background: linear-gradient(to bottom,  #434343 0%,#252525 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#434343', endColorstr='#252525',GradientType=0 );
+  padding: 1.25em 0;
+  overflow: hidden;
+  display: none;
+}
+#admin-bar-tab {
+  border-top: solid 2px #5f5f5f;
+  background: #252525;
+  text-align: center;
+  padding: 6px 0;
+  -moz-border-radius: 0 0 12px 12px;
+  -webkit-border-radius: 0 0 12px 12px;
+  border-radius: 0 0 12px 12px;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 0.75em;
+}
+
+#zone-aps {
+  text-align: center;
+}
+#zone-aps-wrapper {
+  background: transparent url(../images/aps_background.jpg) repeat-x center center;
+  -webkit-box-shadow: 0px -10px 15px 15px rgba(0,0,0,0.35);
+  -moz-box-shadow: 0px -10px 15px 15px rgba(0,0,0,0.35);
+  box-shadow: 0px -10px 15px 15px rgba(0,0,0,0.35);
+  padding: 0.75em 0;
+}
+
+#section-content {
+  padding-top: 2em;
+}
+
+.node-type-menu-page #section-content .zone-wrapper .zone {
+  overflow: hidden;
+}
+.node-type-menu-page #section-content .zone-wrapper:first-child .zone {
+  border-top: solid 1px #E5E5E5;
+}
+.node-type-menu-page #section-content .zone-wrapper .zone,
+.node-type-menu-page #section-footer .zone-wrapper .zone {
+  border-left: solid 1px #E5E5E5;
+  border-right: solid 1px #E5E5E5;
+}
+.node-type-menu-page #section-footer .zone-wrapper:last-child .zone {
+  border-bottom: solid 1px #E5E5E5;
+}
+
+.page-protected-node h1.title {
+  text-align: center;
+}
+.page-protected-node #protected-node-enterpassword {
+  text-align: center;
+}

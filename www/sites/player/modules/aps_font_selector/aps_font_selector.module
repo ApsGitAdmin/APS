@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * @file
+ * aps_font_selector module.
+ * Connect fonts to CSS tags.
+ */
+
+/**
+ * Implements hook_field_info().
+ */
+function aps_font_selector_field_info() {
+  return array(
+    'font_selector' => array(
+      'label' => t('Font Selector'),
+      'description' => t('Font Type'),
+      'default_widget' => 'font_selector_widget_default',
+      'default_formatter' => 'font_selector_formatter_default',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function aps_font_selector_field_widget_info() {
+  return array(
+    'font_selector_widget_default' => array(
+      'label' => t('Default widget'),
+      'field types' => array('font_selector'),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+        'default value' => FIELD_BEHAVIOR_DEFAULT,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function aps_font_selector_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    case 'font_selector_widget_default':
+      $element['font_selector']['font_face'] = array(
+        '#type' => 'select',
+        '#title' => t('Font Face'),
+        '#options' => aps_theming_get_fonts(),
+        '#default_value' => isset($items[$delta]['font_face']) ? $items[$delta]['font_face'] : NULL,
+      );
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function aps_font_selector_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  if ($field['type'] == 'font_selector') {
+    foreach ($items as $delta => $item) {
+      // If field is not considered empty, validate its data.
+      if (!aps_font_selector_field_is_empty($item, $field)) {
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function aps_font_selector_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  // Structure the field data as expected by the database. Only act when the
+  // elements come nested as 'publisher_reference'. Otherwise, no change needed.
+  if (!empty($items) && $field['type'] == 'font_selector' && array_key_exists('font_selector', $items[0])) {
+    foreach ($items as $delta => $item) {
+      $items[$delta]['font_face'] = $item['font_selector']['font_face'];
+    }
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function aps_font_selector_field_formatter_info() {
+  return array(
+    'font_selector_formatter_default' => array(
+      'label' => t('Default formatter'),
+      'field types' => array('font_selector'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function aps_font_selector_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'font_selector_formatter_default':
+    foreach ($items as $delta => $item) {
+      $item_output = '';
+      foreach ($item as $column => $value) {
+        if ($column == 'font_face') {
+          $item_output .= '<strong>' . $column . ':</strong>' . ' ' . $value . '<br />';
+        }
+      }
+      $element[$delta]['font_selector_row'] = array(
+        '#type' => 'fieldset',
+      );
+      $element[$delta]['font_selector_row']['content'] = array(
+        '#markup' => $item_output,
+      );
+    }
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function aps_font_selector_field_is_empty($item, $field) {
+  if ($field['type'] == 'font_selector') {
+    // If a single column is empty, consider the field empty.
+    if (sizeof($item['font_selector']) > sizeof(array_filter($item['font_selector']))) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+}
+
+/**
+ * Code to return an array of selectable Deltas.
+ */
+function aps_theming_get_fonts() {
+  $query = db_select('fontyourface_font');
+
+  $query->condition('enabled', 1);
+  $query->fields('fontyourface_font', array('fid', 'css_family'));
+  $result = $query->execute()->fetchAllKeyed();
+
+  $fonts = array();
+  foreach ($result as $fid => $family) {
+    $group = strstr($family, ' ')? strstr($family, ' ', TRUE) : $family; 
+    $fonts[drupal_strtoupper($group)][$fid] = $family;
+  }
+  $fonts = array(NULL => t('None')) + $fonts;
+  ksort($fonts);
+
+  return ($result)? $fonts : array();
+}

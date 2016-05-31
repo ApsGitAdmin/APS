@@ -1,0 +1,43 @@
+<?php
+/**
+ * @file
+ * aps Custom tracking module, connects to the onBeforeUnload API.
+ */
+function aps_litebox_menu() {
+  $items['admin/config/content/litebox'] = array(
+    'title' => 'Litebox',
+    'description' => 'Activates litebox on specific content types.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('aps_litebox_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'aps_litebox.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Injects the code into specific content types
+ */
+function aps_litebox_node_view($node, $view_mode, $langcode) {
+  global $user;
+
+  if (aps_litebox_node_type_active($node->type) && $view_mode == 'full') {
+    // Install our client-side behavior.
+    drupal_add_js(drupal_get_path('module', 'aps_litebox') . '/js/litebox.js', array('scope' => 'footer'));
+    drupal_add_js(drupal_get_path('module', 'aps_litebox') . '/js/images-loaded.min.js', array('scope' => 'footer'));
+    drupal_add_css(drupal_get_path('module', 'aps_litebox') . '/css/litebox.css');
+  }
+}
+
+/**
+ * Returns TRUE if this node uses tracking or if no nodes are selected.
+ */
+function aps_litebox_node_type_active($node_type) {
+  $types = array_filter(variable_get('aps_litebox_node_types', array()));
+  if (empty($types) || !empty($types[$node_type])) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
