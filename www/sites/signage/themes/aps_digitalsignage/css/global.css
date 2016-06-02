@@ -1320,10 +1320,10 @@ table.meeting-row td.meeting-info p {
   font-style: italic;
 }
 
-table.meeting-row td.meeting-info h2 {
+table.meeting-row tr.display-row td.meeting-info h2 {
   margin-top: 0.2em;
 }
-table.meeting-row td.meeting-info:first-child h2 {
+table.meeting-row tr.display-row:first-child td.meeting-info h2 {
   margin-top: 0;
 }
 
