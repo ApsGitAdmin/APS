@@ -28,6 +28,12 @@
  */
 ?>
 <div class="screen-display clearfix">
+	<?php if ($header): ?>
+    <div class="view-header">
+      <?php print $header; ?>
+    </div>
+  <?php endif; ?>
+  
   <?php if ($rows): ?>
       <?php print $rows; ?>
   <?php elseif ($empty): ?>
