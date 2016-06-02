@@ -1277,8 +1277,8 @@ table.meeting-row h2 {
 }
 
 table.meeting-row h3 {
-  font-size: 0.85em;
-  margin-bottom: 0.15em;
+  font-size: 0.75em;
+  margin-bottom: 0.25em;
 }
 
 table.meeting-row h2,
@@ -1305,8 +1305,9 @@ table.meeting-row td.knockout > div {
 
 table.meeting-row td > span {
   font-size: 0.75em;
-  display: inherit;
+  display: inline-block;
   letter-spacing: 0;
+  line-height: 0.85em;
 }
 
 table.meeting-row td.meeting-info {
