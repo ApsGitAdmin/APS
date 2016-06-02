@@ -140,18 +140,6 @@ function insertMeetingToRow($row,$start,$end,$cell) {
   } else {
     return FALSE;
   }
-
-  dpm($start . ' - ' . $end);
-
-  if ($start = 0 && $end = 86400) {
-    dpm($cell);
-    foreach ($row as $increment => &$time) {
-      $time = array('data' => $cell, 'colspan' => count($row) - 1, 'class' => array('meeting'));
-      break;
-    } 
-
-    return $row;
-  }
 }
 
 function template_preprocess_aps_matrix_grid(&$vars) {
