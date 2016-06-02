@@ -2,6 +2,8 @@
 (function($) {
   function setSize() {
     var meetings = document.querySelectorAll('.display-row');
+    var meetingRows = document.querySelectorAll('.meeting-row');
+    var rows = meetingRows.length;
     var usedHeight = 0;
     var margin = 0;
     var guttering = 0;
@@ -33,8 +35,14 @@
 
       // Set the new font-size and try again
       $('.display-row').css({'font-size' : fontSize});
+
       setSize();
     }
+
+    meetingSize = parseFloat($('table.meeting-row h3').css('font-size'));
+    meetingSize = meetingSize + ((rows - 5) * 0.05);
+
+    $('table.meeting-row h3').css({'font-size' : meetingSize});
   }
 
   $(window).ready(function(){
