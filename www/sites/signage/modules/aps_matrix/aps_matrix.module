@@ -141,6 +141,8 @@ function insertMeetingToRow($row,$start,$end,$cell) {
     return FALSE;
   }
 
+  dpm($start . ' - ' . $end);
+
   if ($start = 0 && $end = 86400) {
     dpm($cell);
     foreach ($row as $increment => &$time) {
