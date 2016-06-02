@@ -1320,6 +1320,13 @@ table.meeting-row td.meeting-info p {
   font-style: italic;
 }
 
+table.meeting-row td.meeting-info h2 {
+  margin-top: 0.2em;
+}
+table.meeting-row td.meeting-info:first-child h2 {
+  margin-top: 0;
+}
+
 table.meeting-row td.arrowfont {
   text-align: right;
   font-size: 2.25em;
