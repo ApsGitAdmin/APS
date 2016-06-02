@@ -10,6 +10,7 @@ body {
   font-family:Arial, Helvetica, sans-serif;
   color: #666666;
   background: url(../images/background.png);
+  overflow: hidden;
 }
 
 a {
