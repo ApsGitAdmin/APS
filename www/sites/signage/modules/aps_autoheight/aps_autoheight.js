@@ -33,6 +33,7 @@
 
       // Set the new font-size and try again
       $('.display-row').css({'font-size' : fontSize});
+      setSize();
     }
   }
 
