@@ -1225,7 +1225,7 @@ table.meeting-row {
 }
 
 table.meeting-row table {
-  margin: 0;
+  margin: 0 0 0.2em;
   border: none;
 }
 
@@ -1327,11 +1327,20 @@ table.meeting-row tr.display-row:first-child td.meeting-info h2 {
   margin-top: 0;
 }
 
+table.meeting-row tr.display-row table {
+  margin-bottom: 0.2em;
+}
+table.meeting-row tr.display-row:last-child table {
+  margin-bottom: 0;
+}
+
 table.meeting-row td.arrowfont {
   text-align: right;
-  font-size: 2.25em;
+  font-size: 2em;
   line-height: 1.4em;
   padding-right: 5%;
+  letter-spacing: 1px;
+  width: 1%;
 }
 
 .display-row {
@@ -1354,6 +1363,11 @@ table.meeting-row td.arrowfont {
 
 .profile .user-picture {
   float: none;	
+}
+
+.auto-refresh {
+  visibility: hidden;
+  position: absolute;
 }
 
 
