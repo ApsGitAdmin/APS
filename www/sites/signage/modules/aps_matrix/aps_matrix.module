@@ -88,15 +88,6 @@ function insertMeeting($meeting,&$rows,$row_id,$blank_row) {
 }
 
 function insertMeetingToRow($row,$start,$end,$cell) {
-  if ($start == 0 && $end == 86400) {
-    foreach ($row as $increment => &$time) {
-      $time = array('data' => $cell, 'colspan' => count($row) - 1, 'class' => array('meeting'));
-      break;
-    } 
-
-    return $row;
-  }
-
   $colspan = 1;
   // Iterates through the time fields and adds the cells as appropriate
   foreach ($row as $increment => &$time) {
@@ -129,7 +120,6 @@ function insertMeetingToRow($row,$start,$end,$cell) {
     while (key($row) !== $cell_id) next($row);
 
     $remove = array();
-    $conflict = FALSE;
     // Iterate through how many cells are taken up
     for ($i = 1; $i < $colspan; $i++) { 
       next($row);
@@ -149,6 +139,16 @@ function insertMeetingToRow($row,$start,$end,$cell) {
     return $row;
   } else {
     return FALSE;
+  }
+
+  if ($start = 0 && $end = 86400) {
+    dpm($cell);
+    foreach ($row as $increment => &$time) {
+      $time = array('data' => $cell, 'colspan' => count($row) - 1, 'class' => array('meeting'));
+      break;
+    } 
+
+    return $row;
   }
 }
 
