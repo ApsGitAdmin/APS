@@ -40,6 +40,7 @@
   $(window).ready(function(){
     //$('.meeting-info table').closest('tr').addClass('display-row');
     setSize();
+    setInterval(setSize, 60000);
   });
 
   $(window).resize(function(){
