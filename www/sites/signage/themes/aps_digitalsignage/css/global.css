@@ -1256,7 +1256,7 @@ table.meeting-row td {
 }
 
 table.meeting-row > tbody > tr > td {
-  padding: 10px 0;
+  padding: 10px 15px 10px 0;
 }
 
 table.meeting-row > tbody > tr > td {
