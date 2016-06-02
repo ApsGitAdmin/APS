@@ -38,11 +38,6 @@
 
       setSize();
     }
-
-    meetingSize = parseFloat($('table.meeting-row h3').css('font-size'));
-    meetingSize = meetingSize + ((rows - 5) * 0.05);
-
-    $('table.meeting-row h3').css({'font-size' : meetingSize});
   }
 
   $(window).ready(function(){
