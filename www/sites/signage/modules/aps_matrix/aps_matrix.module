@@ -120,7 +120,6 @@ function insertMeetingToRow($row,$start,$end,$cell) {
     while (key($row) !== $cell_id) next($row);
 
     $remove = array();
-    $conflict = FALSE;
     // Iterate through how many cells are taken up
     for ($i = 1; $i < $colspan; $i++) { 
       next($row);
