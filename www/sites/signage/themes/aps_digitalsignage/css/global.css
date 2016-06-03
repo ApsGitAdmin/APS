@@ -12,6 +12,9 @@ body {
   background: url(../images/background.png);
   overflow-x: hidden;
 }
+body.page-digitalsignage-screen {
+  overflow: hidden;
+}
 
 a {
   color: #00a1f4;	
