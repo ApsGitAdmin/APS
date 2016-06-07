@@ -484,11 +484,14 @@ td .clipping {
   text-align: center;
 }
 #zone-aps-wrapper {
-  background: transparent url(../images/aps_background.jpg) repeat-x center center;
   -webkit-box-shadow: 0px -10px 15px 15px rgba(0,0,0,0.35);
   -moz-box-shadow: 0px -10px 15px 15px rgba(0,0,0,0.35);
   box-shadow: 0px -10px 15px 15px rgba(0,0,0,0.35);
   padding: 0.75em 0;
+}
+
+#zone-aps-wrapper .view-branded-blocks {
+  text-align: center;
 }
 
 #section-content {

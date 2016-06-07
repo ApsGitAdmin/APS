@@ -12,3 +12,9 @@
 #zone-aps {
 	text-align: left;
 }
+#zone-aps-wrapper .view-branded-blocks.view-display-id-first {
+	text-align: left;
+}
+#zone-aps-wrapper .view-branded-blocks.view-display-id-second {
+	text-align: right;
+}
