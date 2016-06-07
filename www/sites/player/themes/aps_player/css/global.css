@@ -11,7 +11,7 @@ h1#page-title {
   font-size: 28px;
 }
 body {
-	font-size: 16px;
+  font-size: 16px;
   color: #000;
 }
 label {
@@ -127,7 +127,7 @@ input[type="button"] {
 .button-type:focus,
 input.form-submit:hover,
 .form-actions input:hover {
-	background: #3f3f3f;
+  background: #3f3f3f;
 }
 
 textarea,
@@ -165,6 +165,7 @@ input[type="week"] {
   font-size: 0.85em;
   font-family: Tahoma, Geneva, sans-serif;
   height: 2.5em;
+  min-width: 25%;
   *padding-top: 2px; /* IE7 */
   *padding-bottom: 1px; /* IE7 */
   *height: auto; /* IE7 */
@@ -492,6 +493,31 @@ td .clipping {
 
 #section-content {
   padding-top: 2em;
+}
+
+.access-denied #zone-content {
+  display: none;
+}
+
+.block-user-login {
+
+}
+.block-user-login h2 {
+  display: none;
+}
+
+#user-login-form {
+  text-align: center;
+}
+#user-login-form .item-list {
+  display: none;
+}
+
+.page-node-form #zone-content {
+  text-align: center;
+}
+.page-node-form #zone-content h2.node-title {
+  display: none;
 }
 
 .node-type-menu-page #section-content .zone-wrapper .zone {
