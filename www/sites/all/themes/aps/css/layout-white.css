@@ -1086,6 +1086,7 @@ p.percent {
 --------------------------------------------------------*/
 .edit-portfolio {
 	text-align: center;
+	margin: 0.5em 0;
 }
 .local-edit {
 	background: url(../images/edit.png) center center no-repeat #fffce5;
