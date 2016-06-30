@@ -1070,7 +1070,10 @@ p.percent {
 /* Manage Portfolio
 --------------------------------------------------------*/
 .view-manage-portfolio {
-
+	margin: 2em 0;
+}
+.view-manage-portfolio .view-content table {
+	margin: 0 auto;
 }
 .view-manage-portfolio .item-list {
 	margin: 1em 0;
@@ -1079,14 +1082,15 @@ p.percent {
 	text-align: center;
 }
 .view-manage-portfolio .view-footer .local-add {
-
+	font-size: 1.4em;
+	margin-bottom: 1.5em;
 }
 
 /* Edit
 --------------------------------------------------------*/
 .edit-portfolio {
 	text-align: center;
-	margin: 0.5em 0;
+	margin: 0.5em 0 1.5em;
 }
 .local-edit {
 	background: url(../images/edit.png) center center no-repeat #fffce5;
