@@ -27,7 +27,7 @@
 <?php $classes = (array_key_exists('field_additional_classes', $fields))? $fields['field_additional_classes']->content : 'alpha grid-16 clearfix omega'; ?>
 <div class="<?php print $classes ?> list-item">
 	<?php
-		if ($fields['edit_node']) {
+		if (array_key_exists('edit_node', $fields)) {
 			print $fields['edit_node']->content; 
 		}
 	?>
