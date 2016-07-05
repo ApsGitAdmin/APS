@@ -26,7 +26,11 @@
 ?>
 <?php $classes = (array_key_exists('field_additional_classes', $fields))? $fields['field_additional_classes']->content : 'alpha grid-16 clearfix omega'; ?>
 <div class="<?php print $classes ?> list-item">
-	<?php print $fields['edit_node']->content; ?>
+	<?php
+		if ($fields['edit_node']) {
+			print $fields['edit_node']->content; 
+		}
+	?>
 	<?php if ($fields['url'] != '#'): ?>
 		<a class="litebox" data-litebox-ratio="sixteen-nine" data-litebox-group="group-<?php print $fields['field_menu_page']->content; ?>" data-litebox-text="<?php print $fields['title']->content; ?>" href="<?php print $fields['url']; ?>">
 	<?php else: ?>
