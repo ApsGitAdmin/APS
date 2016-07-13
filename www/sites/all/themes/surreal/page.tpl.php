@@ -153,10 +153,11 @@
   </div>
   <!-- end Region #3 --> 
 
-  <!-- Region #4 -->
+
+  <!-- Region #4 
   <div id="r4"></div>
   <div id="portfolio" class="page section"  style="clear: left;">
-    <!--start parallax 4-->
+    start parallax 4
     <?php if($file = file_load(theme_get_setting('parallax_bg_region4_image', 'surreal'))): ?>
     <div id="parallax-4" class="parallax fixed" style="background: url('<?php print file_create_url($file->uri); ?>')"> 
       <div class="quoteWrap">
@@ -173,7 +174,7 @@
       </div>
     </div>
     <?php endif; ?>
-    <!--end parallax 4--> 
+    end parallax 4
     
     <?php if (theme_get_setting('region4Name', 'surreal') || theme_get_setting('region4Description', 'surreal')): ?>
     <div class="container portfolioContainer">
@@ -187,7 +188,8 @@
     <?php endif; ?>
     <div class="space40"></div>
   </div>
-  <!-- end Region #4 --> 
+  end Region #4 --> 
+
 
   <!-- Region #5 -->
   <div id="r5"></div>
