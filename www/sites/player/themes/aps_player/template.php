@@ -126,7 +126,8 @@ function convert_number_to_words($number) {
     70 => 'seventy',
     80 => 'eighty',
     90 => 'ninety',
-    100 => 'hundred'
+    100 => 'hundred',
+    1000 => 'thousand'
   );
 
     if (!is_numeric($number)) {
