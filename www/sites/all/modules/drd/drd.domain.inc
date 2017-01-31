@@ -11,8 +11,10 @@
 function drd_domain_edit($form, &$form_state, $did) {
   $domain = drd_domain_load($did);
 
+  $form['#sid'] = $domain->sid;
   $form['#did'] = $did;
   $form['#did_settings'] = $domain->settings;
+  $form['#did_http_headers'] = $domain->http_headers;
 
   $form['serverinfo'] = drd_server_info($domain->sid);
 
@@ -45,6 +47,8 @@ function drd_domain_edit($form, &$form_state, $did) {
 
   _drd_tags_build_form('domain', $did, $form);
 
+  $form += _drd_http_header_build_form('domain', $domain->http_headers, $domain->http_headers_server);
+
   $sub_form = drd_action_remote('drd.config.domain.read', 'domain', $did);
   if (!empty($sub_form) && is_array($sub_form)) {
     $form = array_merge($form, $sub_form);
@@ -68,6 +72,7 @@ function drd_domain_edit($form, &$form_state, $did) {
  */
 function drd_domain_edit_submit($form, &$form_state) {
   $did = $form['#did'];
+  $sid = $form['#sid'];
   $values = $form_state['values'];
   $settings = $form['#did_settings'];
   $changed = (serialize($settings['ignore']) != serialize($values['drd_requirements_ignore']));
@@ -86,6 +91,8 @@ function drd_domain_edit_submit($form, &$form_state) {
     ->condition('did', $did)
     ->execute();
 
+  _drd_http_header_save($values, $form['#did_http_headers'], $sid, $did);
+
   _drd_tags_save('domain', $form['#did'], $values['tags']);
 
   drd_action_remote('drd.config.domain.save', 'domain', $form['#did'], $values);
@@ -102,7 +109,6 @@ function drd_domain_view($did, $mode = 'status') {
   $build['info'] = drd_domain_info($did);
   $build['status'] = drd_domain_status($did);
 
-  drd_action_build_form($form, 'domain');
   $url = drd_url_by_id('domain', $did);
   $output = '';
   drd_info('domain', $did, $url, $output, $mode);

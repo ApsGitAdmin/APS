@@ -72,24 +72,60 @@ function drd_drush_command() {
     'aliases' => array('drdlt'),
   );
 
-  /*
+  $core_edit_arguments = array(
+    'url' => 'Domain (and optionally path) of the remote Drupal core installation.'
+  );
+  $core_edit_options = array(
+    'name' => 'Name of the core, defaults to URL.',
+    'tags' => 'Comma separated list of tags for the DRD ui only.',
+    'ssl' => 'Whether this core can be accessed via ssl (=1) or not (=0; default).',
+    'support-remote-installation' => 'Whether this core supports remote installation (=1) or not (=0; default).',
+    'ssh' => 'Whether this core can be accessed via SSH (=1) or not (=0; default).',
+    'ssh-host' => 'SSH hostname or ip address.',
+    'ssh-port' => 'SSH port defaults to 22.',
+    'ssh-auth-mode' => 'How to authenticate a SSH session: 1 = username/password, 2 = public key, 3 = agent.',
+    'ssh-auth-username' => 'Username for SSH authentication, required for both authentication methods.',
+    'ssh-auth-password' => 'Password for username/password SSH authentication.',
+    'ssh-auth-public-key' => 'Filename of the public key for public key SSH authentication.',
+    'ssh-auth-private-key' => 'Filename of the private key for public key SSH authentication.',
+    'ssh-auth-public-key-passphrase' => 'Passphrase of the private key file for public key SSH authentication.',
+    'use-drush' => 'Whether this core has drush installed (=1) or not (=0; default). Requires ssh enabled for this host too.',
+    'aes-implementation' => 'Which AES implementation to use, available and default values depend on your system configuration.',
+    'aes-cipher' => 'Which AES cipher to use, available and default values depend on AES implementation and your system configuration.',
+    'http-header-auth' => 'Whether this core requires http authentication (=1) or not (=0; default).',
+    'http-header-auth-username' => 'Username for http authentication.',
+    'http-header-auth-password' => 'Password for http authentication.',
+    'ip' => 'Outgoing IP address to be added to the remote core as an allowed referer. DRD uses ip.addpspot.com as an alternative if not explicitly defined here.',
+    'remote-path' => 'Fully qualified remote path of the drupal installation, used together with SSH if no other option available to remotely install components.'
+  );
   $items['drd-core-add'] = array(
     'description' => 'Add a new core to DRD.',
-    'arguments' => array(
-      'name' => 'Name of the core.',
-    ),
+    'arguments' => $core_edit_arguments,
+    'options' => $core_edit_options,
     'drupal dependencies' => array('drd'),
     'aliases' => array('drdca'),
+    'examples' => array(
+      'drush drd-core-add www.example.com' => 'Add that Drupal site as a core to your dashboard.',
+      'drush drd-core-add www.example.com/portal' => 'Add that Drupal site which is installed in a subdirectory as a core to your dashboard.',
+    ),
+  );
+  $items['drd-core-update'] = array(
+    'description' => 'Update an existing core in DRD.',
+    'arguments' => $core_edit_arguments,
+    'options' => $core_edit_options,
+    'drupal dependencies' => array('drd'),
+    'aliases' => array('drdcu'),
   );
   $items['drd-core-remove'] = array(
     'description' => 'Remove an existing core from DRD.',
     'arguments' => array(
-      'name' => 'Name of the core.',
+      'id' => 'ID of the core to be removed.',
     ),
     'drupal dependencies' => array('drd'),
     'aliases' => array('drdcrm'),
   );
 
+  /*
   $items['drd-tag-add'] = array(
     'description' => 'Add a tag to one or many core(s).',
     'arguments' => array(
@@ -192,7 +228,7 @@ function _drd_drush_ask_server_domain($mode, &$ids, $name) {
 
   $ids = array();
   foreach ($selected as $id) {
-    $ids[] = substr($id, 3);
+    $ids[] = drupal_substr($id, 3);
   }
 
   return TRUE;
@@ -217,6 +253,84 @@ function _drd_drush_ask_action() {
   }
 
   return $selected;
+}
+
+function _drd_drush_get_alias($url) {
+  static $alias;
+
+  if (!isset($alias)) {
+    drush_log('Looking for an alias.');
+
+    $alias = FALSE;
+    $alias_name = FALSE;
+
+    drush_sitealias_load_all();
+    $all_site_aliases = drush_get_context('site-aliases');
+    foreach ($all_site_aliases as $name => $alias_values) {
+      if (!empty($alias_values['uri']) && ($url == $alias_values['uri'])) {
+        $alias_name = $name;
+        break;
+      }
+    }
+
+    if ($alias_name) {
+      drush_log('Found alias !name.', array('!name' => $alias_name));
+      $alias = drush_sitealias_get_record($alias_name);
+      $result = drush_invoke_process($alias, 'status');
+      if (!$result || empty($result['object']['uri']) || strpos($result['object']['uri'], $url) === FALSE) {
+        drush_log('Using drush failed.');
+        $alias = FALSE;
+      }
+    }
+    else {
+      drush_log('No alias found, using local drush not possible');
+    }
+  }
+
+  return $alias;
+}
+
+function _drd_drush_get_remote_alias($server) {
+  static $alias;
+
+  if (!isset($alias)) {
+    drush_log('Looking for a remote alias.');
+
+    $alias = FALSE;
+
+    include_once 'drd.ssh2.inc';
+    $connection = drd_ssh2_connect($server);
+    if ($connection) {
+      drush_log('Remote SSH connected');
+      $remote_path = drush_get_option('remote-path', FALSE);
+      if (empty($remote_path)) {
+        $all_site_aliases = $connection ? drd_ssh2_command($server, $connection, 'drush site-alias --format=json', TRUE) : array();
+        foreach ($all_site_aliases as $name => $alias_values) {
+          if (!empty($alias_values['uri']) && ($server->url == $alias_values['uri'])) {
+            $alias = '@' . $name;
+            break;
+          }
+        }
+      }
+      else {
+        $alias = '--uri=' . $server->url . ' --root=' . $remote_path;
+      }
+    }
+
+    if (!empty($alias)) {
+      drush_log('Found alias: ' . $alias);
+      $result = drd_ssh2_command($server, $connection, 'drush ' . $alias . ' status --format=json', TRUE);
+      if (!$result || empty($result['uri']) || strpos($result['uri'], $server->url) === FALSE) {
+        drush_log('Using drush failed.');
+        $alias = FALSE;
+      }
+    }
+    else {
+      drush_log('No remote alias found, using drush over SSH not possible');
+    }
+  }
+
+  return $alias;
 }
 
 /**
@@ -361,7 +475,7 @@ function drush_drd_action() {
   if (count($args) > 0) {
     $action_name = array_shift($args);
     if (strpos($action_name, 'help:') === 0) {
-      _drush_drd_action_help(substr($action_name, 5));
+      _drush_drd_action_help(drupal_substr($action_name, 5));
       return;
     }
     $interactive = FALSE;
@@ -539,9 +653,9 @@ function drd_drush_action_update_actions($action_name, $mode, $sid) {
         }
         $pos = strpos($action['description'], '. ');
         if (($pos > 0) && strlen($action['description']) > $pos) {
-          $label = trim(substr($action['description'], 0, $pos + 1));
+          $label = trim(drupal_substr($action['description'], 0, $pos + 1));
           $fields['info'] = array(
-            '#markup' => trim(substr($action['description'], $pos + 1)),
+            '#markup' => trim(drupal_substr($action['description'], $pos + 1)),
             '#weight' => -10,
           );
         }
@@ -549,9 +663,9 @@ function drd_drush_action_update_actions($action_name, $mode, $sid) {
           $label = $action['description'];
         }
         $drush_actions[$key] = array(
-          'category' => $actions['title'],
+          'category' => '|Drush|' . $actions['title'],
           'label' => $action['command'] . ': ' . $label,
-          'mode' => 'domain',
+          'mode' => ($action['bootstrap'] < 2) ? 'server' : 'domain',
           'drush' => TRUE,
           'fields' => $fields,
         );
@@ -566,30 +680,34 @@ function drd_drush_action_update_actions($action_name, $mode, $sid) {
 /**
  * @param string $action_name_long
  * @param string $mode
- * @param int $did
+ * @param int $id
  */
-function drd_drush_action_remote($action_name_long, $mode, $did) {
+function drd_drush_action_remote($action_name_long, $mode, $id) {
   $args = func_get_args();
   $action_name_long = array_shift($args);
   $mode = array_shift($args);
-  $did = array_shift($args);
-  $command = substr($action_name_long, 10);
+  $id = array_shift($args);
+  $command = drupal_substr($action_name_long, 10);
 
-  if ($mode != 'domain') {
-    // For now we only support domain related actions with drush.
+  $action = drd_actions($action_name_long);
+
+  if ($mode != $action['mode']) {
     return;
   }
 
-  $domain = drd_domain_load($did);
-  $server = drd_server_load($domain->sid);
-  $action = drd_actions($action_name_long);
-
-  $status = drd_action_remote('drd.status', 'domain', $did);
+  $server = drd_server_load($id, $mode);
+  $status = drd_action_remote('drd.status', $mode, $id);
   if (empty($status['drupal_root'])) {
-    //return;
-    $status['drupal_root'] = '/var/www/live/htdocs';
+    $status['drupal_root'] = '/var/www';
   }
-  $cmd = 'drush -y --uri=' . $domain->url . ' --root=' . $status['drupal_root'] . ' ' . $command;
+
+  if ($mode == 'domain') {
+    $domain = drd_domain_load($id);
+    $cmd = 'drush -y --uri=' . $domain->url . ' --root=' . $status['drupal_root'] . ' ' . $command;
+  }
+  else {
+    $cmd = 'drush -y --root=' . $status['drupal_root'] . ' ' . $command;
+  }
   foreach ($action['fields'] as $field) {
     $arg = array_shift($args);
     if (!empty($arg)) {
@@ -608,11 +726,207 @@ function drd_drush_action_remote($action_name_long, $mode, $did) {
   include_once 'drd.ssh2.inc';
   $connection = drd_ssh2_connect($server);
   if ($connection) {
+    drd_log($mode, $id, $cmd);
     $result = drd_ssh2_command($server, $connection, $cmd);
     if ($result) {
       $message = 'drush ' . $command . ': <pre>' . $result . '</pre>';
-      drd_set_message($domain, $message);
-      drd_store_message($mode, $did, 'status', $message);
+      if (isset($domain)) {
+        drd_set_message($domain, $message);
+      }
+      else {
+        drd_set_message($server, $message);
+      }
+      drd_store_message($mode, $id, 'status', $message);
     }
+  }
+}
+
+function drush_drd_core_add() {
+  _drd_drush_core_prepare(FALSE);
+}
+
+function drush_drd_core_update() {
+  _drd_drush_core_prepare(TRUE);
+}
+
+function _drd_drush_core_prepare($update) {
+  $args = drush_get_arguments();
+  if (count($args) > 1) {
+    $url = $args[1];
+  }
+  else {
+    drush_set_error(t('URL missing. Cancelled.'));
+    return;
+  }
+
+  include_once 'drd.server.inc';
+  $sid = 0;
+  if ($update) {
+    $server = drd_server_load_by_url($url);
+    if ($server) {
+      $sid = $server->sid;
+    }
+  }
+  $server = _drd_server_defaults($sid, $url);
+
+  list($auth_enabled, $auth_username, $auth_password) = _drd_http_header_prepare($server['http_headers']);
+  $values = array(
+    'name' => drush_get_option('name', $server['name']),
+    'url' => $url,
+    'tags' => drush_get_option('tags', _drd_tags_load('server', $server['sid'])),
+    'usessl' => drush_get_option('ssl', $server['usessl']),
+    'status' => $server['status'],
+    'remoteinstall' => drush_get_option('support-remote-installation', $server['remoteinstall']),
+    'aes_implementation' => drush_get_option('aes-implementation', $server['aes_impl']),
+    'aes_cipher' => drush_get_option('aes-cipher', $server['aes_cipher']),
+    'aes_iv' => drush_get_option('aes-cipher', $server['aes_iv']),
+    'ssh2_enable' => drush_get_option('ssh', $server['settings']['ssh2']['enable']),
+    'ssh2_host' => drush_get_option('ssh-host', $server['settings']['ssh2']['host']),
+    'ssh2_port' => drush_get_option('ssh-port', $server['settings']['ssh2']['port']),
+    'ssh2_auth_mode' => drush_get_option('ssh-auth-mode', $server['settings']['ssh2']['auth']['mode']),
+    'ssh2_auth_username' => drush_get_option('ssh-auth-username', $server['settings']['ssh2']['auth']['username']),
+    'ssh2_auth_password' => drush_get_option('ssh-auth-password', $server['settings']['ssh2']['auth']['password']),
+    'ssh2_auth_file_public_key' => drush_get_option('ssh-auth-public-key', $server['settings']['ssh2']['auth']['file_public_key']),
+    'ssh2_auth_file_private_key' => drush_get_option('ssh-auth-private-key', $server['settings']['ssh2']['auth']['file_private_key']),
+    'ssh2_auth_key_secret' => drush_get_option('ssh-auth-public-key-passphrase', $server['settings']['ssh2']['auth']['key_secret']),
+    'drush_enable' => drush_get_option('use-drush', $server['settings']['ssh2']['drush']),
+    'http_header_auth_enabled' => drush_get_option('http-header-auth', $auth_enabled),
+    'http_header_auth_username' => drush_get_option('http-header-auth-username', $auth_username),
+    'http_header_auth_password' => drush_get_option('http-header-auth-password', $auth_password),
+  );
+
+  drush_log('Validating core values.');
+  if (!_drd_server_validate($values, 'drush')) {
+    // Parameters are not valid. Output has already been generated.
+    drush_log('Core values not valid', 'error');
+    return;
+  }
+
+  drush_log('Saving core values.');
+  $success = _drd_server_save($values, $server, TRUE);
+  $ssh_connection = FALSE;
+  if (!$success) {
+    // Remote installation has failed, let's try through drush.
+    drush_log('Remote installation not possible, trying other means.');
+
+    // Let's see if we can use local drush to configure remote core.
+    drush_log('Trying option 1: installing drd_server and aes with drush.');
+
+    $alias = _drd_drush_get_alias($url);
+    if ($alias) {
+      drush_invoke_process($alias, 'pm-enable', array('aes', 'drd_server'));
+      $success = TRUE;
+    }
+
+    if (!$success) {
+      drush_log('Trying option 2: using SSH');
+      $server = drd_server_load_by_url($url);
+      $alias = _drd_drush_get_remote_alias($server);
+      if ($alias) {
+        $ssh_connection = drd_ssh2_connect($server);
+        drd_ssh2_command($server, $ssh_connection, 'drush ' . $alias . ' pm-enable aes drd_server');
+        $success = TRUE;
+      }
+    }
+
+  }
+
+  if (!$success) {
+    drupal_set_message('Remote installation and configuration not possible. Please follow instructions in your browser when going to DRD.', 'error');
+    return;
+  }
+
+  drush_log('Determine outgoing IP address.');
+  $ip = drush_get_option('ip', FALSE);
+  if (!$ip) {
+    $appspot = drupal_http_request('http://ip.appspot.com');
+    if ($appspot->code == 200) {
+      $ip = trim($appspot->data);
+    }
+  }
+  if (!$ip) {
+    drupal_set_message('Can not determine outgoing IP address, giving up!', 'error');
+    return;
+  }
+
+  $alias = $ssh_connection ? _drd_drush_get_remote_alias($url) : _drd_drush_get_alias($url);
+  if ($alias) {
+    drush_log('Reading allowed referer.');
+    if ($ssh_connection) {
+      $result = drd_ssh2_command($server, $ssh_connection, 'drush ' . $alias . ' variable-get drd_allowed_referer');
+      $refs = drupal_substr(trim($result), 22, -1);
+    }
+    else {
+      $result = drush_invoke_process($alias, 'variable-get', array('drd_allowed_referer'));
+      if (!isset($result['object']['drd_allowed_referer'])) {
+        drupal_set_message('Can not push IP address to the remote core using drush.', 'error');
+        return;
+      }
+      $refs = $result['object']['drd_allowed_referer'];
+    }
+    $refs = str_replace(',', ' ', $refs);
+    $refs = str_replace(';', ' ', $refs);
+    $referer = explode(' ', $refs);
+    if (!in_array($ip, $referer)) {
+      drush_log('Adding outgoing IP address to allowed referer.');
+      $referer[] = $ip;
+      $refs = implode(',', $referer);
+      if ($ssh_connection) {
+        drd_ssh2_command($server, $ssh_connection, 'drush ' . $alias . ' variable-set drd_allowed_referer ' . $refs);
+      }
+      else {
+        drush_invoke_process($alias, 'variable-set', array('drd_allowed_referer', $refs));
+      }
+    }
+  }
+  else {
+    $success = FALSE;
+  }
+
+  if ($success) {
+    drush_log('Push AES keys to remote core.');
+    $server = drd_server_load_by_url($url);
+    drd_update_aes($server->sid);
+    drush_log('Update domain list from core.');
+    drd_action('server', array($server->sid), 'drd.server.domains', FALSE);
+    drush_queue_run('drd');
+    $dids = drd_server_domains($server->sid);
+    drush_log('Update info for all domains of core.');
+    drd_action('domain', $dids, 'drd.info', FALSE);
+    drush_queue_run('drd');
+  }
+}
+
+function drush_drd_core_remove() {
+  $args = drush_get_arguments();
+  if (count($args) > 1) {
+    array_shift($args);
+    $sids = $args;
+  }
+  else {
+    drush_set_option('ask', TRUE);
+    $sids = drd_get_server_ids(_drd_drush_filter('server'));
+    if (!_drd_drush_ask_server_domain('server', $sids, 'Remove cores')) {
+      return;
+    }
+  }
+  $names = array();
+  $cores = array();
+  foreach ($sids as $sid) {
+    $server = drd_server_load($sid);
+    if (!empty($server->sid)) {
+      $names[] = $server->name;
+      $cores[] = $server->sid;
+    }
+  }
+  if (empty($cores)) {
+    return;
+  }
+  $core_names = implode(', ', $names);
+  if (!drush_confirm(t('Are you sure you want to remove the following core(s) and all their domains and historical data from DRD: !cores ? This can not be un-done!', array('!cores' => $core_names)))) {
+    return;
+  }
+  foreach ($cores as $sid) {
+    drd_action_server_delete('remove', 'server', $sid);
   }
 }

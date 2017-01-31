@@ -87,7 +87,7 @@ function drd_server_build_row($s) {
     $charts = module_exists('chart');
   }
 
-  $name = (strlen($s->name) > 35) ? substr($s->name, 0, 30) . '...' : $s->name;
+  $name = (strlen($s->name) > 35) ? drupal_substr($s->name, 0, 30) . '...' : $s->name;
   $count = drd_server_domains_count($s->sid);
   $warning_or = db_or()
     ->condition('d.status_w_health', 1)

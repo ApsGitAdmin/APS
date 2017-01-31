@@ -25,6 +25,7 @@ function drd_modules($mode = 'all', $sid = 0, $did = 0) {
   $query->addField('pr', 'details', 'pr_details');
   $query->addField('s', 'name', 'server_name');
   if ($sid) {
+    $query->innerJoin('drd_project_release_domain', 'prd', 'pr.rid = prd.rid');
     $query->condition('s.sid', $sid);
     $build['info'] = drd_server_info($sid);
   }
@@ -84,7 +85,7 @@ function drd_modules($mode = 'all', $sid = 0, $did = 0) {
     'update' => array('data' => ''),
   );
   foreach ($servers as $server) {
-    $header['s_' . $server->sid] = array('data' => '<span title="' . $server->server_name . '">' . substr($server->server_name, 0, 4) . '...</span>', 'class' => 'server');
+    $header['s_' . $server->sid] = array('data' => '<span title="' . $server->server_name . '">' . drupal_substr($server->server_name, 0, 4) . '...</span>', 'class' => 'server');
   }
 
   $rows = array();
@@ -119,35 +120,46 @@ function drd_modules($mode = 'all', $sid = 0, $did = 0) {
         $update = '';
         if (empty($info['ok'])) {
           $r = $install['details'][$version['version']]['recommended'];
-          if (empty($install['versions'][$r])) {
-            $data[$type][$pid]['versions'][$r]['details'] = unserialize(
-              db_select('drd_project_release', 'pr')
+          if (empty($r)) {
+            $update = 'error';
+          }
+          else {
+            if (empty($install['versions'][$r])) {
+              $recommended = db_select('drd_project_release', 'pr')
                 ->fields('pr', array('details'))
                 ->condition('pr.pid', $pid)
                 ->condition('pr.version', $r)
                 ->execute()
-                ->fetchField()
-            );
-            $install['versions'][$r] = $data[$type][$pid]['versions'][$r];
-          }
-          if (empty($install['versions'][$r])) {
-            $update = 'error';
-          }
-          else {
-            $update_details = $install['versions'][$r]['details'];
-            $label = empty($update_details['version']) ? 'unknown' : $update_details['version'];
-            $update_extras = '<span class="drd-display">' . drd_icon('show', 'info');
-            $update_extras .= '<div class="detail">';
-            $update_extras .= '<p>' . t('Notes') . l($link, $update_details['release_link'], array('html' => TRUE, 'external' => TRUE, 'attributes' => array('target' => '_blank'))) . '</p>';
-            $update_extras .= '<p>' . t('Date') . ': <strong>' . format_date($update_details['date']) . '</strong></p>';
-            $update_extras .= '<p>' . t('File size') . ': <strong>' . format_size($update_details['filesize']) . '</strong></p>';
-            $update_extras .= '<p>' . t('MD hash') . ': <strong>' . $update_details['mdhash'] . '</strong></p>';
-            if (!empty($update_details['terms']['Release type'])) {
-              $update_extras .= '<p>' . t('Release types') . ': <strong>' . implode(', ', $update_details['terms']['Release type']) . '</strong></p>';
+                ->fetchField();
+              if ($recommended) {
+                $data[$type][$pid]['versions'][$r]['details'] = unserialize($recommended);
+                $install['versions'][$r] = $data[$type][$pid]['versions'][$r];
+              }
             }
-            $update_extras .= '</div>';
-            $update_extras .= '</span>';
-            $update = l($label, $update_details['download_link']) . $update_extras;
+            if (empty($install['versions'][$r])) {
+              $update = 'error';
+            }
+            else {
+              $update_details = $install['versions'][$r]['details'];
+              $label = empty($update_details['version']) ? 'unknown' : $update_details['version'];
+              $update_extras = '<span class="drd-display">' . drd_icon('show', 'info');
+              $update_extras .= '<div class="detail">';
+              $update_extras .= '<p>' . t('Notes') . (empty($update_details['release_link']) ? '' : l($link, $update_details['release_link'], array(
+                  'html' => TRUE,
+                  'external' => TRUE,
+                  'attributes' => array('target' => '_blank')
+                ))) . '</p>';
+              $update_extras .= empty($update_details['date']) ? '' : '<p>' . t('Date') . ': <strong>' . format_date($update_details['date']) . '</strong></p>';
+              $update_extras .= empty($update_details['filesize']) ? '' : '<p>' . t('File size') . ': <strong>' . format_size($update_details['filesize']) . '</strong></p>';
+              $update_extras .= empty($update_details['mdhash']) ? '' : '<p>' . t('MD hash') . ': <strong>' . $update_details['mdhash'] . '</strong></p>';
+              if (!empty($update_details['terms']['Release type'])) {
+                $update_extras .= '<p>' . t('Release types') . ': <strong>' . implode(', ', $update_details['terms']['Release type']) . '</strong></p>';
+              }
+              $update_extras .= '</div>';
+              $update_extras .= '</span>';
+              $update = empty($update_details['download_link']) ? '' : l($label, $update_details['download_link']);
+              $update .= $update_extras;
+            }
           }
         }
 

@@ -1,6 +1,36 @@
 drd 7.x-2.x-dev
 ---------------
 
+drd 7.x-2.6, 2016-10-12
+-----------------------
+Issue #2491177 by Cyberschorsch: Generating a IV should respect the aes crypt implementation
+Issue #2780417 by dahousecat: Domain modules page incorectly returns not found
+Issue #2779363 by dahousecat: 401 error when action domain "DRD: remotely install/uninstall" used with authenication
+Issue #2777091 by dahousecat: Deleting a core from it's view tab causes loads of errors
+Issue #2655962: Upgrade path from D7 to D8, rebuild menu and enhance validity period for tokens to 30 minutes
+Issue #2655962: Upgrade path from D7 to D8, make the token unique by adding a timestamp
+Issue #2655962: Upgrade path from D7 to D8
+Issue #2592967 by jurgenhaas: Can't add new Drupal core - aes_config() undefined
+Issue #2592967: Can't add new Drupal core - aes_config() undefined
+Issue #2370845 by SteffenR: Heartbeat not working correctly due JS error
+Issue #2438045 by jurgenhaas: Uncaught TypeError: Cannot read property 'messages' of undefined
+Issue #2471204 by zvs: Warning: htmlspecialchars() [function.htmlspecialchars]: Invalid multibyte sequence in argument in check_plain()
+#2324063 Implement part 2 of http authentication
+#2382909 Avoid some warnings about missing indexes
+#2369569 Output domain blocks only on the respective domain detail tab
+#2332877 Implement SSH2 auth method through agent if ssh2_auth_agent() is available
+#2332877 Cleanup core adding via drush
+#2332877 Implement fallback to install DRD remotely over SSH if available
+#2332877 Adding and updating new cores via drush aliases completed
+#2332877 Implementing drush commands to add, update and remove cores from the DRD dashboard (work in progress)
+#2311355 Avoid warnings for modules with incomplete versioning info
+#2324063 Support HTTP headers for cores and domains, db table and editing for authorization completed
+#2322147 Fix the DRD message if a server based drush command was xecuted
+#2322827 Better implementation of Drush command as actions
+#2322147 Bug fix with action submits with field keys containing spaces
+#2322479 Action drd.server.domains does not provide SSL information
+#2322451 Module list shows to many items when filter is active
+
 drd 7.x-2.5, 2014-07-10
 -----------------------
 Exclude xmlrpc responses from Drush logging at the console

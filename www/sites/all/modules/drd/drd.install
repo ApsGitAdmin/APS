@@ -286,6 +286,46 @@ function drd_schema() {
     'primary key' => array('aid'),
   );
 
+  $schema['drd_http_header'] = array(
+    'description' => 'HTTP header values for cores and domains.',
+    'fields' => array(
+      'sid' => array(
+        'description' => 'The server for which this http header shall be used.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'did' => array(
+        'description' => 'The domain for which this http header shall be used.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'http_header_key' => array(
+        'description' => 'The name of the key.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'http_header_value' => array(
+        'description' => 'The value for that key.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'unique keys' => array(
+      'header_keys' => array('sid', 'did', 'http_header_key'),
+    ),
+    'indexes' => array(
+      'sid' => array('sid'),
+      'did' => array('sid'),
+      'http_header_key' => array('http_header_key'),
+    ),
+  );
+
   $schema['drd_term'] = array(
     'description' => 'Tagging for Drupal core and domains.',
     'fields' => array(
@@ -538,7 +578,7 @@ function drd_update_7200() {
   $servers = variable_get('drd_servers', array());
   foreach ($servers as $key => $server) {
     $values = array(
-      'name' => substr($server['url'], 0, 255),
+      'name' => drupal_substr($server['url'], 0, 255),
       'url' => $server['url'],
       'usessl' => 0,
       'status' => !$server['disabled'],
@@ -560,7 +600,7 @@ function drd_update_7200() {
     while ($cache = cache_get(_drd_cache_id($key, $i, 'DomainInfo'), 'cache_drd')) {
       $domain = array(
         'sid' => $sid,
-        'name' => substr($cache->data['value'][0]['content'], 0, 255),
+        'name' => drupal_substr($cache->data['value'][0]['content'], 0, 255),
         'url' => $cache->data['url'],
       );
       drupal_write_record('drd_domain', $domain);
@@ -780,4 +820,14 @@ function drd_update_7215() {
 function drd_update_7216() {
   $schema = drd_schema();
   db_change_field('drd_monitor_values', 'user_acounts', 'user_accounts', $schema['drd_monitor_values']['fields']['user_accounts']);
+}
+
+/**
+ * Install drd_http_header table
+ */
+function drd_update_7217() {
+  if (!db_table_exists('drd_http_header')) {
+    $schema = drd_schema();
+    db_create_table('drd_http_header', $schema['drd_http_header']);
+  }
 }

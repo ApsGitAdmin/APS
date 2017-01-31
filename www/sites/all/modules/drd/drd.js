@@ -85,7 +85,7 @@ Drupal.behaviors.drd = {
           }),
           dataType: 'html',
           complete: function (response) {
-            var data = Drupal.drd.parse(response.response);
+            var data = Drupal.drd.parse(response.responseText);
           },
           success: function () {
           },
@@ -112,7 +112,7 @@ Drupal.drd.queue = function() {
       processData: false,
       async: true,
       complete: function (response) {
-        var data = Drupal.drd.parse(response.response);
+        var data = Drupal.drd.parse(response.responseText);
         if (data.status == 'OK') {
           clearInterval(Drupal.settings.drd.queueRun);
           Drupal.settings.drd.queueCount = 5000;
@@ -132,7 +132,7 @@ Drupal.drd.info = function() {
     processData: false,
     async: true,
     complete: function (response) {
-      var data = Drupal.drd.parse(response.response);
+      var data = Drupal.drd.parse(response.responseText);
       var content = '&nbsp;';
       if (data.count == 0) {
         clearInterval(Drupal.settings.drd.queueInfo);
@@ -169,7 +169,7 @@ Drupal.drd.checkStatus = function(elem) {
     processData: false,
     async: true,
     complete: function (response) {
-      var data = Drupal.drd.parse(response.response);
+      var data = Drupal.drd.parse(response.responseText);
       $(elem).html(data.status);
     }
   });
@@ -185,7 +185,7 @@ Drupal.drd.heartbeat = function() {
       processData: false,
       async: true,
       complete: function (response) {
-        var data = Drupal.drd.parse(response.response);
+        var data = Drupal.drd.parse(response.responseText);
         $('.drd-heartbeat[oid="'+v+'"]').html(data.heartbeat);
       }
     });
@@ -199,6 +199,9 @@ Drupal.drd.parse = function(response) {
   }
   else {
     data = response;
+  }
+  if (data == undefined) {
+    return {status: ''};
   }
   if (data.messages !== undefined && data.messages !== '') {
     $('#drd-messages .content').append(data.messages);

@@ -1,6 +1,21 @@
 <?php
 
 /**
+ * Build the server edit page
+ *
+ * @param $sid
+ * @return array|mixed
+ */
+function drd_server_edit_page($sid) {
+  // If this server does not exist return page not found
+  if (drd_server_info($sid) === FALSE) {
+    drupal_not_found();
+    exit;
+  }
+  return drupal_get_form('drd_server_edit', $sid);
+}
+
+/**
  * Build the form to edit Drupal core properties.
  *
  * @param array $form
@@ -9,52 +24,7 @@
  * @return array
  */
 function drd_server_edit($form, &$form_state, $sid = 0) {
-  if ($sid) {
-    $server = (array) drd_server_load($sid);
-    if (is_string($server['settings'])) {
-      $server['settings'] = unserialize($server['settings']);
-    }
-  }
-  else {
-    $server = array(
-      'sid' => 0,
-      'name' => '',
-      'url' => '',
-      'usessl' => 0,
-      'status' => 1,
-      'remoteinstall' => 0,
-      'weight' => 0,
-      'aes_key' => '',
-      'aes_cipher' => '',
-      'aes_iv' => '',
-      'aes_impl' => '',
-      'drupalversion' => '',
-      'settings' => array(),
-    );
-  }
-  if (empty($server['aes_iv'])) {
-    $aes_iv_org = variable_get("aes_encryption_iv", '');
-    aes_make_iv(TRUE);
-    $server['aes_iv'] = variable_get("aes_encryption_iv", '');
-    variable_set("aes_encryption_iv", $aes_iv_org);
-  }
-  $server['settings'] = drupal_array_merge_deep(array(
-    'ssh2' => array(
-      'enable' => FALSE,
-      'host' => '',
-      'port' => 22,
-      'drush' => FALSE,
-      'auth' => array(
-        'mode' => 1,
-        'username' => '',
-        'password' => '',
-        'file_public_key' => '',
-        'file_private_key' => '',
-        'key_secret' => '',
-      ),
-    ),
-  ), $server['settings']);
-
+  $server = _drd_server_defaults($sid);
   $form['#server'] = $server;
 
   $form['name'] = array(
@@ -73,6 +43,8 @@ function drd_server_edit($form, &$form_state, $sid = 0) {
   );
 
   _drd_tags_build_form('server', $server['sid'], $form);
+
+  $form += _drd_http_header_build_form('server', $server['http_headers']);
 
   $form['usessl'] = array(
     '#type' => 'checkbox',
@@ -102,15 +74,16 @@ function drd_server_edit($form, &$form_state, $sid = 0) {
     '#prefix' => '<div class="messages warning">',
     '#suffix' => '</div>',
   );
+  module_load_include('inc', 'aes', 'aes.admin');
   $form += aes_config();
-  unset($form['aes']['aes_convert']);
-  unset($form['aes']['view_method']);
-  unset($form['aes']['aes_key_storage_method']);
-  unset($form['aes']['aes_key_path']);
-  unset($form['aes']['submit']);
-  $form['aes']['aes_implementation']['#default_value'] = $server['aes_impl'];
-  $form['aes']['aes_cipher']['#default_value'] = $server['aes_cipher'];
-  $form['aes']['aes_iv'] = array(
+  unset($form['aes_convert']);
+  unset($form['view_method']);
+  unset($form['aes_key_storage_method']);
+  unset($form['aes_key_path']);
+  unset($form['submit']);
+  $form['aes_implementation']['#default_value'] = $server['aes_impl'];
+  $form['aes_cipher']['#default_value'] = $server['aes_cipher'];
+  $form['aes_iv'] = array(
     '#type' => 'textfield',
     '#title' => 'AES IV',
     '#default_value' => $server['aes_iv'],
@@ -140,13 +113,17 @@ function drd_server_edit($form, &$form_state, $sid = 0) {
     '#title' => 'Hostname or IP',
     '#default_value' => $server['settings']['ssh2']['host'],
   );
+  $ssh_auth_options = array(
+    '1' => t('Username and password'),
+    '2' => t('Public key'),
+  );
+  if (function_exists('ssh2_auth_agent')) {
+    $ssh_auth_options['3'] = t('Agent');
+  }
   $form['ssh2']['settings']['ssh2_auth_mode'] = array(
     '#type' => 'select',
     '#title' => t('Auth mode'),
-    '#options' => array(
-      '1' => t('Username and password'),
-      '2' => t('Public key'),
-    ),
+    '#options' => $ssh_auth_options,
     '#default_value' => $server['settings']['ssh2']['auth']['mode'],
   );
   $form['ssh2']['settings']['ssh2_port'] = array(
@@ -223,40 +200,199 @@ function drd_server_edit($form, &$form_state, $sid = 0) {
  * @param array $form_state
  */
 function drd_server_edit_validate($form, &$form_state) {
+  _drd_server_validate($form_state['values']);
+}
+
+/**
+ * Submits the edited Drupal core properties and installs the Drupal core if required.
+ *
+ * @param array $form
+ * @param array $form_state
+ */
+function drd_server_edit_submit($form, &$form_state) {
+  $values = $form_state['values'];
+  $server = $form['#server'];
+  $goto = _drd_server_save($values, $server);
+
+  if (!empty($goto)) {
+    drupal_goto($goto);
+  }
+}
+
+/**
+ * @param int $sid
+ * @return array
+ */
+function drd_server_view($sid) {
+  $build['info'] = drd_server_info($sid);
+
+  // If this server does not exist return page not found
+  if ($build['info'] === FALSE) {
+    drupal_not_found();
+    exit;
+  }
+
+  $url = drd_url_by_id('server', $sid);
+  $output = '';
+  drd_info('server', $sid, $url, $output);
+  $form = drupal_get_form('drd_action_form', 'server', $sid);
+  $build['actions_form'] = array(
+    '#markup' => drupal_render($form),
+  );
+  $build['detail'] = array(
+    '#markup' => $output,
+  );
+
+  return $build;
+}
+
+/**
+ * @param int $sid
+ * @return array
+ */
+function drd_server_view_heartbeat($sid) {
+  $build['info'] = drd_server_info($sid);
+
+  // If this server does not exist return page not found
+  if ($build['info'] === FALSE) {
+    drupal_not_found();
+    exit;
+  }
+
+  include_once('drd.monitor.inc');
+
+  $url = drd_url_by_id('server', $sid);
+  $output = '';
+  drd_charts('server', $sid, $url, $output);
+  $build['detail'] = array(
+    '#markup' => $output,
+  );
+
+  return $build;
+}
+
+/** ======================================================================
+ *
+ * Helper functions
+ *
+ */
+
+/**
+ * Internal callback to determine a fully propagated array with server values.
+ * @param int $sid
+ * @param string $name
+ * @return array
+ */
+function _drd_server_defaults($sid = 0, $name = '') {
+  if ($sid) {
+    $server = (array) drd_server_load($sid);
+    if (is_string($server['settings'])) {
+      $server['settings'] = unserialize($server['settings']);
+    }
+  }
+  else {
+    module_load_include('inc', 'aes', 'aes.admin');
+    $aes_default = aes_config();
+    $server = array(
+      'sid' => 0,
+      'name' => $name,
+      'url' => '',
+      'usessl' => 0,
+      'status' => 1,
+      'remoteinstall' => 0,
+      'weight' => 0,
+      'aes_key' => '',
+      'aes_cipher' => $aes_default['aes_cipher']['#default_value'],
+      'aes_iv' => '',
+      'aes_impl' => $aes_default['aes_implementation']['#default_value'],
+      'drupalversion' => '',
+      'settings' => array(),
+      'http_headers' => array(),
+    );
+  }
+  if (empty($server['aes_iv'])) {
+    $server['aes_iv'] = _drd_server_aes_init_iv();
+  }
+  $server['settings'] = drupal_array_merge_deep(array(
+    'ssh2' => array(
+      'enable' => FALSE,
+      'host' => '',
+      'port' => 22,
+      'drush' => FALSE,
+      'auth' => array(
+        'mode' => 1,
+        'username' => '',
+        'password' => '',
+        'file_public_key' => '',
+        'file_private_key' => '',
+        'key_secret' => '',
+      ),
+    ),
+  ), $server['settings']);
+
+  return $server;
+}
+
+/**
+ * Internal callback to generate an IV for AES encryption without overwriting
+ * a possible IV for the general usage of the AES module.
+ *
+ * @return string
+ */
+function _drd_server_aes_init_iv() {
+  $aes_iv_org = variable_get("aes_encryption_iv", '');
+  aes_make_iv();
+  $iv = variable_get("aes_encryption_iv", '');
+  variable_set("aes_encryption_iv", $aes_iv_org);
+  return $iv;
+}
+
+/**
+ * Internal callback to validate all server values and to either output possible
+ * error as form errors if the validation was called from the form validation
+ * context or as drush messages if called from drush.
+ *
+ * @param array $values
+ * @param string $output
+ * @return bool
+ */
+function _drd_server_validate($values, $output = 'form') {
   // Try to validate the URL
-  $url = $form_state['values']['url'];
-  $usessl = $form_state['values']['usessl'];
+  $url = $values['url'];
+  $usessl = $values['usessl'];
   $valid = TRUE;
   if (strpos($url, '://') !== FALSE) {
-    form_set_error('url', t('The URL can not contain a the protocol, i.e. do not input http:// at the beginning of the URL.'));
+    _drd_server_validate_output($output, 'url', t('The URL can not contain a the protocol, i.e. do not input http:// at the beginning of the URL.'));
     $valid = FALSE;
   }
   if (strpos($url, ' ') !== FALSE) {
-    form_set_error('url', t('The URL can not contain space characters.'));
+    _drd_server_validate_output($output, 'url', t('The URL can not contain space characters.'));
     $valid = FALSE;
   }
   if (strpos($url, '/') === 0) {
-    form_set_error('url', t('The URL should not contain leading slashes.'));
+    _drd_server_validate_output($output, 'url', t('The URL should not contain leading slashes.'));
     $valid = FALSE;
   }
-  if (!empty($url) && substr($url, -1) == '/') {
-    form_set_error('url', t('The URL should not contain trailing slashes.'));
+  if (!empty($url) && drupal_substr($url, -1) == '/') {
+    _drd_server_validate_output($output, 'url', t('The URL should not contain trailing slashes.'));
     $valid = FALSE;
   }
   if (empty($url)) {
-    form_set_error('url', t('The URL can not be empty.'));
+    _drd_server_validate_output($output, 'url', t('The URL can not be empty.'));
     $valid = FALSE;
   }
   if ($valid) {
     $url = ($usessl ? 'https://' : 'http://') . $url;
     try {
-      $options = array('timeout' => 300, 'max_redirects' => 0);
+      $dummy = new stdClass();
+      $dummy->http_headers = _drd_http_header_extract($values);
+      $options = _drd_http_default_options($dummy);
       $output = _drd_xmlrpc($url . '/xmlrpc.php', 'system.getCapabilities', array(), $options);
       if (empty($output['xmlrpc'])) {
         $error = xmlrpc_error();
         if ($error->code == 302) {
           $new_url = str_replace('/xmlrpc.php', '', $error->message);
-          form_set_error('url', t('Your URL %url redirects to %target, please adjust your settings accordingly.', array('%url' => $url, '%target' => $new_url)));
+          _drd_server_validate_output($output, 'url', t('Your URL %url redirects to %target, please adjust your settings accordingly.', array('%url' => $url, '%target' => $new_url)));
           $url = $new_url;
         }
         else {
@@ -269,11 +405,11 @@ function drd_server_edit_validate($form, &$form_state) {
       $valid = FALSE;
     }
     if (!$valid) {
-      form_set_error('url', t('Failed to connect to the URL %url.', array('%url' => $url)));
+      _drd_server_validate_output($output, 'url', t('Failed to connect to the URL %url.', array('%url' => $url)));
     }
     else {
       // Check the remote installation support
-      if ($form_state['values']['remoteinstall']) {
+      if ($values['remoteinstall']) {
         $valid = TRUE;
         $url .= '/drd_server.install.php';
         try {
@@ -286,29 +422,53 @@ function drd_server_edit_validate($form, &$form_state) {
           $valid = FALSE;
         }
         if (!$valid) {
-          form_set_error('remoteinstall', t('Remote installation file drd_server.install.php not available on this domain.'));
+          _drd_server_validate_output($output, 'remoteinstall', t('Remote installation file drd_server.install.php not available on this domain.'));
         }
       }
     }
   }
 
-  if (!empty($form_state['values']['aes_key'])) {
-    if ($form_state['values']['aes_key'] !== $form_state['values']['aes_key_c']) {
-      form_set_error('aes_key', t("The encryption keys didn't match."));
+  if (!empty($values['aes_key'])) {
+    if ($values['aes_key'] !== $values['aes_key_c']) {
+      _drd_server_validate_output($output, 'aes_key', t("The encryption keys didn't match."));
     }
+  }
+
+  return $valid;
+}
+
+/**
+ * Internal callback called by _drd_server_validate() to generate messages as
+ * form errors or drush messages.
+ *
+ * @param string $output
+ * @param string $field
+ * @param string $message
+ */
+function _drd_server_validate_output($output, $field, $message) {
+  if ($output == 'form') {
+    form_set_error($field, $message);
+  }
+  else if ($output == 'drush') {
+    drush_set_error($message);
   }
 }
 
 /**
- * Submits the edited Drupal core properties and installs the Drupal core if required.
+ * Internal callback to receive all validated server values to create or update
+ * server values and perform additional tasks required to utilize that server
+ * in the dashboard.
  *
- * @param array $form
- * @param array $form_state
+ * @param array $values
+ * @param array $server
+ * @param bool $is_drush
+ * @return bool|string
  */
-function drd_server_edit_submit($form, &$form_state) {
+function _drd_server_save($values, $server, $is_drush = FALSE) {
   $changed = FALSE;
-  $values = $form_state['values'];
-  $server = $form['#server'];
+  $goto = FALSE;
+  $remote_update = FALSE;
+
   $server['name'] = $values['name'];
   $server['url'] = $values['url'];
   $server['usessl'] = $values['usessl'];
@@ -317,6 +477,9 @@ function drd_server_edit_submit($form, &$form_state) {
   $server['aes_impl'] = $values['aes_implementation'];
   $server['aes_cipher'] = $values['aes_cipher'];
   $server['aes_iv'] = $values['aes_iv'];
+
+  $http_headers_old = isset($server['http_headers']) ? $server['http_headers'] : array();
+  unset($server['http_headers']);
 
   if (empty($values['ssh2_auth_password'])) {
     $values['ssh2_auth_password'] = $server['settings']['ssh2']['auth']['password'];
@@ -341,7 +504,7 @@ function drd_server_edit_submit($form, &$form_state) {
     ),
   );
 
-  if (!empty($form_state['values']['aes_key'])) {
+  if (!empty($values['aes_key'])) {
     $changed = ($server['aes_key'] !== $values['aes_key']);
     $server['aes_key'] = $values['aes_key'];
   }
@@ -366,32 +529,44 @@ function drd_server_edit_submit($form, &$form_state) {
       $result = drd_install_drd_server('install server', 'server', $server['sid'], 0, FALSE);
     }
     else {
-      $result = t('This Drupal core does not support remote installation of the drd_server module. If you want to support remote installation, go to your remote Drupal core, move the file drd_server.install.php.txt to the Drupal core root directory and rename it to drd_server.install.php! After that, change the setting here for this Drupal core and turn remote installation on.');
+      $result = $is_drush ? FALSE : t('This Drupal core does not support remote installation of the drd_server module. If you want to support remote installation, go to your remote Drupal core, move the file drd_server.install.php.txt to the Drupal core root directory and rename it to drd_server.install.php! After that, change the setting here for this Drupal core and turn remote installation on.');
     }
     if (!$result) {
-      drd_set_message($server, 'Drupal core installation failed, please check manually.', 'error');
+      if (!$is_drush) {
+        drd_set_message($server, 'Drupal core installation failed, please check manually.', 'error');
+      }
     }
     else if ($result == 'Either module DRD_SERVER or AES can not be enabled.') {
-      drd_set_message($server, $result, 'error');
+      if (!$is_drush) {
+        drd_set_message($server, $result, 'error');
+      }
+    }
+    else if ($is_drush) {
+      $remote_update = TRUE;
     }
     else {
-      drd_set_message((object)$server, $result);
+      drd_set_message((object) $server, $result);
       $query = drupal_get_destination();
       $query['goto'] = '1';
       $query['destination'] = 'admin/drd';
       $query['drd-extras'] = '1';
       $link = l('here', 'admin/drd/server/' . $server['sid'] . '/pushaes', array('query' => $query));
-      drd_set_message((object)$server, 'After that, ...');
-      drd_set_message((object)$server, '... either click ' . $link . ' to push the AES keys to the Drupal core.');
-      drd_set_message((object)$server, '... or edit the remote AES keys manually: Implementation = "' . $server['aes_impl'] . '", Cipher = "' . $server['aes_cipher'] . '", Key = "' . $server['aes_key'] . '", IV = "' . $server['aes_iv'] . '"');
+      drd_set_message((object) $server, 'After that, ...');
+      drd_set_message((object) $server, '... either click ' . $link . ' to push the AES keys to the Drupal core.');
+      drd_set_message((object) $server, '... or edit the remote AES keys manually: Implementation = "' . $server['aes_impl'] . '", Cipher = "' . $server['aes_cipher'] . '", Key = "' . $server['aes_key'] . '", IV = "' . $server['aes_iv'] . '"');
     }
     $goto = 'admin/drd';
   }
+
+  _drd_http_header_save($values, $http_headers_old, $server['sid'], 0);
 
   if (isset($values['tags'])) {
     _drd_tags_save('server', $server['sid'], $values['tags']);
   }
 
+  if ($is_drush) {
+    return $remote_update;
+  }
   if ($changed) {
     drd_update_aes($server['sid']);
   }
@@ -399,46 +574,5 @@ function drd_server_edit_submit($form, &$form_state) {
     drd_action_remote('drd.config.server.save', 'server', $server['sid'], $values);
   }
 
-  if (!empty($goto)) {
-    drupal_goto($goto);
-  }
-}
-
-/**
- * @param int $sid
- * @return array
- */
-function drd_server_view($sid) {
-  $build['info'] = drd_server_info($sid);
-
-  $url = drd_url_by_id('server', $sid);
-  $output = '';
-  drd_info('server', $sid, $url, $output);
-  $form = drupal_get_form('drd_action_form', 'server', $sid);
-  $build['actions_form'] = array(
-    '#markup' => drupal_render($form),
-  );
-  $build['detail'] = array(
-    '#markup' => $output,
-  );
-
-  return $build;
-}
-
-/**
- * @param int $sid
- * @return array
- */
-function drd_server_view_heartbeat($sid) {
-  include_once('drd.monitor.inc');
-  $build['info'] = drd_server_info($sid);
-
-  $url = drd_url_by_id('server', $sid);
-  $output = '';
-  drd_charts('server', $sid, $url, $output);
-  $build['detail'] = array(
-    '#markup' => $output,
-  );
-
-  return $build;
+  return $goto;
 }

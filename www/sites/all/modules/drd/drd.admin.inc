@@ -208,6 +208,7 @@ function drd_admin_reset_projects($form, $form_state) {
  * @param array $form_state
  */
 function drd_admin_reset_projects_submit($form, $form_state) {
+  db_truncate('drd_project_release_server')->execute();
   db_truncate('drd_project_release_domain')->execute();
   db_truncate('drd_project_release')->execute();
   db_truncate('drd_project')->execute();

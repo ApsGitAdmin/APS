@@ -186,6 +186,13 @@ function drd_permission() {
  */
 function drd_menu() {
   $items = array();
+  $items['drd/migrate2d8'] = array(
+    'title' => 'Prepare domains for DRD D8 migration',
+    'page callback' => 'drd_migrate_d8',
+    'access arguments' => array('administer drd'),
+    'file' => 'drd.migrate.inc',
+    'type' => MENU_CALLBACK,
+  );
   $items['drd/autocomplete/%/%'] = array(
     'title' => 'Autocomplete Callback',
     'page callback' => 'drd_autocomplete',
@@ -320,8 +327,8 @@ function drd_menu() {
   );
   $items['admin/drd/server/%/edit'] = array(
     'title' => 'Edit',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('drd_server_edit', 3),
+    'page callback' => 'drd_server_edit_page',
+    'page arguments' => array(3),
     'access arguments' => array('administer drd'),
     'file' => 'drd.server.inc',
     'type' => MENU_LOCAL_TASK,
@@ -680,6 +687,7 @@ function drd_action($mode, $ids, $action_name, $goto = TRUE) {
     $values = array();
     if (!empty($action['fields'])) {
       foreach ($action['fields'] as $key => $def) {
+        $key = str_replace(' ', '-', $key);
         # Support FAPI file field
         if (isset($def['#type']) && $def['#type'] == 'file') {
           if (!empty($_FILES['files']['tmp_name'][$key])) {
@@ -887,7 +895,7 @@ function drd_action_remote($action_name, $mode, $id) {
     }
   }
   drd_log($mode, $id, $action_name, 'remote');
-  $options = array('timeout' => 300, 'max_redirects' => 0);
+  $options = _drd_http_default_options($server_domain);
   $output = _drd_xmlrpc($url, $action_name, $args, $options);
   if ($output === FALSE) {
     $error = xmlrpc_error();
@@ -915,7 +923,7 @@ function drd_action_remote($action_name, $mode, $id) {
     return;
   }
 
-  if (substr($output, 0, 1) === '{' && substr($output, -1) === '}') {
+  if (drupal_substr($output, 0, 1) === '{' && drupal_substr($output, -1) === '}') {
     // not encrypted
   }
   else {
@@ -1095,12 +1103,22 @@ function drd_action_set_value($action_name, $mode, $id, $field, $flag) {
  * @param int $id
  */
 function drd_action_server_delete($action_name, $mode, $id) {
+  $server = drd_server_load($id);
+  $dids = drd_server_domains($id);
+  if (!empty($dids)) {
+    _drd_domain_delete($dids);
+  }
+  db_delete('drd_project_release_server')
+    ->condition('sid', $id)
+    ->execute();
+  db_delete('drd_http_header')
+    ->condition('sid', $id)
+    ->execute();
   db_delete('drd_server')
     ->condition('sid', $id)
     ->execute();
-  db_delete('drd_domain')
-    ->condition('sid', $id)
-    ->execute();
+  drupal_set_message(t('The server %name has been deleted.', array('%name' => $server->name)));
+  drupal_goto('admin/drd');
 }
 
 /**
@@ -1115,7 +1133,7 @@ function drd_action_server_domains($server, $domains) {
     return;
   }
   $current_domains = db_select('drd_domain', 'd')
-      ->fields('d', array('did', 'url', 'installed'))
+      ->fields('d', array('did', 'url', 'installed', 'usessl'))
       ->condition('d.sid', $server->sid)
       ->execute()
       ->fetchAll();
@@ -1132,13 +1150,19 @@ function drd_action_server_domains($server, $domains) {
             ->condition('did', $current_domain->did)
             ->execute();
         }
+        if (!isset($domains[$key]['uses ssl']) || $domains[$key]['uses ssl'] != $current_domain->usessl) {
+          $usessl = isset($domains[$key]['uses ssl']) ? (int)$domains[$key]['uses ssl'] : 0;
+          db_update('drd_domain')
+            ->fields(array('usessl' => $usessl))
+            ->condition('did', $current_domain->did)
+            ->execute();
+        }
         break;
       }
     }
     if (empty($current_key) || empty($domains[$current_key]['did'])) {
       // Domain doesn't exist anymore, delete it from the database
-      db_delete('drd_domain')->condition('did', $current_domain->did)->execute();
-      db_delete('drd_domain_alias')->condition('did', $current_domain->did)->execute();
+      _drd_domain_delete($current_domain->did);
       drd_store_message('server', $server->sid, 'status', t('Domain %url removed', array('%url' => $current_domain->url)));
     }
   }
@@ -1152,6 +1176,7 @@ function drd_action_server_domains($server, $domains) {
         'name' => $domain['url'],
         'url' => $domain['url'],
         'installed' => $domain['drd installed'],
+        'usessl' => $domain['uses ssl'],
       );
       drupal_write_record('drd_domain', $domain);
       $domain['aliases'] = $aliases;
@@ -1248,6 +1273,7 @@ function drd_action_build_form(&$form, $mode, $id = 0) {
         ),
       );
       foreach ($op['fields'] as $key => $element) {
+        $key = str_replace(' ', '-', $key);
         if (!empty($element['#markup']) || $element['#type'] != 'hidden') {
           $form['options']['drd_action_' . $action][$key] = $element;
         }
@@ -1337,7 +1363,8 @@ function drd_install_drd_server($action_name, $mode, $id, $dummy, $flag) {
   $extra .= '&base_url=' . $url;
   $url .= '/drd_server.install.php?' . $mode . $extra;
   try {
-    $result = drupal_http_request($url);
+    $options = (empty($domain) || empty($domain->http_headers)) ? array() : array('headers' => $domain->http_headers);
+    $result = drupal_http_request($url, $options);
     if ($result->code == 200 && $action_name == 'install server') {
       return $result->data;
     }
@@ -1534,6 +1561,9 @@ function drd_server_load($sid, $mode = 'server') {
         ->execute()
         ->fetch();
   }
+  if ($server === FALSE) {
+    return FALSE;
+  }
   if (empty($server->settings)) {
     $server->settings = array();
   }
@@ -1543,7 +1573,20 @@ function drd_server_load($sid, $mode = 'server') {
   if (!isset($server->settings['ignore'])) {
     $server->settings['ignore'] = array();
   }
+  $server->http_headers = _drd_http_header_load($server->sid);
   return $server;
+}
+
+/**
+ * @param $url
+ * @return bool|stdClass
+ */
+function drd_server_load_by_url($url) {
+  $domain = drd_domain_load_by_url($url);
+  if ($domain) {
+    return drd_server_load($domain->sid);
+  }
+  return FALSE;
 }
 
 /**
@@ -1605,6 +1648,8 @@ function drd_domain_load($did) {
   if (!isset($domain->settings['ignore'])) {
     $domain->settings['ignore'] = array();
   }
+  $domain->http_headers = _drd_http_header_load($domain->sid, $domain->did);
+  $domain->http_headers_server = _drd_http_header_load($domain->sid);
   return $domain;
 }
 
@@ -1629,8 +1674,9 @@ function drd_domain_load_by_url($url) {
       drupal_set_message('Critical error: there is no domain for the url ' . $url, 'error');
       return FALSE;
     }
+    $domain->installed = TRUE;
     drupal_write_record('drd_domain', $domain);
-    return $domain;
+    $did = $domain->did;
   }
   return drd_domain_load($did);
 }
@@ -1774,7 +1820,7 @@ function drd_ajax($mode, $action, $id) {
       }
       db_update('drd_' . $mode)
         ->fields($update)
-        ->condition(substr($mode, 0, 1) . 'id', $id)
+        ->condition(drupal_substr($mode, 0, 1) . 'id', $id)
         ->execute();
       $refresh = $id;
     }
@@ -1799,7 +1845,7 @@ function drd_ajax($mode, $action, $id) {
   if ($refresh) {
     include_once('drd.' . $mode . '.pages.inc');
     $function = 'drd_' . $mode . '_build_row';
-    $obj = db_select('drd_' . $mode, 't')->fields('t')->condition('t.' . substr($mode, 0, 1) . 'id', $refresh)->execute()->fetch();
+    $obj = db_select('drd_' . $mode, 't')->fields('t')->condition('t.' . drupal_substr($mode, 0, 1) . 'id', $refresh)->execute()->fetch();
     $row = $function($obj);
     $output['refresh_id'] = $row['#attributes']['id'];
     $output['refresh_data'] = $row;
@@ -1998,7 +2044,7 @@ function drd_info($mode, $id, $url, &$output, $sub_mode = 'status') {
   }
 
   // Retrieve blocks from domain
-  if ($mode == 'domain') {
+  if ($mode == 'domain' && $sub_mode == 'block') {
     $output .= drd_action_remote('drd.retrieve.blocks', 'domain', $id);
   }
 
@@ -2072,6 +2118,9 @@ function drd_server_info($s) {
   }
   else {
     $server = drd_server_load($s);
+  }
+  if ($server === FALSE) {
+    return FALSE;
   }
   if (empty($server)) {
     $serverinfo = t('List contains domains from multiple servers.');
@@ -2198,6 +2247,40 @@ function theme_drd_heartbeat($variables) {
  */
 
 /**
+ * Delete one or many domain(s) including all records from related tables.
+ *
+ * @param int/array $did
+ */
+function _drd_domain_delete($did) {
+  db_delete('drd_project_release_domain')
+    ->condition('did', $did)
+    ->execute();
+  db_delete('drd_domain_alias')
+    ->condition('did', $did)
+    ->execute();
+  db_delete('drd_domain')
+    ->condition('did', $did)
+    ->execute();
+}
+
+/**
+ * Fetch all headers for a server or a domain.
+ *
+ * @param int $sid
+ * @param int $did
+ * @return array
+ */
+function _drd_http_header_load($sid, $did = 0) {
+  return db_select('drd_http_header', 'h')
+    ->fields('h', array('http_header_key', 'http_header_value'))
+    ->condition('h.sid', $sid)
+    ->condition('h.did', array(0, $did))
+    ->orderBy('h.did')
+    ->execute()
+    ->fetchAllKeyed();
+}
+
+/**
  * Determine the cache id for the given parameters.
  *
  * @param string $mode
@@ -2224,6 +2307,29 @@ function _drd_call_user_func_array($mode, $id, $function, $args, $follower) {
   }
 }
 
+/**
+ * Prepare http request headers
+ *
+ * @param $object
+ *  Either a server or domain object that may contain http_headers and/or
+ *  http_headers_server entries as arrays.
+ *
+ * @return array
+ */
+function _drd_http_default_options($object) {
+  $options = array('timeout' => 300, 'max_redirects' => 0);
+  if (!empty($object->http_headers_server)) {
+    foreach ($object->http_headers_server as $key => $value) {
+      $options['headers'][$key] = $value;
+    }
+  }
+  if (!empty($object->http_headers)) {
+    foreach ($object->http_headers as $key => $value) {
+      $options['headers'][$key] = $value;
+    }
+  }
+  return $options;
+}
 /**
  * DRD replacement for the Drupal core _xmlrpc() function.
  *
@@ -2284,35 +2390,185 @@ function _drd_variables_block($vars) {
   return '<pre>'.@print_r($vars, TRUE).'</pre>';
 }
 
+function _drd_http_header_prepare($headers) {
+  $auth_username = '';
+  $auth_password = '';
+  $auth_enabled = isset($headers['Authorization']);
+  if ($auth_enabled && !empty($headers['Authorization'])) {
+    list($auth_username, $auth_password) = explode(':', base64_decode(drupal_substr($headers['Authorization'], 6)));
+  }
+  return array($auth_enabled, $auth_username, $auth_password);
+}
+
+/**
+ * @param string $mode
+ * @param array $headers
+ * @param array $headers_server
+ * @return array
+ */
+function _drd_http_header_build_form($mode, $headers, $headers_server = array()) {
+  $form = array();
+
+  $form['http_header'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('HTTP Header'),
+  );
+  $form['http_header']['auth'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Authorization'),
+  );
+  list($auth_enabled, $auth_username, $auth_password) = _drd_http_header_prepare($headers);
+  if ($mode == 'server') {
+    $form['http_header']['auth']['http_header_auth_enabled'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enabled'),
+      '#default_value' => $auth_enabled,
+    );
+    $form['http_header']['auth']['values'] = array(
+      '#type' => 'container',
+      '#states' => array(
+        'invisible' => array(
+          'input[name="http_header_auth_enabled"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
+  }
+  else {
+    $auth_mode = 0;
+    if ($auth_enabled) {
+      if (empty($headers_server['Authorization']) || ($headers_server['Authorization'] != $headers['Authorization'])) {
+        $auth_mode = empty($headers['Authorization']) ? 2 : 1;
+      }
+    }
+    $form['http_header']['auth']['http_header_auth_enabled'] = array(
+      '#type' => 'radios',
+      '#options' => array(
+        '0' => t('Use core settings'),
+        '1' => t('Enable and define username/password'),
+        '2' => t('Disable (regardless of core setting)'),
+      ),
+      '#default_value' => $auth_mode,
+    );
+    $form['http_header']['auth']['values'] = array(
+      '#type' => 'container',
+      '#states' => array(
+        'visible' => array(
+          'input[name="http_header_auth_enabled"]' => array('value' => 1),
+        ),
+      ),
+    );
+  }
+  $form['http_header']['auth']['values']['http_header_auth_username'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Username'),
+    '#default_value' => $auth_username,
+  );
+  $form['http_header']['auth']['values']['http_header_auth_password'] = array(
+    '#type' => 'password',
+    '#title' => t('Password'),
+    '#default_value' => $auth_password,
+  );
+
+  return $form;
+}
+
+/**
+ * @param $values
+ * @return array
+ */
+function _drd_http_header_extract($values) {
+  $result = array();
+  if ($values['http_header_auth_enabled']) {
+    $result['Authorization'] = 'Basic ' . base64_encode($values['http_header_auth_username'] . ':' . $values['http_header_auth_password']);
+  }
+  return $result;
+}
+
+/**
+ * @param array $values
+ * @param array $old_values
+ * @param int $sid
+ * @param int $did
+ */
+function _drd_http_header_save($values, $old_values, $sid, $did = 0) {
+  if ($values['http_header_auth_enabled']) {
+    if ($did > 0 && $values['http_header_auth_enabled'] == 2) {
+      // This is a domain disabling auth explicitly
+      $auth_value = '';
+      $changed = TRUE;
+    }
+    else {
+      $auth_value = 'Basic ' . base64_encode($values['http_header_auth_username'] . ':' . $values['http_header_auth_password']);
+      if (isset($old_values['Authorization'])) {
+        list($old_auth_username, $old_auth_password) = explode(':', base64_decode(drupal_substr($old_values['Authorization'], 6)));
+        $changed = (($old_auth_username != $values['http_header_auth_username']) || !empty($values['http_header_auth_password']));
+      }
+      else {
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $key = $value = array(
+        'sid' => $sid,
+        'did' => $did,
+        'http_header_key' => 'Authorization',
+      );
+      $value['http_header_value'] = $auth_value;
+      db_merge('drd_http_header')
+        ->key($key)
+        ->fields($value)
+        ->execute();
+    }
+  }
+  else {
+    db_delete('drd_http_header')
+      ->condition('sid', $sid)
+      ->condition('did', $did)
+      ->condition('http_header_key', 'Authorization')
+      ->execute();
+  }
+}
+
+/**
+ * @param string $mode
+ * @param int $oid
+ * @return string
+ */
+function _drd_tags_load($mode, $oid) {
+  if ($oid && module_exists('taxonomy')) {
+    $vocabulary = taxonomy_vocabulary_machine_name_load('drd');
+    if ($vocabulary) {
+      $tids = db_select('drd_term', 't')
+        ->fields('t', array('tid'))
+        ->condition('t.mode', $mode)
+        ->condition('t.oid', $oid)
+        ->execute()
+        ->fetchAllKeyed(0, 0);
+      $terms = taxonomy_term_load_multiple(array_keys($tids));
+      $term_data = array();
+      foreach ($terms as $term) {
+        $term_data[] = $term->name;
+      }
+      return implode(', ', $term_data);
+    }
+  }
+  return '';
+}
+
 /**
  * @param string $mode
  * @param int $oid
  * @param array $form
  */
 function _drd_tags_build_form($mode, $oid, &$form) {
-  if (module_exists('taxonomy')) {
-    $vocabulary = taxonomy_vocabulary_machine_name_load('drd');
-    if ($vocabulary) {
-      $tids = db_select('drd_term', 't')
-          ->fields('t', array('tid'))
-          ->condition('t.mode', $mode)
-          ->condition('t.oid', $oid)
-          ->execute()
-          ->fetchAllKeyed(0, 0);
-      $terms = taxonomy_term_load_multiple(array_keys($tids));
-      $term_data = array();
-      foreach ($terms as $term) {
-        $term_data[] = $term->name;
-      }
-      $form['tags'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Tags'),
-        '#default_value' => implode(', ', $term_data),
-        '#maxlength' => 1024,
-        '#autocomplete_path' => 'drd/autocomplete/taxonomy',
-      );
-    }
-  }
+  $form['tags'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tags'),
+    '#default_value' => _drd_tags_load($mode, $oid),
+    '#maxlength' => 1024,
+    '#autocomplete_path' => 'drd/autocomplete/taxonomy',
+    '#access' => module_exists('taxonomy'),
+  );
 }
 
 /**

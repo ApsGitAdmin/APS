@@ -111,7 +111,7 @@ function drd_domain_build_row($d) {
 
   $d->name = trim($d->name);
   $d->name = empty($d->name) ? $d->url : $d->name;
-  $name = (strlen($d->name) > 35) ? substr($d->name, 0, 30) . '...' : $d->name;
+  $name = (strlen($d->name) > 35) ? drupal_substr($d->name, 0, 30) . '...' : $d->name;
   if ($d->status) {
     $heartbeat   = ($charts) ? l(drd_icon('heartbeat', 'heart'), 'admin/drd/domain/' . $d->did . '/heartbeat', array('html' => TRUE)) : '';
     $stat_health = drd_icon_status($d->status_w_health, $d->status_e_health);

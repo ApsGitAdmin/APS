@@ -33,10 +33,10 @@ function drd_ssh2_connect($server) {
       else {
         $host = $server->url;
         if (strpos($host, ':') !== FALSE) {
-          $host = substr($host, 0, strpos($host, ':'));
+          $host = drupal_substr($host, 0, strpos($host, ':'));
         }
         if (strpos($host, '/') !== FALSE) {
-          $host = substr($host, 0, strpos($host, '/'));
+          $host = drupal_substr($host, 0, strpos($host, '/'));
         }
       }
       $connection = @ssh2_connect($host, $server->settings['ssh2']['port']);
@@ -58,6 +58,15 @@ function drd_ssh2_connect($server) {
               $server->settings['ssh2']['auth']['file_private_key'],
               $server->settings['ssh2']['auth']['key_secret']
             );
+            break;
+
+          case 3:
+            if (function_exists('ssh2_auth_agent')) {
+              $success = @ssh2_auth_agent(
+                $connection,
+                $server->settings['ssh2']['auth']['username']
+              );
+            }
             break;
 
           default:
@@ -109,6 +118,7 @@ function drd_ssh2_command($server, $connection, $cmd, $json = FALSE) {
  * @param string $action_name
  * @param string $mode
  * @param int $sid
+ * @return bool
  */
 function drd_action_ssh2_test($action_name, $mode, $sid) {
   $server = drd_server_load($sid);
@@ -118,5 +128,7 @@ function drd_action_ssh2_test($action_name, $mode, $sid) {
     drd_set_message($server, 'SSH connection successfully established.');
     $home_dir = drd_ssh2_command($server, $connection, 'pwd');
     drd_set_message($server, t('Home directory: !path', array('!path' => $home_dir)));
+    return TRUE;
   }
+  return FALSE;
 }
