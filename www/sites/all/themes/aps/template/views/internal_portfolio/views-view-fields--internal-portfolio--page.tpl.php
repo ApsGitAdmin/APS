@@ -26,8 +26,10 @@
 ?>
 <h2 class="portfolio-job-number"><?php print $fields['name']->content; ?></h2>
 <h4 class="portfolio-title"><?php print $fields['title']->content; ?></h6>
-<?php
-	$link = "http://" . $fields['field_portfolio_username']->content . ":" . $fields['field_portfolio_password']->content . "@" . strip_tags($fields['field_master_url']->content);
-	print l(t('Click to open'), $link, array('attributes' => array('class' => array('internal-portfolio-link'), 'target' => '_blank'), 'external' => TRUE));
-?>
 <code><?php print $link; ?></code>
+<div class="portfolio-link">
+	<?php
+		$link = "http://" . $fields['field_portfolio_username']->content . ":" . $fields['field_portfolio_password']->content . "@" . strip_tags($fields['field_master_url']->content);
+		print l(t('Click to open'), $link, array('attributes' => array('class' => array('internal-portfolio-link'), 'target' => '_blank'), 'external' => TRUE));
+	?>
+</div>
