@@ -26,7 +26,7 @@
 ?>
 <?php
 	dpm($fields);
+	print $fields['field_portfolio_username']->content;
+	print $fields['field_portfolio_password']->content;
+	print $fields['field_master_url']->content;
 ?>
-<?php foreach ($fields as $id => $field): ?>
-    <?php print $field->content; ?>
-<?php endforeach; ?>
