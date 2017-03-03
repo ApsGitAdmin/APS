@@ -27,6 +27,7 @@
 <?php
 	$link = "http://" . $fields['field_portfolio_username']->content . ":" . $fields['field_portfolio_password']->content . "@" . strip_tags($fields['field_master_url']->content);
 
+	print $fields['name']->content;
 	print $fields['title']->content;
 	print l(t('Click to open'), $link, array('attributes' => array('class' => array('internal-portfolio-link'), 'target' => '_blank'), 'external' => TRUE));
 ?>
