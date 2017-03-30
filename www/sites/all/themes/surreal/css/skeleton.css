@@ -61,7 +61,7 @@
     .parallax                                   { height: 340px; }
 
     .logoContainer                              { width: 20%; }
-    .logo                                       { width: 100%; height: 100px; }
+    .logo                                       { width: auto; height: 100px; }
 
     nav ul                                      { width: 80% }
     nav ul li                                   { display: inline-block; }
@@ -184,7 +184,7 @@
     .parallax                                   { height: 220px; }
 
     .logoContainer                              { width: 20%; }
-    .logo                                       { width: 100%; height: 100px; }
+    .logo                                       { width: auto; height: 100px; }
 
     nav ul                                      { width: 80% }
     nav ul li a                                 { font-size: 13px; }
@@ -288,7 +288,7 @@
         .parallax                                   { height: 220px; }
 
         .logoContainer                              { width: 20%; }
-        .logo                                       { width: 100%; height: 100px; }
+        .logo                                       { width: auto; height: 100px; }
 
         nav ul                                      { width: 80% }
         nav ul li a                                 { font-size: 9px; }
@@ -308,7 +308,7 @@
 
         .about .video-container                     { margin-top: 0; margin-bottom: 10px; width: 50%; }
 
-        .services-header h1                         { margin-bottom: 0; }
+        .services-header h1                         { margin-bottom: 10px; }
 
         .services.odd .services-header,
         .services.odd .services-text                { width: 100%; margin-left: 0; clear: both; }
@@ -397,11 +397,11 @@
         .parallax { height: 160px; }
 
         .logoContainer { width: 75%; }
-        .logo { width: 100%; height: 80px; }
+        .logo { width: auto; height: 80px; }
 
         nav { height: auto; z-index: 10; }
         nav ul li { float: none; }
-        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; }
+        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
 
         .page { padding-top: 60px; }
 
@@ -424,7 +424,7 @@
 
         .servicesContainer .block .content > a { padding-top: 60px; }
 
-        .services-header h1 { margin-bottom: 0; }
+        .services-header h1 { margin-bottom: 10px; }
 
         .services.odd .services-header,
         .services.odd .services-text { width: 100%; margin-left: 0; clear: both; }
@@ -498,12 +498,12 @@
         .container .two-thirds.column { width: 420px; }
 
         .logoContainer { width: 75%; }
-        .logo { width: 100%; height: 80px; }
+        .logo { width: auto; height: 80px; }
 
         nav { z-index: 10; }
         nav ul { }
         nav ul li { display: block; }
-        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; }
+        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
 
         #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }
 
