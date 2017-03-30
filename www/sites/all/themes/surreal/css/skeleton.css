@@ -58,7 +58,7 @@
 
     #virtual-meeting                            { position: absolute; margin: -120px 0 0 -180px; padding: 0; left: 50%; width: 360px; }
 
-    .parallax                                   { height: 340px; }
+    .parallax                                   { height: 260px; }
 
     .logoContainer                              { width: 20%; }
     .logo                                       { width: auto; height: 100px; }
@@ -181,7 +181,7 @@
 
     #virtual-meeting                            { position: absolute; margin: -120px 0 0 -180px; padding: 0; left: 50%; width: 360px; }
 
-    .parallax                                   { height: 220px; }
+    .parallax                                   { height: 200px; }
 
     .logoContainer                              { width: 20%; }
     .logo                                       { width: auto; height: 100px; }
@@ -285,7 +285,7 @@
 
         #virtual-meeting                            { position: absolute; margin: -120px 0 0 -180px; padding: 0; left: 50%; width: 360px; }
 
-        .parallax                                   { height: 220px; }
+        .parallax                                   { height: 160px; }
 
         .logoContainer                              { width: 20%; }
         .logo                                       { width: auto; height: 100px; }
@@ -394,7 +394,7 @@
 
         #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }
 
-        .parallax { height: 160px; }
+        .parallax { height: 140px; }
 
         .logoContainer { width: 75%; }
         .logo { width: auto; height: 80px; }
@@ -440,8 +440,8 @@
         .teamBlock { width: calc(100%/3); height: 100px; }
         .teamBlock.even .teamImage img { float: none; }
         .teamBlock.odd .teamImage img { float: none; }
-        .teamName h2 { margin-top: 3px; font-size: 16px; line-height: 20px; }
-        .teamName h3 { font-size: 12px; line-height: 16px; }  
+        .teamImage h2 { margin-top: 3px; font-size: 16px; line-height: 20px; }
+        .teamImage h3 { font-size: 12px; line-height: 16px; }  
         .teamImage img { height: 100px; width: 100%; }
 
         .gallerySelectorList li { width: calc(100%/3); }
@@ -510,8 +510,8 @@
         .teamBlock { width: calc(100%/3); height: 140px; }
         .teamBlock.even .teamImage img { float: left; }
         .teamBlock.odd .teamImage img { float: right; }
-        .teamName h2 { margin-top: 20px; font-size: 16px; line-height: 20px; }
-        .teamName h3 { font-size: 12px; line-height: 16px; }  
+        .teamImage h2 { margin-top: 20px; font-size: 16px; line-height: 20px; }
+        .teamImage h3 { font-size: 12px; line-height: 16px; }  
         .teamImage img { height: 140px; width: 100%; }
 
         form.contact-form .five.columns { width: 400px; margin: 0 10px;}
