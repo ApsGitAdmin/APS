@@ -92,6 +92,11 @@ body {
 	text-align: left;
 	width: 100%;
 	height: 100%;
+	background: url('../images/background.jpg') center center repeat-y transparent;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .embed-container {
@@ -247,12 +252,10 @@ blockquote:after {
 	z-index:2;
 }
 .page.desktop{
-	background: url('../images/background.jpg') repeat-x scroll 50% 50%;
 	position:relative !important; 
 	z-index:6;
 }
 .page{
-	background:#fff; 
 	background-attachment:scroll;
 }
 nav {
@@ -267,11 +270,12 @@ nav {
 	-moz-box-shadow: 0 5px 10px #555;
 	-webkit-box-shadow: 0 5px 10px #555;
 	box-shadow: 0 5px 10px #555;
+	white-space: nowrap;
+	padding: 1em 0;
 }
 nav ul {
-	height: 40px;
+	width: 65%;
 	display: inline-block;
-	margin-top: 60px;
 }
 nav ul li {
 	position: relative;
@@ -287,28 +291,20 @@ nav ul li a:hover {
 	color: #05aeda;
 	transition: color 0.5s;
 }
+#mobile-menu li > a, .mobile-menu li > a {
+	float: none;
+	display: block;
+	padding: 10px 5%;
+}
 .logoContainer {
-	float: left; 
-	display: inline; 
-	margin-right: 10px;
-	margin-left: 0;
+	display: inline-block;
 	text-align: left;
 }
-.menuContainer {
-	margin-left: 10px;
-	margin-right: 0;
-	text-align: right;	
-}
-.dropmenu {
-	display: none;
-}	
 #homepage .container {
     height: 100%;
 }
 .logo {
-	float: left;
-	margin-top: 12px;
-	margin-left: 0;
+	margin: 0;
 }
 
 /* Manage Portfolio
@@ -2511,7 +2507,6 @@ you can use the generic selector below, but it's slower:
 	#slidecaption { display:none;}
 	#prevslide, #nextslide{top:120px;}
 	.parallax.fixed{background-attachment:scroll; background-position: center center;}
-	.logo {margin-top: 0; margin-left: -20px; transform: scale(.5);}
 	#prevslide {right: 45px; transform: scale(.5);}
 	#nextslide {right: 22px; transform: scale(.5);}
 	.homepage {margin-bottom: 0px;}

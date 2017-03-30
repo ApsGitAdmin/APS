@@ -60,14 +60,12 @@
 
     .parallax                                   { height: 340px; }
 
-    .menuContainer                              { float: left; }
+    .logoContainer                              { width: 20%; }
+    .logo                                       { width: 100%; height: 100px; }
 
-    nav                                         { height: 130px; }
-    nav ul li                                   { float: left; }
+    nav ul                                      { width: 80% }
+    nav ul li                                   { display: inline-block; }
     nav ul li a                                 { font-size: 18px; }
-
-    .logoContainer                              { width: 280px; }
-    .menuContainer                              { width: 880px; }
 
     .page                                       { padding-top: 130px; }
 
@@ -185,10 +183,11 @@
 
     .parallax                                   { height: 220px; }
 
-    nav ul li a                                 { font-size: 13px; }
+    .logoContainer                              { width: 20%; }
+    .logo                                       { width: 100%; height: 100px; }
 
-    .logoContainer                              { width: 220px; }
-    .menuContainer                              { width: 700px; }
+    nav ul                                      { width: 80% }
+    nav ul li a                                 { font-size: 13px; }
 
     #about                                      { padding-top: 150px; }
 
@@ -288,12 +287,13 @@
 
         .parallax                                   { height: 220px; }
 
+        .logoContainer                              { width: 20%; }
+        .logo                                       { width: 100%; height: 100px; }
+
+        nav ul                                      { width: 80% }
         nav ul li a                                 { font-size: 9px; }
 
         #about                                      { padding-top: 150px; }
-
-        .logoContainer                              { width: 172px; }
-        .menuContainer                              { width: 556px; }
 
         .about-header h1                            { margin-bottom: 0; }
 
@@ -396,13 +396,12 @@
 
         .parallax { height: 160px; }
 
-        .menuContainer { float: none; }
+        .logoContainer { width: 75%; }
+        .logo { width: 100%; height: 80px; }
 
-        nav { height: auto; }
+        nav { height: auto; z-index: 10; }
         nav ul li { float: none; }
-
-        .logoContainer { width: 200px; }
-        .menuContainer { width: 80px; }
+        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; }
 
         .page { padding-top: 60px; }
 
@@ -441,7 +440,8 @@
         .teamBlock { width: calc(100%/3); height: 100px; }
         .teamBlock.even .teamImage img { float: none; }
         .teamBlock.odd .teamImage img { float: none; }
-        .teamName h2 { margin-top: 3px; font-size: 16px; }
+        .teamName h2 { margin-top: 3px; font-size: 16px; line-height: 20px; }
+        .teamName h3 { font-size: 12px; line-height: 16px; }  
         .teamImage img { height: 100px; width: 100%; }
 
         .gallerySelectorList li { width: calc(100%/3); }
@@ -497,15 +497,21 @@
         .container .one-third.column,
         .container .two-thirds.column { width: 420px; }
 
-        #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }
+        .logoContainer { width: 75%; }
+        .logo { width: 100%; height: 80px; }
 
-        .logoContainer { width: 240px; }
-        .menuContainer { width: 160px; }
+        nav { z-index: 10; }
+        nav ul { }
+        nav ul li { display: block; }
+        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; }
+
+        #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }
 
         .teamBlock { width: calc(100%/3); height: 140px; }
         .teamBlock.even .teamImage img { float: left; }
         .teamBlock.odd .teamImage img { float: right; }
-        .teamName h2 { margin-top: 20px; font-size: 24px; }
+        .teamName h2 { margin-top: 20px; font-size: 16px; line-height: 20px; }
+        .teamName h3 { font-size: 12px; line-height: 16px; }  
         .teamImage img { height: 140px; width: 100%; }
 
         form.contact-form .five.columns { width: 400px; margin: 0 10px;}

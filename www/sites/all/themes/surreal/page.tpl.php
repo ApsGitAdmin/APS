@@ -1,16 +1,12 @@
 <div id="top"></div>
 <?php if(drupal_is_front_page()): ?>
-<!-- Start Navigation -->
 <nav>
   <div class="container">
     <div class="sixteen columns">
-      <!-- logo & slogan -->
-      <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="logoContainer"> <img src="<?php print $logo; ?>" class="logo" width="186" height="100" alt="<?php print t('Home'); ?>" /> </a>
-      <?php endif; ?>
-      <!-- End logo & slogan --> 
-      <div id="nav" class="menuContainer hidden-phone"> 
-        <!-- Start Nav Menu -->
+      <div id="nav" class="menuContainer"> 
+        <?php if ($logo): ?>
+          <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="logoContainer"> <img src="<?php print $logo; ?>" class="logo" width="186" height="100" alt="<?php print t('Home'); ?>" /> </a>
+        <?php endif; ?>
         <?php if (module_exists('i18n_menu')) {
               $main_menu_tree = i18n_menu_translated_tree(variable_get('menu_main_links_source', 'main-menu'));
             } else {
@@ -19,12 +15,9 @@
             print drupal_render($main_menu_tree);
           ?>
       </div>    
-      <!-- End Nav Menu --> 
     </div>
-    
   </div>
 </nav>
-<!-- End Navigation --> 
 <div id="page">  
   <div id="homepage" class="homepage section">
     <div id="r0"></div>
@@ -36,7 +29,7 @@
     <!--end Hero--> 
   </div>
 
-  <div id="virtual-meeting"><a href="http://vimeo.com/155992387" rel="prettyPhoto"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/video-popup.png" /></a></div>
+  <!--<div id="virtual-meeting"><a href="http://vimeo.com/155992387" rel="prettyPhoto"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/video-popup.png" /></a></div>-->
 
   <?php if($messages): ?>
     <!--<div id="drupal_messages"><div class="alert-box message"><?php print $messages; ?></div></div>-->

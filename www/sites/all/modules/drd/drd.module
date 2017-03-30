@@ -11,6 +11,7 @@ define('DRD_ERROR_NO_LOG_PHP', 1006);
 define('DRD_ERROR_MISSING_AES', 1007);
 define('DRD_ERROR_WRONG_KEYS', 1999);
 
+include 'drd.aes.inc';
 include 'drd.requirements.inc';
 
 /** ======================================================================
@@ -830,6 +831,9 @@ function drd_action_remote($action_name, $mode, $id) {
     return;
   }
 
+  // Get and remember the IV for this request and response
+  $iv = drd_aes_get_iv();
+
   require_once DRUPAL_ROOT . '/includes/xmlrpc.inc';
   $args = func_get_args();
   $action_name = array_shift($args);
@@ -890,13 +894,13 @@ function drd_action_remote($action_name, $mode, $id) {
         if (is_array($value) || is_object($value)) {
           $value = drupal_json_encode($value);
         }
-        $args[$i] = aes_encrypt($value, TRUE, $server->aes_key, $server->aes_cipher, $server->aes_iv, $server->aes_impl);
+        $args[$i] = drd_aes_encrypt($value, TRUE, $server->aes_key, $server->aes_cipher, $iv, $server->aes_impl);
       }
     }
   }
   drd_log($mode, $id, $action_name, 'remote');
   $options = _drd_http_default_options($server_domain);
-  $output = _drd_xmlrpc($url, $action_name, $args, $options);
+  $output = _drd_xmlrpc($url, $action_name, $args, $options, $iv);
   if ($output === FALSE) {
     $error = xmlrpc_error();
     if (!is_object($error)) {
@@ -927,7 +931,7 @@ function drd_action_remote($action_name, $mode, $id) {
     // not encrypted
   }
   else {
-    $output = aes_decrypt($output, TRUE, $server->aes_key, $server->aes_cipher, $server->aes_iv, $server->aes_impl);
+    $output = drd_aes_decrypt($output, TRUE, $server->aes_key, $server->aes_cipher, $iv, $server->aes_impl);
   }
   $output = drupal_json_decode($output);
   $log_info['result'] = $output;
@@ -2339,7 +2343,7 @@ function _drd_http_default_options($object) {
  * @param array $options
  * @return bool|array
  */
-function _drd_xmlrpc($url, $method, $args, $options = array()) {
+function _drd_xmlrpc($url, $method, $args, $options = array(), $iv = NULL) {
   require_once DRUPAL_ROOT . '/includes/xmlrpc.inc';
   xmlrpc_clear_error();
   $xmlrpc_request = xmlrpc_request($method, $args);
@@ -2351,6 +2355,9 @@ function _drd_xmlrpc($url, $method, $args, $options = array()) {
   $options['headers']['Accept-Encoding'] = 'utf-8';
   if (variable_get('drd_cluster_mode', FALSE)) {
     $options['headers']['X-DRD-AUTH-TOKEN'] = variable_get('drd_cluster_mode_token');
+  }
+  if (!empty($iv)) {
+    $options['headers']['X-DRD-IV'] = base64_encode($iv);
   }
   $options['data'] = $xmlrpc_request->xml;
   $result = drupal_http_request($url, $options);

@@ -814,7 +814,7 @@ function _drd_drush_core_prepare($update) {
 
     $alias = _drd_drush_get_alias($url);
     if ($alias) {
-      drush_invoke_process($alias, 'pm-enable', array('aes', 'drd_server'));
+      drush_invoke_process($alias, 'pm-enable', array('drd_server'));
       $success = TRUE;
     }
 
@@ -824,7 +824,7 @@ function _drd_drush_core_prepare($update) {
       $alias = _drd_drush_get_remote_alias($server);
       if ($alias) {
         $ssh_connection = drd_ssh2_connect($server);
-        drd_ssh2_command($server, $ssh_connection, 'drush ' . $alias . ' pm-enable aes drd_server');
+        drd_ssh2_command($server, $ssh_connection, 'drush ' . $alias . ' pm-enable drd_server');
         $success = TRUE;
       }
     }

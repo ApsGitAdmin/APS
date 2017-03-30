@@ -87,27 +87,6 @@ function aps_preprocess_html(&$vars) {
     drupal_add_css(drupal_get_path('theme', 'aps') . '/css/layout-white.css', array('group' => CSS_THEME, 'type' => 'file'));
 }
 
-global $user;
-
-if ( $user->uid ) {
-	$admin_css = "<style> 
-	.mb_YTVPBar {bottom: 41px !important;} 
-	#controlBar_bgndVideo, .buttonBar { padding-right:0px !important; padding-left:0px !important;}
-	.mb_YTVPBar .buttonBar {top: -30px;}
-	nav {z-index:1 !important;}
-	</style>";
-	
-	variable_set('inspiro_admin_css',$admin_css);
-} else {
-	$admin_css = "<style> 
-	.mb_YTVPBar {bottom: 70px !important;} 
-	#controlBar_bgndVideo, .buttonBar { padding-right:0px !important; padding-left:0px !important;}
-	.mb_YTVPBar .buttonBar {top: -30px;}
-	</style>";
-	
-	variable_set('inspiro_admin_css',$admin_css);
-}
-
 function aps_preprocess_image_spacing($amount) {
     $remaining = 16;
 

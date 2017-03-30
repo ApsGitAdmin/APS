@@ -280,7 +280,6 @@ if ( $user->uid ) {
 	.mb_YTVPBar {bottom: 41px !important;} 
 	#controlBar_bgndVideo, .buttonBar { padding-right:0px !important; padding-left:0px !important;}
 	.mb_YTVPBar .buttonBar {top: -30px;}
-	nav {z-index:1 !important;}
 	</style>";
 	
 	variable_set('inspiro_admin_css',$admin_css);

@@ -41,3 +41,6 @@ www/modules
 www/profiles
 www/scripts
 www/themes
+
+# Ignore DS_Store
+.DS_Store

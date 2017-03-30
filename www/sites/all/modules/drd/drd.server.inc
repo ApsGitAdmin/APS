@@ -74,21 +74,7 @@ function drd_server_edit($form, &$form_state, $sid = 0) {
     '#prefix' => '<div class="messages warning">',
     '#suffix' => '</div>',
   );
-  module_load_include('inc', 'aes', 'aes.admin');
-  $form += aes_config();
-  unset($form['aes_convert']);
-  unset($form['view_method']);
-  unset($form['aes_key_storage_method']);
-  unset($form['aes_key_path']);
-  unset($form['submit']);
-  $form['aes_implementation']['#default_value'] = $server['aes_impl'];
-  $form['aes_cipher']['#default_value'] = $server['aes_cipher'];
-  $form['aes_iv'] = array(
-    '#type' => 'textfield',
-    '#title' => 'AES IV',
-    '#default_value' => $server['aes_iv'],
-    '#disabled' => TRUE,
-  );
+  $form += _drd_server_aes_config($server['aes_impl'], $server['aes_cipher'], $server['aes_iv']);
 
   $form['ssh2'] = array(
     '#type' => 'fieldset',
@@ -291,8 +277,7 @@ function _drd_server_defaults($sid = 0, $name = '') {
     }
   }
   else {
-    module_load_include('inc', 'aes', 'aes.admin');
-    $aes_default = aes_config();
+    $aes_default = _drd_server_aes_config('mcrypt', '', '');
     $server = array(
       'sid' => 0,
       'name' => $name,
@@ -311,7 +296,7 @@ function _drd_server_defaults($sid = 0, $name = '') {
     );
   }
   if (empty($server['aes_iv'])) {
-    $server['aes_iv'] = _drd_server_aes_init_iv();
+    $server['aes_iv'] = drd_aes_get_iv();
   }
   $server['settings'] = drupal_array_merge_deep(array(
     'ssh2' => array(
@@ -331,20 +316,6 @@ function _drd_server_defaults($sid = 0, $name = '') {
   ), $server['settings']);
 
   return $server;
-}
-
-/**
- * Internal callback to generate an IV for AES encryption without overwriting
- * a possible IV for the general usage of the AES module.
- *
- * @return string
- */
-function _drd_server_aes_init_iv() {
-  $aes_iv_org = variable_get("aes_encryption_iv", '');
-  aes_make_iv();
-  $iv = variable_get("aes_encryption_iv", '');
-  variable_set("aes_encryption_iv", $aes_iv_org);
-  return $iv;
 }
 
 /**
@@ -575,4 +546,52 @@ function _drd_server_save($values, $server, $is_drush = FALSE) {
   }
 
   return $goto;
+}
+
+function _drd_server_aes_config($implementation, $cipher, $iv) {
+  $phpsec_load_result = _drd_aes_load_phpsec();
+  $phpsec_loaded = ($phpsec_load_result > 0);
+  $form = array();
+  $encryption_implementations = array();
+  if ($phpsec_loaded) {
+    $encryption_implementations['phpseclib'] = t('PHP Secure Communications Library (phpseclib)');
+  }
+  if (extension_loaded('mcrypt')) {
+    $encryption_implementations['mcrypt'] = t('Mcrypt extension');
+  }
+  if (empty($encryption_implementations)) {
+    $encryption_implementations = array(t('None!'));
+  }
+  $form['aes_implementation'] = array(
+    '#type' => 'select',
+    '#title' => t('AES implementation'),
+    '#options' => $encryption_implementations,
+    '#default_value' => $implementation,
+  );
+  $form['aes_cipher'] = array(
+    '#type' => 'select',
+    '#title' => t('Cipher'),
+    '#options' => array(
+      'rijndael-128' => 'Rijndael 128',
+      'rijndael-192' => 'Rijndael 192',
+      'rijndael-256' => 'Rijndael 256'
+    ),
+    '#default_value' => $cipher,
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="aes_implementation"]' => array('value' => 'phpseclib'),
+      ),
+    ),
+  );
+  $form['aes_iv'] = array(
+    '#type' => 'textfield',
+    '#title' => 'AES IV',
+    '#default_value' => $iv,
+    '#disabled' => TRUE,
+  );
+  $form['aes_key'] = array(
+    '#type' => 'password',
+    '#title' => t('Key'),
+  );
+  return $form;
 }

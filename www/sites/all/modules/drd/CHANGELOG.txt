@@ -1,6 +1,14 @@
 drd 7.x-2.x-dev
 ---------------
 
+drd 7.x-2.8, 2017-02-23
+-----------------------
+Issue #2855388 by jurgenhaas: Use new IV for each request
+
+drd 7.x-2.7, 2017-02-22
+-----------------------
+#2852175 by jurgenhaas: Remove AES dependency
+
 drd 7.x-2.6, 2016-10-12
 -----------------------
 Issue #2491177 by Cyberschorsch: Generating a IV should respect the aes crypt implementation

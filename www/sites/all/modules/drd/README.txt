@@ -5,7 +5,6 @@ See http://drupal.org/project/drd
 -- REQUIREMENTS --
 
 * Drupal 7
-* AES
 
 -- INSTALLATION --
 
