@@ -25,7 +25,7 @@ $(document).ready(function () {
 
 
 //MENU --------------------------------------------------------------------------------/
-	$("nav ul li a").click(function () {
+	$("nav ul.menu li a").click(function () {
         $("html, body").animate({
             scrollTop: $($(this).attr("href")).offset().top + "px"
         }, {

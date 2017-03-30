@@ -276,6 +276,8 @@ nav {
 nav ul {
 	display: inline-block;
 	vertical-align: top;
+}
+nav ul.menu {
 	text-align: right;
 }
 nav ul li {

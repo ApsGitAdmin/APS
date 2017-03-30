@@ -19,7 +19,7 @@
   $Anchor = str_replace(' ', '-', strtolower($fields['title']->raw)).'-anchor';
 ?>
 
-<a name='<?php print $Anchor; ?>' id='<?php print $Anchor; ?>'>
+<article name="<?php print $Anchor; ?>" id="<?php print $Anchor; ?>">
   <div class="services <?php print $zebra; ?> clearfix">
     <div class="services-header">
       <h1 class="minimo-bold" style='color: <?php print $Colour; ?>'>
@@ -39,4 +39,4 @@
       <?php print $Body; ?>
     </div>
   </div>
-</a>
+</article>

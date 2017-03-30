@@ -63,9 +63,9 @@
     .logoContainer                              { width: 20%; }
     .logo                                       { width: auto; height: 100px; }
 
-    nav ul                                      { width: 80% }
-    nav ul li                                   { display: inline-block; }
-    nav ul li a                                 { font-size: 18px; line-height: 100px; }
+    nav ul.menu                                 { width: 80% }
+    nav ul.menu li                              { display: inline-block; }
+    nav ul.menu li a                            { font-size: 18px; line-height: 100px; }
 
     .page                                       { padding-top: 130px; }
 
@@ -186,8 +186,8 @@
     .logoContainer                              { width: 20%; }
     .logo                                       { width: auto; height: 100px; }
 
-    nav ul                                      { width: 80% }
-    nav ul li a                                 { font-size: 13px; line-height: 100px; }
+    nav ul.menu                                 { width: 80% }
+    nav ul.menu li a                            { font-size: 13px; line-height: 100px; }
 
     #about                                      { padding-top: 150px; }
 
@@ -290,8 +290,8 @@
         .logoContainer                              { width: 20%; }
         .logo                                       { width: auto; height: 100px; }
 
-        nav ul                                      { width: 80% }
-        nav ul li a                                 { font-size: 9px; line-height: 100px; }
+        nav ul.menu                                 { width: 80% }
+        nav ul.menu li a                            { font-size: 9px; line-height: 100px; }
 
         #about                                      { padding-top: 150px; }
 
@@ -400,7 +400,7 @@
         .logo { width: auto; height: 80px; }
 
         nav { height: auto; z-index: 10; }
-        nav ul li { float: none; }
+        nav ul.menu li { float: none; }
         #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
 
         .page { padding-top: 60px; }
@@ -501,8 +501,8 @@
         .logo { width: auto; height: 80px; }
 
         nav { z-index: 10; }
-        nav ul { }
-        nav ul li { display: block; }
+        nav ul.menu { }
+        nav ul.menu li { display: block; }
         #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
 
         #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }
