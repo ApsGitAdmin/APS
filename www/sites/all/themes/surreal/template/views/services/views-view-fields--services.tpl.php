@@ -33,7 +33,7 @@
       </p>
     </div>
     <div class="video-container">
-      <?php print l($Poster, $Vimeo->content,  array('html' => TRUE, 'attributes' => array('rel' => 'shadowbox'))); ?>
+      <?php print l($Poster, $Vimeo->content,  array('html' => TRUE, 'attributes' => array('class' => 'magnific-popup'))); ?>
     </div>
     <div class="services-text">
       <?php print $Body; ?>
