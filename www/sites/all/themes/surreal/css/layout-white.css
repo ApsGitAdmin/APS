@@ -274,8 +274,9 @@ nav {
 	padding: 1em 0;
 }
 nav ul {
-	width: 65%;
 	display: inline-block;
+	vertical-align: top;
+	text-align: right;
 }
 nav ul li {
 	position: relative;
@@ -285,7 +286,7 @@ nav ul li a {
 	color: #656565;
 	text-decoration: none;
 	text-transform: uppercase;
-	padding: 10px 15px;
+	padding: 0 15px;
 }
 nav ul li a:hover {
 	color: #05aeda;
@@ -1099,6 +1100,13 @@ p.percent {
 }
 .services .services-header h1 span {
 	margin-right: 10px;
+}
+.services .video-container a {
+	display: inline-block;
+}
+.services .video-container a img {
+	width: 100%;
+	height: auto;
 }
 
 /* Careers

@@ -65,7 +65,7 @@
 
     nav ul                                      { width: 80% }
     nav ul li                                   { display: inline-block; }
-    nav ul li a                                 { font-size: 18px; }
+    nav ul li a                                 { font-size: 18px; line-height: 100px; }
 
     .page                                       { padding-top: 130px; }
 
@@ -187,7 +187,7 @@
     .logo                                       { width: auto; height: 100px; }
 
     nav ul                                      { width: 80% }
-    nav ul li a                                 { font-size: 13px; }
+    nav ul li a                                 { font-size: 13px; line-height: 100px; }
 
     #about                                      { padding-top: 150px; }
 
@@ -291,7 +291,7 @@
         .logo                                       { width: auto; height: 100px; }
 
         nav ul                                      { width: 80% }
-        nav ul li a                                 { font-size: 9px; }
+        nav ul li a                                 { font-size: 9px; line-height: 100px; }
 
         #about                                      { padding-top: 150px; }
 
