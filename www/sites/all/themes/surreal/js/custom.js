@@ -116,7 +116,7 @@ $(document).ready(function () {
 
 	$('.magnific-popup').magnificPopup({
 		mainClass: 'mfp-fade',
-		removalDelay: 300,
+		removalDelay: 500,
 		type: 'iframe',
 		patterns: {
 		    youtube: {
