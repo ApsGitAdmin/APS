@@ -86,7 +86,8 @@
 
     .about .video-container                     { margin-top: -100px; margin-bottom: 0; width: 50%; }        
 
-    .servicesContainer .block .content > a      { padding-top: 50px; }
+    .servicesContainer .block .content > a,
+    .servicesContainer .block .content > article{ padding-top: 50px; }
 
     .services-header h1                         { margin-bottom: 10px; }
 
@@ -422,7 +423,8 @@
 
         .about .video-container { margin-top: 0; margin-bottom: 10px; width: 100%; }
 
-        .servicesContainer .block .content > a { padding-top: 60px; }
+        .servicesContainer .block .content > a,
+        .servicesContainer .block .content > article { padding-top: 60px; }
 
         .services-header h1 { margin-bottom: 10px; }
 

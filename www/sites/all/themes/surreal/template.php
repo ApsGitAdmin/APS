@@ -241,12 +241,11 @@ function surreal_set_banners($value) {
 
 /**
  * Theme Colors
- *
  */
 //drupal_add_css(drupal_get_path('theme','surreal').'/css/'.theme_get_setting('colors', 'surreal'));
+
 /**
  * Theme Homepage style
- *
  */
 //drupal_add_css(drupal_get_path('theme','surreal').'/css/'.theme_get_setting('homepage', 'surreal'));
 
@@ -266,34 +265,7 @@ function surreal_process_html(&$vars) {
  */
 function surreal_preprocess_html(&$vars) {
    	global $parent_root;
-   	drupal_add_js('http://jwpsrv.com/library/1gzkaihgEeSZeCIACyaB8g.js', 'external');
+   	//drupal_add_js('http://jwpsrv.com/library/1gzkaihgEeSZeCIACyaB8g.js', 'external');
 	drupal_add_js(drupal_get_path('theme', 'surreal') . '/js/custom.js', array('weight' => -1, 'group' => JS_THEME, 'type' => 'file'));	
     drupal_add_css(drupal_get_path('theme', 'surreal') . '/css/layout-white.css', array('group' => CSS_THEME, 'type' => 'file'));
 }
-
-
-
-global $user;
-
-if ( $user->uid ) {
-	$admin_css = "<style> 
-	.mb_YTVPBar {bottom: 41px !important;} 
-	#controlBar_bgndVideo, .buttonBar { padding-right:0px !important; padding-left:0px !important;}
-	.mb_YTVPBar .buttonBar {top: -30px;}
-	</style>";
-	
-	variable_set('inspiro_admin_css',$admin_css);
-	
-} else {
-	$admin_css = "<style> 
-	.mb_YTVPBar {bottom: 70px !important;} 
-	#controlBar_bgndVideo, .buttonBar { padding-right:0px !important; padding-left:0px !important;}
-	.mb_YTVPBar .buttonBar {top: -30px;}
-	</style>";
-	
-	variable_set('inspiro_admin_css',$admin_css);
-}
-
-
-
-	
