@@ -67,9 +67,9 @@
     nav ul.menu li                              { display: inline-block; }
     nav ul.menu li a                            { font-size: 18px; line-height: 100px; }
 
-    .page                                       { padding-top: 130px; }
+    .page                                       { padding-top: 130px; margin-top: -100px; }
 
-    #about                                      { padding-top: 150px; }
+    #about                                      { padding-top: 150px; margin-top: -100px }
 
     .aboutContainer .block .content > a         { padding-top: 150px; }
 
@@ -190,7 +190,7 @@
     nav ul.menu                                 { width: 80% }
     nav ul.menu li a                            { font-size: 13px; line-height: 100px; }
 
-    #about                                      { padding-top: 150px; }
+    #about                                      { padding-top: 150px; margin-top: -100px }
 
     .about.odd .about-header,
     .about.odd .about-text                      { width: 55%; margin-left: 45%; }
@@ -294,7 +294,7 @@
         nav ul.menu                                 { width: 80% }
         nav ul.menu li a                            { font-size: 9px; line-height: 100px; }
 
-        #about                                      { padding-top: 150px; }
+        #about                                      { padding-top: 150px; margin-top: -100px; }
 
         .about-header h1                            { margin-bottom: 0; }
 
@@ -404,9 +404,9 @@
         nav ul.menu li { float: none; }
         #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
 
-        .page { padding-top: 130px; }
+        .page { padding-top: 130px; margin-top: -100px; }
 
-        #about { padding-top: 60px; }
+        #about { padding-top: 130px; margin-top: -100px; }
 
         .aboutContainer .block .content > a { padding-top: 80px; }
 

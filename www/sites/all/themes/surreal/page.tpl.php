@@ -207,8 +207,7 @@
       </div>
       <?php endif; ?>
       <!--end parallax 5--> 
-      
-      <div class="space40"></div>
+
       <div class="container careersContainer">
         <?php if (theme_get_setting('region5Name', 'surreal') || theme_get_setting('region5Description', 'surreal')): ?>
         <div class="sixteen columns">
