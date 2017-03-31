@@ -63,7 +63,10 @@
     .logoContainer                              { width: 20%; }
     .logo                                       { width: auto; height: 100px; }
 
-    nav ul.menu                                 { width: 80% }
+    #collapsed-menu-button                      { display: none; }
+    #mobile-menu-wrapper                        { display: none; }
+
+    nav ul.menu                                 { width: 80%; display: inline-block; }
     nav ul.menu li                              { display: inline-block; }
     nav ul.menu li a                            { font-size: 18px; line-height: 100px; }
 
@@ -187,7 +190,10 @@
     .logoContainer                              { width: 20%; }
     .logo                                       { width: auto; height: 100px; }
 
-    nav ul.menu                                 { width: 80% }
+    #collapsed-menu-button                      { display: none; }
+    #mobile-menu-wrapper                        { display: none; }
+
+    nav ul.menu                                 { width: 80%; display: inline-block; }
     nav ul.menu li a                            { font-size: 13px; line-height: 100px; }
 
     #about                                      { padding-top: 150px; margin-top: -100px }
@@ -291,7 +297,10 @@
         .logoContainer                              { width: 20%; }
         .logo                                       { width: auto; height: 100px; }
 
-        nav ul.menu                                 { width: 80% }
+        #collapsed-menu-button                      { display: none; }
+        #mobile-menu-wrapper                        { display: none; }
+
+        nav ul.menu                                 { width: 80%; display: inline-block; }
         nav ul.menu li a                            { font-size: 9px; line-height: 100px; }
 
         #about                                      { padding-top: 150px; margin-top: -100px; }
@@ -401,8 +410,10 @@
         .logo { width: auto; height: 80px; }
 
         nav { height: auto; z-index: 10; }
+        nav ul.menu { display: none; }
         nav ul.menu li { float: none; }
-        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
+        #collapsed-menu-button { display: inline-block; float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
+        #mobile-menu-wrapper { display: block; }
 
         .page { padding-top: 130px; margin-top: -100px; }
 
@@ -503,9 +514,10 @@
         .logo { width: auto; height: 80px; }
 
         nav { z-index: 10; }
-        nav ul.menu { }
+        nav ul.menu { display: none; }
         nav ul.menu li { display: block; }
-        #collapsed-menu-button { float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
+        #collapsed-menu-button { display: inline-block; float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
+        #mobile-menu-wrapper { display: block; }
 
         #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }
 
