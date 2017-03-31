@@ -267,7 +267,7 @@ nav {
 	-webkit-box-shadow: 0 5px 10px #555;
 	box-shadow: 0 5px 10px #555;
 	white-space: nowrap;
-	padding: 1em 0;
+	padding: 15px 0;
 }
 nav ul {
 	display: inline-block;
@@ -1101,7 +1101,7 @@ p.percent {
 	margin-right: 10px;
 }
 .services .video-container a {
-	display: inline-block;
+	display: block;
 }
 .services .video-container a img {
 	width: 100%;
@@ -1125,6 +1125,7 @@ p.percent {
 .careers .tagline span {
 	color: #FFF; 
 	padding: 7px 10px 3px 10px;
+	line-height: 1.65em;
 }
 .careers.odd {
 

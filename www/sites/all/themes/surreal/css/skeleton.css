@@ -449,8 +449,8 @@
         .gallerySelectorList li { width: calc(100%/3); }
 
         .contactLogo { text-align: center; }
-        .contactInfo { padding: 0 20px; }
-        .contactDetails { text-align: left; margin-top: 20px; margin-bottom: 20px; }
+        .contactInfo { padding: 0 20px; text-align: center; }
+        .contactDetails { text-align: left; margin-top: 10px !important; margin-bottom: 10px !important; text-align: center; }
         .contactDetails ul { padding: 0 20px; }
 
         .googlemap-wrap { margin-left: 20px !important; }
