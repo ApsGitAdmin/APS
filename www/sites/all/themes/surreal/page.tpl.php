@@ -20,13 +20,13 @@
 </nav>
 <div id="page">  
   <div id="homepage" class="homepage section">
-    <div id="r0"></div>
-    
-    <!-- Region Hero -->  
-    <?php if ($page['hero']): ?>
-    <?php print render($page["hero"]); ?>
-    <?php endif; ?>
-    <!--end Hero--> 
+    <div id="r0">  
+      <!-- Region Hero -->  
+      <?php if ($page['hero']): ?>
+      <?php print render($page["hero"]); ?>
+      <?php endif; ?>
+      <!--end Hero--> 
+    </div>
   </div>
 
   <!--<div id="virtual-meeting"><a href="http://vimeo.com/155992387" rel="prettyPhoto"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/video-popup.png" /></a></div>-->
