@@ -38,7 +38,7 @@
     <?php foreach ($rows as $row_count => $row): ?>
     <?php
       if ($row['field_room_colour']) {
-        $row['field_direction'] = '<span style="color:' . $row['field_room_colour'] . ';">' . $row['field_direction'] . '</span>';
+        $row['field_direction'] = '<div style="color:' . $row['field_room_colour'] . ';">' . $row['field_direction'] . '</div>';
       }
       unset($row['field_room_colour']);
     ?>

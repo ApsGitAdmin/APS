@@ -1069,6 +1069,7 @@ table.aps-matrix-grid {
   margin: 0;
   border: none;
   border-bottom: 1px solid #ddd;
+  table-layout: fixed;
 }
 
 table.aps-matrix-grid caption {
@@ -1087,7 +1088,7 @@ table.aps-matrix-grid tbody {
 
 table.aps-matrix-grid thead .time,
 table.aps-matrix-grid thead .room {
-  border-bottom: 2px solid #004c99;
+  
 }
 
 table.aps-matrix-grid thead .screen {
@@ -1095,7 +1096,7 @@ table.aps-matrix-grid thead .screen {
 }
 
 table.aps-matrix-grid thead .room {
-  outline: 1px solid #004c99;
+  
 }
 
 table.aps-matrix-grid thead th {
@@ -1168,7 +1169,6 @@ table.aps-matrix-grid th.screen {
 }
 
 table.aps-matrix-grid th.room {
-  background: #0074BD;
   color: #FFF;
   white-space: nowrap;
   text-align: center;
@@ -1209,6 +1209,17 @@ table.aps-matrix-grid td {
   position: relative;
   height: 1600px;
   background: #FFF;
+  outline: solid 1px #dedede;
+}
+
+table.aps-matrix-grid td div.timeline {
+  position: absolute;
+  width: 95%;
+  padding: 0 2.5%;
+  text-align: right;
+  border-bottom: solid 2px #FF0000;
+  color: #FF0000;
+  z-index: 99;
 }
 
 table.aps-matrix-grid td.meeting {
@@ -1219,30 +1230,32 @@ table.aps-matrix-grid td.meeting {
 
 table.aps-matrix-grid td div.meeting {
   position: absolute;
-  background: #4d8f46;
-  outline: solid 1px #0a6700;
   width: 100%;
 }
 table.aps-matrix-grid td div.meeting.all-day {
-  outline: solid 1px #be7;
-  background: #f8fff0;
+
 }
 table.aps-matrix-grid td div.meeting .node-meeting {
   border: none;
-  color: #FFF;
-  font-size: 9pt;
+  font-size: 12pt;
+  line-height: 16pt;
+  display: table-cell;
+  vertical-align: middle;
 }
 table.aps-matrix-grid td div.meeting .node-meeting h4 {
   margin-bottom: 0;
   padding-bottom: 0;
-  font-size: 14pt;
+  font-size: 18pt;
+  line-height: 26pt;
 }
 table.aps-matrix-grid td div.meeting.all-day .node-meeting {
-  color: #4d8f46;
+
 }
 
 table.aps-matrix-grid td div.meeting .meeting-content {
-  margin: 5% 2.5%;
+  display: table;
+  width: 100%;
+  height: 100%;
   text-align: center;
 }
 table.aps-matrix-grid td div.meeting .meeting-content h3 {

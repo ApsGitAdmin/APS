@@ -6,142 +6,6 @@
 
 include_once 'aps_matrix.features.inc';
 
-/**
- * Creates a range of times in a specific formatting
- */
-function hoursRange($lower = 0,$upper = 86400,$step = 3600,$format = '') {
-  $times = array();
-  if (empty($format)) {
-    $format = 'g:i';
-  }
-
-  foreach (range($lower, $upper, $step) as $increment) {
-    $time = gmdate('H:i', $increment);
-    list($hour, $minutes) = explode(':', $time);
-    $date = new DateTime( $hour . ':' . $minutes);
-    $times[$increment] = array('data' => '<span>' . $date->format($format) . '</span>', 'header' => TRUE, 'class' => array('time-cell'));
-  }
-  return $times;
-}
-
-/**
- * Creates a range of times in a specific formatting
- */
-function insertMeeting($meeting,&$rows,$row_id,$blank_row) {
-  // Set the Blank row to not have a header
-  unset($blank_row[0]);
-
-  $available_rows = array();
-  foreach ($rows as $room_id => $row) {
-    $nid = (strstr($room_id, '-'))? strstr($room_id, '-', TRUE) : $room_id;
-    if ($nid == $row_id) {
-      $available_rows[] = &$rows[$row_id];
-      $row_pos = $row_id;
-    }
-  }
-
-  $used = FALSE;
-  foreach ($available_rows as $i => &$row) {
-    if ($used != TRUE) {
-      // Remove the header for the row
-      $header = reset($row);
-      unset($row[0]);
-      $id = $row_id;
-
-      // Give the rows the proper key to start
-      $temp = $row;
-
-      // Get the amount of seconds from the start of the datestamp
-      $start = strtotime($meeting->field_meeting_time[LANGUAGE_NONE][0]['value']);
-      $start -= strtotime("midnight", $start);
-      $end = strtotime($meeting->field_meeting_time[LANGUAGE_NONE][0]['value2']);
-      $end -= strtotime("midnight", $end);
-
-      // Compensate for Drupals 'all-day' method, which starts and ends on midnight of the same day (for some reason)
-      $end = ($end == 0)? 86400 : $end;
-
-      // Render the content in teaser format
-      $cell = node_view($meeting, 'teaser');
-      $cell = render($cell);
-
-      if ($insert = insertMeetingToRow($temp,$start,$end,$cell)) {
-        $temp = $insert;
-        $used = TRUE;
-      } 
-
-      $temp[0] = $header;
-      ksort($temp);
-      $row = $temp;
-    }
-  }
-
-  if (!$used) {
-    $new_row = insertMeetingToRow($blank_row,$start,$end,$cell);
-    $rows[$row_id . '-' . ($i +1)] = $new_row;
-    if (array_key_exists('rowspan', $rows[$row_id][0])) {
-      $rows[$row_id][0]['rowspan'] = $rows[$row_id][0]['rowspan'] + 1;
-    } else {
-      $rows[$row_id][0]['rowspan'] = 2;
-    }
-  }
-  ksort($rows, SORT_STRING);
-}
-
-function insertMeetingToRow($row,$start,$end,$cell) {
-  $colspan = 1;
-  // Iterates through the time fields and adds the cells as appropriate
-  foreach ($row as $increment => &$time) {
-    // Set useful variables to determine how close the start was
-    $s = ($increment - $start)/60;
-    $e = ($end - $increment)/60;
-
-    // Does the event start before time has started recording?
-    if ($start < $increment && $s <= 30) {
-      // Set the first cell info
-      if (!isset($cell_id)) {
-        $cell_id = $increment;
-        $time = array('data' => $cell, 'colspan' => $colspan, 'class' => array('meeting'));
-      }
-    }
-
-    // How many cells does it take up
-    if (isset($cell_id)) {
-      if ($end > $increment) {
-        $colspan++;
-      }
-    }
-  }
-  if (isset($cell_id)) {
-    $row[$cell_id]['colspan'] = $colspan;
-
-    // Remove cells taken up by rowspan, first set the row array pointer to the 
-    // cell with the content added
-    reset($row);
-    while (key($row) !== $cell_id) next($row);
-
-    $remove = array();
-    // Iterate through how many cells are taken up
-    for ($i = 1; $i < $colspan; $i++) { 
-      next($row);
-      $pos = key($row);
-      $cell = current($row);
-      // If the cell is empty, remove it
-      if (empty($cell['data'])) {
-        $remove[] = $pos;
-      } else {
-        return FALSE;
-      }
-    }
-
-    foreach ($remove as $pos) {
-      unset($row[$pos]);
-    }
-    return $row;
-  } else {
-    return FALSE;
-  }
-}
-
 function template_preprocess_aps_matrix_grid(&$vars) {
   $view     = $vars['view'];
 
@@ -164,19 +28,29 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   $rows = array();
   $meetings = array();
   foreach ($result as $key => $record) {
+    if ($record->field_field_room_colour) {
+      list($r,$g,$b) = sscanf($record->field_field_room_colour[0]['raw']['rgb'], "#%02x%02x%02x");
+    } 
+    else {
+      $r = $g = $b = 160;
+    }
+
+    // Setup the header
     $headers[$record->node_field_data_field_room_nid] = array(
       'data' => t($record->node_field_data_field_room_title), 
       'header' => TRUE, 
-      'class' => array('room')
+      'class' => array('room'),
+      'style' => array('background:rgb('. implode(',', array($r,$g,$b)) .')'),
     );
-    
+
+    if (!array_key_exists($record->node_field_data_field_room_nid, $rows)) {
+      $rows[$record->node_field_data_field_room_nid] = array();
+    }
+
+    // Create an array of meetings into the rows array
     $meetings[$record->node_field_data_field_room_nid] = views_get_view_result('cluster_matrix_meeting_by_room', NULL, $record->node_field_data_field_room_nid);
  
     foreach ($meetings[$record->node_field_data_field_room_nid] as $key => $meeting) {
-      if (!array_key_exists($record->node_field_data_field_room_nid, $rows)) {
-        $rows[$record->node_field_data_field_room_nid] = array();
-      }
-
       // Get the start and end date in seconds of the meetings for the day
       $start = $meeting->field_field_meeting_time[0]['raw']['value'];
       $start = strtotime($start);
@@ -189,17 +63,20 @@ function template_preprocess_aps_matrix_grid(&$vars) {
       $top = ($start < 27000)? 0 : (($start - 27000) / 792);
       $height = ($end > 79200)? 100 - $start : (($end - $start) / 522);
       $classes = '';
+      $a = '0.3';
 
       // If the start and end time match, then it's classed as all day
       if ($start == $end) {
+        $a = '0.15';
         $top = 0;
         $height = 100;
         $classes = ' all-day';
       }
 
+      // Load the node teaser
       $teaser = node_view($meeting->_field_data['nid']['entity'], 'teaser');
 
-      $output = '<div class="meeting'.$classes.'" style="top:'.$top.'%; height:'.$height.'%;">';
+      $output = '<div class="meeting'.$classes.'" style="top:'.$top.'%; height:'.$height.'%;background:rgba('.implode(',', array($r,$g,$b,$a)).');color:rgb('.implode(',', array($r,$g,$b)).');">';
       $output .= '<div class="meeting-content">';
       $output .= drupal_render($teaser);
       $output .= '</div>';
@@ -209,83 +86,19 @@ function template_preprocess_aps_matrix_grid(&$vars) {
     }
   }
 
+  // Add a 'now' line, so it's easier to see what should be on screen
   $now = REQUEST_TIME;
   $now -= strtotime('midnight', $now);
   $now = ($now > 27000 && $now < 79200)? (($now - 27000) / 792) : NULL;
 
-  foreach ($rows as $row) {
+  foreach ($rows as &$row) {
     if ($now) {
-      $row['data'] .= '<div class="timeline" style="top:'.$now.'%;">&nbsp;</div>';
+      $row['data'] .= '<div class="timeline" style="top:'.$now.'%;">'.date('g:ia', REQUEST_TIME).'</div>';
     }
   }
 
   $vars['headers'][] = $headers;
   $vars['rows'][] = $rows;
-
-  /*
-
-  $days = array();
-  $header = array();
-  $rooms = array();
-  $times = hoursRange(27000, 79200, 60 * 30);
-  $row_info = array_keys($times);
-  array_unshift($row_info, 0);
-  // Find all possible rooms, construct a template array.
-  foreach ($result as $num => $rf) {
-    // Setup easy vars for the important info
-    switch ($rf->_entity_properties['entity object']->type) {
-      case 'room' : {
-        $room = $rf->_entity_properties['entity object'];
-
-        // Create the list of rooms
-        if (!in_array($room->nid, $rooms)) {        
-          $rooms[$room->nid] = array(array('data' => t($room->title), 'header' => TRUE, 'class' => array('room')));
-          $rooms[$room->nid] = array_pad($rooms[$room->nid], count($times)+1, array('data' => NULL));
-          $rooms[$room->nid] = array_combine($row_info, $rooms[$room->nid]);
-        }
-        break;
-      }
-      case 'meeting' : {
-        if ($rf->field_field_meeting_time) {
-          $date = date('d-M-Y', strtotime($rf->field_field_meeting_time[0]['raw']['value']));
-          $meeting = $rf->_entity_properties['entity object'];
-          
-          // Add the new day into an array of listed dates
-          if (!array_key_exists($date, $days)) {
-            $days[$date] = $rooms;
-          }
-
-          // Add the meeting into the correct day
-          $date_rooms = &$days[$date];
-          if (array_key_exists($meeting->field_meeting_room[LANGUAGE_NONE][0]['target_id'], $date_rooms)) {
-            insertMeeting($meeting, $date_rooms, $meeting->field_meeting_room[LANGUAGE_NONE][0]['target_id'], reset($rooms));
-          }
-        }
-        break;
-      }
-      default : {
-        break;
-      }
-    }
-  }
-
-  // Create the header
-  $header = array('blank' => array('data' => NULL, 'class' => array('empty'))) + $times;
-
-  // Add the default Rooming list
-  ksort($days);
-
-
-
-  foreach ($days as $date => $day) {
-    $vars['days'][$date] = array(
-      'header' => $header,
-      'rows' => $day,
-      'title' => ($date)? t(date('jS M Y', strtotime($date))) : t('Overall'),
-    );
-  }
-
-  */
 
   // Cope with an empty table
   if (empty($vars['rows']) && !empty($options['empty_table'])) {
@@ -306,11 +119,5 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   }
   else {
     $vars['caption'] = '';
-  }
-}
-
-function aps_matrix_node_view($node, $view_mode, $langcode) {
-  if (menu_get_object() == $node && $node->type == 'event') {
-    //drupal_add_js(drupal_get_path('module', 'aps_matrix') . '/aps_matrix.js', array('scope' => 'footer'));
   }
 }
