@@ -11,15 +11,15 @@
  * for more information on this topic.
  */
 
-function aps_digitalsignage_preprocess_node(&$vars) {
-  if($vars['view_mode'] == 'teaser') {
-    $vars['theme_hook_suggestions'][] = 'node__' . $vars['node']->type . '__teaser';
-    $vars['theme_hook_suggestions'][] = 'node__' . $vars['node']->nid . '__teaser';
-  }
+function aps_digitalsignage_preprocess_page(&$vars, $hook) {
+  	if (isset($vars['node'])) {
+    	$vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
+  	}
 }
 
-function aps_digitalsignage_preprocess_page(&$vars, $hook) {
-  if (isset($vars['node'])) {
-    $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
-  }
+function aps_digitalsignage_preprocess_node(&$vars) {
+  	if($vars['view_mode'] == 'teaser') {
+    	$vars['theme_hook_suggestions'][] = 'node__' . $vars['node']->type . '__teaser';
+    	$vars['theme_hook_suggestions'][] = 'node__' . $vars['node']->nid . '__teaser';
+  	}
 }

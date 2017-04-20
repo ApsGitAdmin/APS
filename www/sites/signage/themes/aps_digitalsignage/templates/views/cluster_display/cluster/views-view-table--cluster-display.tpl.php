@@ -36,6 +36,12 @@
   <?php endif; ?>
   <tbody>
     <?php foreach ($rows as $row_count => $row): ?>
+    <?php
+      if ($row['field_room_colour']) {
+        $row['field_direction'] = '<span style="color:' . $row['field_room_colour'] . ';">' . $row['field_direction'] . '</span>';
+      }
+      unset($row['field_room_colour']);
+    ?>
       <tr <?php if ($row_classes[$row_count]) { print 'class="' . implode(' ', $row_classes[$row_count]) .'"';  } ?>>
         <?php foreach ($row as $field => $content): ?>
           <td <?php if ($field_classes[$field][$row_count]) { print 'class="'. $field_classes[$field][$row_count] . '" '; } ?><?php print drupal_attributes($field_attributes[$field][$row_count]); ?>>

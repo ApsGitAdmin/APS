@@ -1,23 +1,24 @@
-  <?php foreach ($days as $day): ?>  
+  <div class="aps-matrix-grid-content">
     <table <?php if ($classes) { print 'class="'. $classes . '" '; } ?><?php print $attributes; ?>>
-      <?php if (!empty($day['title'])): ?>
-        <caption><?php print $day['title']; ?></caption>
+      <?php if (!empty($title) || !empty($caption)) : ?>
+        <caption><?php print $caption . $title; ?></caption>
       <?php endif; ?>
-      <?php if (!empty($day['header'])) : ?>
+      <?php if (!empty($headers)) : ?>
         <thead>
-          <tr>
-            <?php 
-              foreach ($day['header'] as $cell) {
-                print _theme_table_cell($cell, TRUE);
-              }
-            ?>
-          </tr>
+          <?php foreach ($headers as $header_count => $header): ?>
+            <tr>
+              <?php 
+                foreach ($header as $cell) {
+                  print _theme_table_cell($cell, TRUE);
+                }
+              ?>
+            </tr>
+          <?php endforeach; ?>
         </thead>
       <?php endif; ?>
       <tbody>
-        <?php $count = 0; ?>
-        <?php foreach ($day['rows'] as $row_count => $row): ?>
-          <tr class="<?php print ($count++ % 2 == 0) ? 'odd' : 'even'; ?>">
+        <?php foreach ($rows as $row_count => $row): ?>
+          <tr <?php if ($row_classes[$row_count]) { print 'class="' . implode(' ', $row_classes[$row_count]) .'"';  } ?>>
           <?php
             foreach ($row as $cell) {
               print _theme_table_cell($cell);
@@ -27,4 +28,4 @@
         <?php endforeach; ?>
       </tbody>
     </table>
-  <?php endforeach; ?>
+  </div>

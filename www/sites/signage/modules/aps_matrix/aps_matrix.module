@@ -154,10 +154,75 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   $vars['rows'] = array();
   $vars['field_classes'] = array();
 
+  $args     = $view->args;
   $options  = $view->style_plugin->options;
   $handler  = $view->style_plugin;
 
   $row_class_special = isset($options['row_class_special']) ? $options['row_class_special'] : TRUE;
+
+  $headers = array();
+  $rows = array();
+  $meetings = array();
+  foreach ($result as $key => $record) {
+    $headers[$record->node_field_data_field_room_nid] = array(
+      'data' => t($record->node_field_data_field_room_title), 
+      'header' => TRUE, 
+      'class' => array('room')
+    );
+    
+    $meetings[$record->node_field_data_field_room_nid] = views_get_view_result('cluster_matrix_meeting_by_room', NULL, $record->node_field_data_field_room_nid);
+ 
+    foreach ($meetings[$record->node_field_data_field_room_nid] as $key => $meeting) {
+      if (!array_key_exists($record->node_field_data_field_room_nid, $rows)) {
+        $rows[$record->node_field_data_field_room_nid] = array();
+      }
+
+      // Get the start and end date in seconds of the meetings for the day
+      $start = $meeting->field_field_meeting_time[0]['raw']['value'];
+      $start = strtotime($start);
+      $start -= strtotime('midnight', $start);
+
+      $end = $meeting->field_field_meeting_time[0]['raw']['value2'];
+      $end = strtotime($end);
+      $end -= strtotime('midnight', $end);
+
+      $top = ($start < 27000)? 0 : (($start - 27000) / 792);
+      $height = ($end > 79200)? 100 - $start : (($end - $start) / 522);
+      $classes = '';
+
+      // If the start and end time match, then it's classed as all day
+      if ($start == $end) {
+        $top = 0;
+        $height = 100;
+        $classes = ' all-day';
+      }
+
+      $teaser = node_view($meeting->_field_data['nid']['entity'], 'teaser');
+
+      $output = '<div class="meeting'.$classes.'" style="top:'.$top.'%; height:'.$height.'%;">';
+      $output .= '<div class="meeting-content">';
+      $output .= drupal_render($teaser);
+      $output .= '</div>';
+      $output .= '</div>';
+
+      $rows[$record->node_field_data_field_room_nid]['data'] .= $output;
+    }
+  }
+
+  $now = REQUEST_TIME;
+  $now -= strtotime('midnight', $now);
+  $now = ($now > 27000 && $now < 79200)? (($now - 27000) / 792) : NULL;
+
+  foreach ($rows as $row) {
+    if ($now) {
+      $row['data'] .= '<div class="timeline" style="top:'.$now.'%;">&nbsp;</div>';
+    }
+  }
+
+  $vars['headers'][] = $headers;
+  $vars['rows'][] = $rows;
+
+  /*
 
   $days = array();
   $header = array();
@@ -210,6 +275,8 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   // Add the default Rooming list
   ksort($days);
 
+
+
   foreach ($days as $date => $day) {
     $vars['days'][$date] = array(
       'header' => $header,
@@ -217,6 +284,8 @@ function template_preprocess_aps_matrix_grid(&$vars) {
       'title' => ($date)? t(date('jS M Y', strtotime($date))) : t('Overall'),
     );
   }
+
+  */
 
   // Cope with an empty table
   if (empty($vars['rows']) && !empty($options['empty_table'])) {

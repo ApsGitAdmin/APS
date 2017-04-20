@@ -5,9 +5,11 @@
  */
 # Player.
 $sites['player.dev.thinkaps.com'] = 'player';
+$sites['player.thinkaps.local'] = 'player';
 
 # Signage.
 $sites['signage.dev.thinkaps.com'] = 'signage';
+$sites['signage.thinkaps.local'] = 'signage';
 
 /**
  * Dev sites.

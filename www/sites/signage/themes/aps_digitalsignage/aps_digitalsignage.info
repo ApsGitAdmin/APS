@@ -22,6 +22,8 @@ regions[preface_third] = Preface Third
 
 regions[full] = Full
 
+regions[screen] = Screen
+
 regions[branding] = Branding
 regions[menu] = Menu
 
@@ -37,6 +39,7 @@ zones[user] = User
 zones[branding] = Branding
 zones[menu] = Menu
 zones[full] = Full
+zones[screen] = Screen
 zones[preface] = Preface
 zones[content] = Content
 zones[postscript] = Postscript
