@@ -60,7 +60,7 @@ function template_preprocess_aps_matrix_grid(&$vars) {
       $end = strtotime($end);
       $end -= strtotime('midnight', $end);
 
-      $top = ($start < 27000)? 0 : (($start - 27000) / 792);
+      $top = ($start < 27000)? 0 : (($start - 27000) / 522);
       $height = ($end > 79200)? 100 - $start : (($end - $start) / 522);
       $classes = '';
       $a = '0.3';
