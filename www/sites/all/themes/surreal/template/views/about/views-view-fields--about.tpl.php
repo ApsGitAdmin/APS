@@ -5,10 +5,9 @@
   $Body = $fields['body']->content;
   $Vimeo = $fields['field_vimeo'];
   $Posterfile = file_load($fields['fid']->content);
-  $PosterURL = file_create_url($Posterfile->uri);
   $Poster = theme_image_style(array(
       'style_name' => 'service_image',
-      'path' => $PosterURL,
+      'path' => $Posterfile->uri,
       'width' => 0,
       'height' => 0,
       'alt' => $Title->content,
