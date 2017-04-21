@@ -103,7 +103,7 @@
     .services.even .video-container             { float: right; text-align: left; }
     .services.odd .video-container              { float: left; text-align: left; }
 
-    .services .video-container                  { margin-top: -100px; margin-bottom: 0; width: 50%; }
+    .services .video-container                  { margin-top: -70px; margin-bottom: 0; width: 50%; }
 
     .teamBlock                                  { width: 200px; height: 200px; }
     .teamBlock.even .teamImage img, 
