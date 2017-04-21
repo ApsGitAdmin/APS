@@ -52,12 +52,16 @@ function template_preprocess_aps_matrix_grid(&$vars) {
  
     foreach ($meetings[$record->node_field_data_field_room_nid] as $key => $meeting) {
       // Get the start and end date in seconds of the meetings for the day
-      $start = $meeting->field_field_meeting_time[0]['raw']['value'];
-      $start = strtotime($start);
+      $start = new DateTime($meeting->field_field_meeting_time[0]['raw']['value'], new DateTimeZone($meeting->field_field_meeting_time[0]['raw']['timezone_db']));
+      $start->setTimezone(new DateTimeZone($meeting->field_field_meeting_time[0]['raw']['timezone']));
+      dpm($start);
+      $start = strtotime($start->date);
       $start -= strtotime('midnight', $start);
 
-      $end = $meeting->field_field_meeting_time[0]['raw']['value2'];
-      $end = strtotime($end);
+      $end = new DateTime($meeting->field_field_meeting_time[0]['raw']['value2'], new DateTimeZone($meeting->field_field_meeting_time[0]['raw']['timezone_db']));
+      $end->setTimezone(new DateTimeZone($meeting->field_field_meeting_time[0]['raw']['timezone']));
+      dpm($end);
+      $end = strtotime($end->date);
       $end -= strtotime('midnight', $end);
 
       $top = ($start < 27000)? 0 : (($start - 27000) / 522);
@@ -89,7 +93,7 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   // Add a 'now' line, so it's easier to see what should be on screen
   $now = REQUEST_TIME;
   $now -= strtotime('midnight', $now);
-  $now = ($now > 27000 && $now < 79200)? (($now - 27000) / 792) : NULL;
+  $now = ($now > 27000 && $now < 79200)? (($now - 27000) / 522) : NULL;
 
   foreach ($rows as &$row) {
     if ($now) {
