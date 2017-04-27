@@ -1217,7 +1217,8 @@ table.aps-matrix-grid td div.timeline {
   width: 95%;
   padding: 0 2.5%;
   text-align: right;
-  border-bottom: solid 2px #FF0000;
+  margin-top: -2px;
+  border-top: solid 2px #FF0000;
   color: #FF0000;
   z-index: 99;
 }
