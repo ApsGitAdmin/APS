@@ -407,15 +407,15 @@
         .parallax { height: 140px; }
 
         .logoContainer { width: 75%; }
-        .logo { width: auto; height: 80px; }
+        .logo { width: auto; height: 50px; }
 
         nav { height: auto; z-index: 10; }
         nav ul.menu { display: none; }
         nav ul.menu li { float: none; }
-        #collapsed-menu-button { display: inline-block; float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
+        #collapsed-menu-button { font-size: 2em; display: inline-block; float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 50px; line-height: 50px; }
         #mobile-menu-wrapper { display: block; }
 
-        .page { padding-top: 110px; margin-top: -100px; }
+        .page { padding-top: 75px; margin-top: -65px; }
 
         #about { padding-top: 130px; margin-top: -100px; }
 
@@ -511,12 +511,12 @@
         .container .two-thirds.column { width: 420px; }
 
         .logoContainer { width: 75%; }
-        .logo { width: auto; height: 80px; }
+        .logo { width: auto; height: 50px; }
 
         nav { z-index: 10; }
         nav ul.menu { display: none; }
         nav ul.menu li { display: block; }
-        #collapsed-menu-button { display: inline-block; float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 80px; line-height: 80px; }
+        #collapsed-menu-button { font-size: 2em; display: inline-block; float: none; width: 25%; text-align: right; margin: 0; vertical-align: top; height: 50px; line-height: 50px; }
         #mobile-menu-wrapper { display: block; }
 
         #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }

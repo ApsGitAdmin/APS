@@ -1502,6 +1502,7 @@ table.meeting-row td.arrowfont span {
 
 .display-row table.meeting-row > tbody > tr > td {
   border: none;
+  vertical-align: bottom;
 }
 
 

@@ -262,6 +262,11 @@ window.matchMedia || (window.matchMedia = function() {
             e.preventDefault();
           });
   */        
+
+          $("#mobile-menu-inner").click(function(e) {
+            _this.menuToggle($('#collapsed-menu-button'));
+          });
+
           if ('ontouchstart' in document.documentElement) {
             $("#collapsed-menu-button").on('touchstart', function(e) {
               _this.menuToggle(this);

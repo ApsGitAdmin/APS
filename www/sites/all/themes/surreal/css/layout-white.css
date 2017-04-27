@@ -267,7 +267,7 @@ nav {
 	-webkit-box-shadow: 0 5px 10px #555;
 	box-shadow: 0 5px 10px #555;
 	white-space: nowrap;
-	padding: 15px 0;
+	padding: 15px 0 8px;
 }
 nav ul {
 	display: inline-block;
