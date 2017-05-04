@@ -23,3 +23,16 @@ function aps_digitalsignage_preprocess_node(&$vars) {
     	$vars['theme_hook_suggestions'][] = 'node__' . $vars['node']->nid . '__teaser';
   	}
 }
+
+function aps_digitalsignage_preprocess_html(&$vars) {
+	dpm($vars);
+	$http_equiv = array(
+	    '#type' => 'html_tag',
+	    '#tag' => 'meta',
+	    '#attributes' => array(
+		    'http-equiv' => 'Refresh',
+		    'content' => '300',
+		)
+	);
+	//drupal_add_html_head($http_equiv, 'http_equiv');
+}
