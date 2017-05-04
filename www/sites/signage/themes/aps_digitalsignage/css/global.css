@@ -1207,7 +1207,7 @@ table.aps-matrix-grid th.time-cell {
 table.aps-matrix-grid td {
   width: auto;
   position: relative;
-  height: 1600px;
+  height: 2200px;
   background: #FFF;
   outline: solid 1px #dedede;
 }
