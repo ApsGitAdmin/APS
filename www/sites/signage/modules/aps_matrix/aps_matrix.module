@@ -64,8 +64,9 @@ function template_preprocess_aps_matrix_grid(&$vars) {
       $end = strtotime($end);
       $end -= strtotime('midnight', $end);
 
-      $top = ($start < 27000)? 0 : (($start - 27000) / 522);
-      $height = ($end > 79200)? 100 - $start : (($end - $start) / 522);
+      // 864 because there are 86400 seconds in a day, but you have to multiply by 100 to get %
+      $top = $start / 864;
+      $height = ($end - $start) / 864;
       $classes = '';
       $a = '0.3';
 
@@ -93,7 +94,7 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   // Add a 'now' line, so it's easier to see what should be on screen
   $now = REQUEST_TIME;
   $now -= strtotime('midnight', $now);
-  $now = ($now > 27000 && $now < 79200)? (($now - 27000) / 522) : NULL;
+  $now = ($now / 864);
 
   foreach ($rows as &$row) {
     if ($now) {
