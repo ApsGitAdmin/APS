@@ -28,7 +28,7 @@ function aps_digitalsignage_preprocess_html(&$vars) {
 	if ($vars['page']) {
 		if ($vars['page']['#views_contextual_links_info']) {
 			if ($vars['page']['#views_contextual_links_info']['views_ui']) {
-				if ($vars['page']['#views_contextual_links_info']['views_ui']['view_name'] == 'cluster_display') && $vars['page']['#views_contextual_links_info']['views_ui']['view_display_id'] == 'room_list') {
+				if ($vars['page']['#views_contextual_links_info']['views_ui']['view_name'] == 'cluster_display' && $vars['page']['#views_contextual_links_info']['views_ui']['view_display_id'] == 'room_list') {
 					$http_equiv = array(
 					    '#type' => 'html_tag',
 					    '#tag' => 'meta',
