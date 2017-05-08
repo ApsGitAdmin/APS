@@ -1449,13 +1449,18 @@ table.meeting-row td.knockout > div {
   color: #FFF;
   font-size: 0.5em;
   line-height: 4em;
+  text-transform: uppercase;
+  background: -moz-linear-gradient(45deg, #0033a0 0%, #752b90 66%, #ed0c6e 100%);
+  background: -webkit-linear-gradient(45deg, #0033a0 0%,#752b90 66%,#ed0c6e 100%);
+  background: linear-gradient(45deg, #0033a0 0%,#752b90 66%,#ed0c6e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0033a0', endColorstr='#ed0c6e',GradientType=1 );
 }
 
 table.meeting-row td > span {
-  font-size: 0.75em;
+  font-size: 0.45em;
   display: inline-block;
   letter-spacing: 0;
-  line-height: 0.85em;
+  line-height: 0.55em;
 }
 
 table.meeting-row td.meeting-info {
@@ -1483,16 +1488,16 @@ table.meeting-row tr.display-row:last-child table {
   margin-bottom: 0;
 }
 
-table.meeting-row td.arrowfont {
+table.meeting-row td.arrow {
   text-align: right;
-  font-size: 2em;
-  line-height: 1.4em;
+  font-size: 1.6em;
+  line-height: 1em;
   padding-right: 5%;
   letter-spacing: 1px;
   width: 1%;
 }
 
-table.meeting-row td.arrowfont span {
+table.meeting-row td.arrow span {
   display: block;
 }
 
@@ -1502,7 +1507,7 @@ table.meeting-row td.arrowfont span {
 
 .display-row table.meeting-row > tbody > tr > td {
   border: none;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 
