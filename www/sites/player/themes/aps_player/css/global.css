@@ -430,6 +430,23 @@ td .clipping {
   margin-top: 3px;
 }
 
+.field-type-iframe{
+  height: 0;
+  padding-bottom: 56.25%;
+  padding-top: 0;
+  position: relative;
+  outline: solid 1px #fff;
+  margin-bottom: 2em;
+}
+.field-type-iframe iframe{
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
 .ajax-progress {
     display: inline-block;
     vertical-align: middle;
