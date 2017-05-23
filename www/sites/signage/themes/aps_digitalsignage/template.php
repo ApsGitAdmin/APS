@@ -34,7 +34,7 @@ function aps_digitalsignage_preprocess_html(&$vars) {
 					    '#tag' => 'meta',
 					    '#attributes' => array(
 						    'http-equiv' => 'Refresh',
-						    'content' => '300',
+						    'content' => '120',
 						),
 					);
 					drupal_add_html_head($http_equiv, 'http_equiv');
