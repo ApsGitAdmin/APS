@@ -1450,7 +1450,7 @@ table.meeting-row td.knockout > div {
   font-size: 14pt;
   line-height: 2em;
   text-transform: uppercase;
-  margin-left: 1px;
+  margin-left: 2px;
   background: -moz-linear-gradient(45deg, #0033a0 0%, #752b90 66%, #ed0c6e 100%);
   background: -webkit-linear-gradient(45deg, #0033a0 0%,#752b90 66%,#ed0c6e 100%);
   background: linear-gradient(45deg, #0033a0 0%,#752b90 66%,#ed0c6e 100%);
