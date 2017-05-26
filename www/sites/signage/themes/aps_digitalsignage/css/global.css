@@ -1441,6 +1441,7 @@ table.meeting-row h3 {
 table.meeting-row td.knockout {
   width: 8%;
   padding-right: 20px;
+  vertical-align: text-top !important;
 }
 
 table.meeting-row td.knockout > div {
