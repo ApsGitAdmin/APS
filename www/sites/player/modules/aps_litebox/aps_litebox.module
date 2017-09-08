@@ -19,8 +19,6 @@ function aps_litebox_menu() {
  * Injects the code into specific content types
  */
 function aps_litebox_node_view($node, $view_mode, $langcode) {
-  global $user;
-
   if (aps_litebox_node_type_active($node->type) && $view_mode == 'full') {
     // Install our client-side behavior.
     drupal_add_js(drupal_get_path('module', 'aps_litebox') . '/js/litebox.js', array('scope' => 'footer'));
