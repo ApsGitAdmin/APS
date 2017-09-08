@@ -6,9 +6,6 @@ Module created by Richard Burford, aka, psynaptic
   http://drupal.org/user/93429
   http://freestylesystems.co.uk/
 
-Module version 7 by Fernando San Julián, aka, manfer
-  http://drupal.org/user/506264
-
 Shadowbox created by Michael J. I. Jackson
   http://www.shadowbox-js.com/
   http://mjijackson.com/

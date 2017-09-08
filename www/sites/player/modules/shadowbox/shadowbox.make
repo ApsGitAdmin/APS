@@ -2,7 +2,7 @@
 ; Example drush make file for downloading third party Shadowbox library.
 ; http://bit.ly/EMVW5
 
-core = 8.x
+core = 7.x
 api = 2
 projects[] = drupal
 
