@@ -1,0 +1,14 @@
+name: 'Shadowbox: Image formatter'
+type: module
+description: Allows image field content to be displayed in a JavaScript modal media viewer application.
+# core: 8.x
+# version: VERSION
+package: Shadowbox
+dependencies:
+  - shadowbox
+
+# Information added by Drupal.org packaging script on 2016-10-24
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'shadowbox'
+datestamp: 1477341541
