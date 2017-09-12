@@ -24,6 +24,7 @@
  * @ingroup views_templates
  */
 ?>
+<?php dpm($fields); ?>
 <?php $classes = (array_key_exists('field_additional_classes', $fields))? $fields['field_additional_classes']->content : 'alpha grid-16 clearfix omega'; ?>
 <div class="<?php print $classes ?> list-item">
 	<?php
