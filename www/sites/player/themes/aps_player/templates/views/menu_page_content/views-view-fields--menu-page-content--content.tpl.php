@@ -31,7 +31,9 @@
 			print $fields['edit_node']->content; 
 		}
 	?>
-	<?php if ($fields['url'] != '#' && $fields['type']->raw != 'menu_page'): ?>
+	<?php if (array_key_exists('field_custom_path', $fields)): ?>
+		<a href="<?php print $fields['field_custom_path']->content; ?>">
+	<?php elseif ($fields['url'] != '#' && $fields['type']->raw != 'menu_page'): ?>
 		<a class="litebox" data-litebox-ratio="sixteen-nine" data-litebox-group="group-<?php print $fields['field_menu_page']->content; ?>" data-litebox-text="<?php print $fields['title']->content; ?>" href="<?php print $fields['url']; ?>">
 	<?php else: ?>
 		<a href="<?php print $fields['url']; ?>">
