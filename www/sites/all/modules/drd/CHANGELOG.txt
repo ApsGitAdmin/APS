@@ -1,5 +1,14 @@
-drd 7.x-2.x-dev
----------------
+drd 7.x-2.10, 2017-07-12
+------------------------
+Improve key length handling
+Always generate random keys
+Store and transport keys in base64 encoded format
+
+drd 7.x-2.9, 2017-04-07
+-----------------------
+Issue #2855797 by renatog: Implements hook_uninstall for cleanup variables on uninstall project
+Issue #2865843: Fix encoding and decoding of IV and only do that once at each end: when adding to and reading from header
+Issue #2859328 by jurgenhaas, cwells: aes_iv column PDOException: incorrect string value for aes_iv
 
 drd 7.x-2.8, 2017-02-23
 -----------------------
