@@ -296,7 +296,7 @@ function _drd_server_defaults($sid = 0, $name = '') {
     );
   }
   if (empty($server['aes_iv'])) {
-    $server['aes_iv'] = drd_aes_get_iv();
+    $server['aes_iv'] = base64_encode(drd_aes_get_iv());
   }
   $server['settings'] = drupal_array_merge_deep(array(
     'ssh2' => array(
@@ -399,12 +399,6 @@ function _drd_server_validate($values, $output = 'form') {
     }
   }
 
-  if (!empty($values['aes_key'])) {
-    if ($values['aes_key'] !== $values['aes_key_c']) {
-      _drd_server_validate_output($output, 'aes_key', t("The encryption keys didn't match."));
-    }
-  }
-
   return $valid;
 }
 
@@ -439,6 +433,7 @@ function _drd_server_save($values, $server, $is_drush = FALSE) {
   $changed = FALSE;
   $goto = FALSE;
   $remote_update = FALSE;
+  $aes_changed = ($server['aes_impl'] != $values['aes_implementation'] || $server['aes_cipher'] != $values['aes_cipher']);
 
   $server['name'] = $values['name'];
   $server['url'] = $values['url'];
@@ -475,14 +470,20 @@ function _drd_server_save($values, $server, $is_drush = FALSE) {
     ),
   );
 
-  if (!empty($values['aes_key'])) {
-    $changed = ($server['aes_key'] !== $values['aes_key']);
-    $server['aes_key'] = $values['aes_key'];
-  }
-  elseif (empty($server['aes_key'])) {
-    $server['aes_key'] = user_password(15);
+  if (empty($server['aes_key']) # There is no password set yet at all
+    || $aes_changed # Either implementation or cipher has changed
+    ) {
     $changed = TRUE;
+    # Let's create a new key
+    if ($server['aes_impl'] == 'mcrypt') {
+      $key_length = mcrypt_get_key_size($server['aes_cipher'], MCRYPT_MODE_CBC);
+    }
+    else {
+      $key_length = 16;
+    }
+    $server['aes_key'] = base64_encode(drupal_random_bytes($key_length));
   }
+
   $new = ($server['sid'] == 0);
   if (!$new) {
     // db_update requires the settings field to be serialized where as
@@ -590,8 +591,10 @@ function _drd_server_aes_config($implementation, $cipher, $iv) {
     '#disabled' => TRUE,
   );
   $form['aes_key'] = array(
-    '#type' => 'password',
+    '#type' => 'textfield',
     '#title' => t('Key'),
+    '#disabled' => TRUE,
+    '#description' => t('A random key will be generated automatically depending on other settings regarding implementation and cipher you select.'),
   );
   return $form;
 }

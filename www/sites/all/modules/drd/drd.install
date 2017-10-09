@@ -13,6 +13,17 @@ function drd_install() {
 }
 
 /**
+ * Implements hook_uninstall().
+ */
+function drd_uninstall() {
+  variable_del('drd_tasks');
+  variable_del('drd_requirements_ignore');
+  variable_del('cache_class_cache_drd');
+  variable_del('drd_remote_ott');
+  variable_del('drd_actions');
+}
+
+/**
  * Implementation of hook_schema().
  */
 function drd_schema() {
@@ -829,5 +840,30 @@ function drd_update_7217() {
   if (!db_table_exists('drd_http_header')) {
     $schema = drd_schema();
     db_create_table('drd_http_header', $schema['drd_http_header']);
+  }
+}
+
+/**
+ * Reset and update aes_key field
+ */
+function drd_update_7218() {
+  # Set new keys for all servers
+  $servers = db_select('drd_server', 's')
+    ->fields('s', array('sid', 'aes_impl', 'aes_cipher'))
+    ->execute()
+    ->fetchAll();
+  foreach ($servers as $server) {
+    if ($server->aes_impl == 'mcrypt') {
+      $key_length = mcrypt_get_key_size($server->aes_cipher, MCRYPT_MODE_CBC);
+    }
+    else {
+      $key_length = 16;
+    }
+    db_update('drd_server')
+      ->fields(array(
+        'aes_key' => base64_encode(drupal_random_bytes($key_length)),
+      ))
+      ->condition('sid', $server->sid)
+      ->execute();
   }
 }

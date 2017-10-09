@@ -7,9 +7,9 @@ dependencies[] = update
 
 configure = admin/drd/settings
 
-; Information added by Drupal.org packaging script on 2017-02-23
-version = "7.x-2.8"
+; Information added by Drupal.org packaging script on 2017-07-12
+version = "7.x-2.10"
 core = "7.x"
 project = "drd"
-datestamp = "1487869793"
+datestamp = "1499840362"
 

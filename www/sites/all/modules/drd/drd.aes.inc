@@ -26,12 +26,16 @@ function drd_aes_encrypt($string, $base64encode, $key, $cipher, $iv, $implementa
   if (empty($string)) {
     return FALSE;
   }
+
+  # Decode the key
+  $key = base64_decode($key);
+
   if ($implementation == 'phpseclib') {
     _drd_aes_load_phpsec();
     $phpsec = new Crypt_AES();
     $phpsec->setKey($key);
     if (!empty($iv)) {
-      $phpsec->setIV(base64_decode($iv));
+      $phpsec->setIV($iv);
     }
     $encrypted = $phpsec->encrypt($string);
   }
@@ -39,7 +43,7 @@ function drd_aes_encrypt($string, $base64encode, $key, $cipher, $iv, $implementa
     $td = mcrypt_module_open($cipher, '', MCRYPT_MODE_CBC, '');
     $ks = mcrypt_enc_get_key_size($td);
     $key = substr(sha1($key), 0, $ks);
-    mcrypt_generic_init($td, $key, base64_decode($iv));
+    mcrypt_generic_init($td, $key, $iv);
     $encrypted = mcrypt_generic($td, $string);
     mcrypt_generic_deinit($td);
     mcrypt_module_close($td);
@@ -62,12 +66,16 @@ function drd_aes_decrypt($string, $base64encoded, $key, $cipher, $iv, $implement
   if (empty($string)) {
     return FALSE;
   }
+
+  # Decode the key
+  $key = base64_decode($key);
+
   if ($implementation == 'phpseclib') {
     _drd_aes_load_phpsec();
     $phpsec = new Crypt_AES();
     $phpsec->setKey($key);
     if (!empty($iv)) {
-      $phpsec->setIV(base64_decode($iv));
+      $phpsec->setIV($iv);
     }
     $decrypted = $phpsec->decrypt($string);
   }
@@ -75,7 +83,7 @@ function drd_aes_decrypt($string, $base64encoded, $key, $cipher, $iv, $implement
     $td = mcrypt_module_open($cipher, '', MCRYPT_MODE_CBC, '');
     $ks = mcrypt_enc_get_key_size($td);
     $key = substr(sha1($key), 0, $ks);
-    mcrypt_generic_init($td, $key, base64_decode($iv));
+    mcrypt_generic_init($td, $key, $iv);
     $decrypted = mdecrypt_generic($td, $string);
     mcrypt_generic_deinit($td);
     mcrypt_module_close($td);
