@@ -2329,5 +2329,9 @@ you can use the generic selector below, but it's slower:
 	h1 span{font-size: 60px;}
 	.teamImage h2 {margin-top: 105px; font-size:40px;}
 	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 298px;}
-
 }
+
+
+
+
+
