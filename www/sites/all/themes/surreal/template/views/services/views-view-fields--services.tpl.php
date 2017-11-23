@@ -4,6 +4,8 @@
   $Tagline = $fields['field_tagline']->content; 
   $Body = $fields['body']->content;
   $Vimeo = $fields['field_vimeo'];
+  $VimeoThumb = strip_tags($fields['field_vimeo_thumb']->content, '<img>');
+  $VimeoThumbLink = preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $fields['field_vimeo_thumb']->content, $match);
   $Posterfile = file_load($fields['fid']->content);
   $Poster = theme_image_style(array(
       'style_name' => 'service_image',
@@ -15,6 +17,9 @@
     )
   );
   
+  //dpm($fields); 
+  //dpm($match);
+
   $Anchor = str_replace(' ', '-', strtolower($fields['title']->raw)).'-anchor';
 ?>
 
@@ -36,6 +41,9 @@
     </div>
     <div class="services-text">
       <?php print $Body; ?>
+      <div class="video-thumbnail">
+          <?php print l($VimeoThumb, $match[0][0], array('html' => TRUE, 'attributes' => array('class' => 'magnific-popup'))); ?>
+      </div>
     </div>
   </div>
 </article>
