@@ -24,7 +24,6 @@
 <div id="page" class="page">
   <div class="section">
     <div id="r0"></div>
-       
   </div>
 
   <?php if($page['client_parallax']): ?>
