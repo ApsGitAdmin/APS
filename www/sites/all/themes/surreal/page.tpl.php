@@ -23,7 +23,7 @@
     <div id="r0">  
       <!-- Region Hero -->  
       <?php if ($page['hero']): ?>
-      <?php print render($page["hero"]); ?>
+      <?php //print render($page["hero"]); ?>
       <?php endif; ?>
       <!--end Hero-->
       <div class="aps-video-wrapper">        
