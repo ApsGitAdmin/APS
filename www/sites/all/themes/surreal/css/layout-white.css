@@ -732,6 +732,7 @@ nav ul li a:hover {
 	
 #about {
 	margin-top: 0;
+	padding-top: 30px;
 }
 .aboutContainer {
 
@@ -2603,5 +2604,17 @@ article {
 	margin-top:0 !important;
 }
 
+#block-views-about-about .services.odd .video-container {
+	display: none;
+}
+
+#block-views-about-about .services .services-text {
+    width: 100%;
+    margin: 10px auto;
+}
+
+#block-views-about-about .services .services-header {
+	margin:0;
+}
 
 
