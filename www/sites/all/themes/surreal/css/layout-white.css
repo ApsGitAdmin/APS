@@ -2599,7 +2599,7 @@ you can use the generic selector below, but it's slower:
 }
 
 article {
-	margin-top:0;
+	margin-top:0 !important;
 }
 
 
