@@ -2620,7 +2620,10 @@ article {
 
 .video-thumbnail a img {}
 
-.video-thumbnail a {}
+.video-thumbnail {
+	padding: 3px 1px;
+    display: inline;
+}
 
 .video-thumbnail a.magnific-popup {
     color: #fff;
