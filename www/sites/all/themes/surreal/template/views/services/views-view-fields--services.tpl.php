@@ -41,7 +41,7 @@
     </div>
     <div class="services-text">
       <?php print $Body; ?>
-      <div class="video-thumbnail">
+      <div style='background-color: <?php print $Colour; ?>' class="video-thumbnail">
           <?php print l($VimeoThumb, $match[0][0], array('html' => TRUE, 'attributes' => array('class' => 'magnific-popup'))); ?>
       </div>
     </div>

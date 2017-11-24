@@ -246,6 +246,7 @@ blockquote:after {
 	position:relative;
 	overflow:hidden;
 	z-index:2;
+	margin-top: 0;
 }
 .page.desktop{
 	position:relative !important; 
@@ -2616,5 +2617,28 @@ article {
 #block-views-about-about .services .services-header {
 	margin:0;
 }
+
+.video-thumbnail a img {}
+
+.video-thumbnail a {}
+
+.video-thumbnail a.magnific-popup {
+    color: #fff;
+    padding: 5px 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
