@@ -245,16 +245,25 @@ blockquote:after {
 .page{
 	position:relative;
 	overflow:hidden;
+<<<<<<< HEAD
 	z-index:2;
 	margin-top: 0;
+=======
+>>>>>>> prod
 }
 .page.desktop{
 	position:relative !important; 
-	z-index:6;
 }
 .page{
 	background-attachment:scroll;
 }
+#r0 > div { z-index: 99; }
+#r1 > div { z-index: 60; }
+#r2 > div { z-index: 50; }
+#r3 > div { z-index: 40; }
+#r4 > div { z-index: 30; }
+#r5 > div { z-index: 20; }
+#r6 > div { z-index: 10; }
 nav {
 	background: #fff;
 	background: rgba(255,255,255,1);
