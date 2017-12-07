@@ -245,11 +245,10 @@ blockquote:after {
 .page{
 	position:relative;
 	overflow:hidden;
-<<<<<<< HEAD
+
 	z-index:2;
 	margin-top: 0;
-=======
->>>>>>> prod
+
 }
 .page.desktop{
 	position:relative !important; 
@@ -265,8 +264,7 @@ blockquote:after {
 #r5 > div { z-index: 20; }
 #r6 > div { z-index: 10; }
 nav {
-	background: #fff;
-	background: rgba(255,255,255,1);
+	background: #5e5e5e;
 	width: 100%;
 	position: fixed;
 	top: 0;
@@ -291,7 +289,7 @@ nav ul li {
 	margin: 0;
 }
 nav ul li a {
-	color: #656565;
+	color: #fff;
 	text-decoration: none;
 	text-transform: uppercase;
 	padding: 0 15px;
