@@ -27,7 +27,7 @@
       <?php endif; ?>
       <!--end Hero-->
       <div class="aps-video-wrapper">        
-        <iframe src="https://player.vimeo.com/video/204911510?autoplay=1&loop=1&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>    
+        <iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=1&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>    
       </div> 
     </div>
   </div>
