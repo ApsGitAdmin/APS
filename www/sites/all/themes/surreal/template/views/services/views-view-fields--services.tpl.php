@@ -17,18 +17,16 @@
     )
   );
   
-  //dpm($fields); 
-  //dpm($match);
-
   $Anchor = str_replace(' ', '-', strtolower($fields['title']->raw)).'-anchor';
 ?>
 
 <article name="<?php print $Anchor; ?>" id="<?php print $Anchor; ?>">
   <div class="services <?php print $zebra; ?> clearfix">
     <div class="services-header">
-      <h1 class="minimo-bold" style='color: <?php print $Colour; ?>'>
+      <h1 class="minimo-bold">
+      <!--<h1 class="minimo-bold" style='color: <?php print $Colour; ?>'>-->
         <?php 
-          print $Title->label_html;
+          //print $Title->label_html;
           print $Title->content;
         ?>
       </h1>
