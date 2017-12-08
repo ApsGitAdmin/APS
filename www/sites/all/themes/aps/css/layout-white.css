@@ -330,7 +330,7 @@ blockquote:after {
 	z-index:2;
 }
 .page.desktop{
-	background: url(../images/background.jpg) repeat-x scroll 50% 50%;
+	background: url(../images/background_dark.png) repeat-x scroll 50% 50%;
 	position:relative !important; 
 	z-index:6;
 }
