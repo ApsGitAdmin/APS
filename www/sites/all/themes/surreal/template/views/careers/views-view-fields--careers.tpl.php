@@ -9,10 +9,12 @@
 
 <div class="careers <?php print $zebra; ?> clearfix">
   <div class="careers-header">
-    <h1 class="minimo-bold" style='color: <?php print $Colour; ?>'>
+    <!--<h1 class="minimo-bold" style='color: <?php print $Colour; ?>'>-->
+    <h1 class="minimo-bold">
       <?php 
         $Title = explode(" ", $Title->content);
-        print '<span class="minimo-light uppercase">' . array_shift($Title) . '</span>' . trim(implode(" ", $Title));
+        //print '<span class="minimo-light uppercase">' . array_shift($Title) . '</span>' . trim(implode(" ", $Title));
+        print trim(implode(" ", $Title));
       ?>
     </h1>
     <p class="tagline">
