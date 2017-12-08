@@ -276,6 +276,8 @@ nav {
 	box-shadow: 0 5px 10px #555;*/
 	white-space: nowrap;
 	padding: 15px 0 8px;
+	border-bottom: solid 8px #1185c2;
+	border-image: url(http://www.thinkaps.com/sites/default/files/parallax/background/Contact_Parallax_0_0.png) 25 25 stretch;
 }
 nav ul {
 	display: inline-block;
@@ -362,7 +364,7 @@ nav ul li a:hover {
 #xmas-phone {
 	text-align: center;
 	padding: 2em 0;
-	background: url('../images/background_dark.png') repeat-x scroll 50% 50%;
+	background: url('../images/background_dark_70.png') repeat-x scroll 50% 50%;
 }
 #xmas a img,
 #xmas-phone a img {
