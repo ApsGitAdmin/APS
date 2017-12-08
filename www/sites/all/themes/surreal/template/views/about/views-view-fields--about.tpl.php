@@ -26,7 +26,7 @@
           //print $Title->label_html;
           
           $path = drupal_get_path('theme', 'surreal');
-          $path .= '/images/thinkaps.png';
+          $path .= '/images/thinkaps_white.png';
           
           print theme_image(array('path' => $path, 'width' => 108, 'height' => 49, 'attributes' => array('class' => array('aps'))));
         ?>
