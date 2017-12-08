@@ -92,7 +92,7 @@ body {
 	text-align: left;
 	width: 100%;
 	height: 100%;
-	background: url('../images/background.jpg') center center repeat transparent;
+	background: url('../images/background_dark.png') center center repeat transparent;
 }
 
 .embed-container {
@@ -362,7 +362,7 @@ nav ul li a:hover {
 #xmas-phone {
 	text-align: center;
 	padding: 2em 0;
-	background: url('../images/background.jpg') repeat-x scroll 50% 50%;
+	background: url('../images/background_dark.png') repeat-x scroll 50% 50%;
 }
 #xmas a img,
 #xmas-phone a img {
