@@ -32,8 +32,8 @@
         ?>
       </h1>
       <p class="tagline">
-        <!--<span style='background-color: <?php print $Colour; ?>' class="minimo-light uppercase"><?php print $Tagline;?></span>-->
-        <span style='background-color: #FFF; color: #5E5E5E;' class="minimo-light uppercase"><?php print $Tagline;?></span>
+        <span style='background-color: <?php print $Colour; ?>' class="minimo-light uppercase"><?php print $Tagline;?></span>
+        <!--<span style='background-color: #FFF; color: #5E5E5E;' class="minimo-light uppercase"><?php print $Tagline;?></span>-->
       </p>
     </div>
     <div class="video-container">
