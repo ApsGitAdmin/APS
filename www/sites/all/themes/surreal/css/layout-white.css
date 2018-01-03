@@ -2635,7 +2635,7 @@ article {
 
 .video-thumbnail {
 	padding: 3px 1px;
-    display: inline;
+    display: none;
 }
 
 .video-thumbnail a.magnific-popup {
