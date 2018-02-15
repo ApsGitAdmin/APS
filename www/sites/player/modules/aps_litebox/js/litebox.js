@@ -197,6 +197,9 @@
 						$('.litebox-text').addClass('active');
 					}
 
+				// Get current http protocol
+					var httpProtocol = document.location.protocol;
+
 				// Process
 					if (href.match(/\.(jpeg|jpg|gif|png|bmp)/i) !== null) {
 						var $img = $('<img>', { 'src': href, 'class': 'litebox-content' });
@@ -215,13 +218,13 @@
 						var src = '';
 
 						if (videoURL[1] == 'youtube')
-							src = 'http://www.youtube.com/v/' + videoURL[5];
+							src = protocol + '//www.youtube.com/v/' + videoURL[5];
 						
 						if (videoURL[1] == 'youtu')
-							src = 'http://www.youtube.com/v/' + videoURL[3];
+							src = protocol + '//www.youtube.com/v/' + videoURL[3];
 						
 						if (videoURL[1] == 'vimeo')
-							src = 'http://player.vimeo.com/video/' + videoURL[3];
+							src = protocol + '//player.vimeo.com/video/' + videoURL[3];
 						
 						if (videoURL[1] == 'dailymotion')
 							src = 'https://www.dailymotion.com/embed/video/' + videoURL[7];
