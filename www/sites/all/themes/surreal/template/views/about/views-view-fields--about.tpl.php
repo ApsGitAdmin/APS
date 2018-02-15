@@ -26,14 +26,14 @@
           //print $Title->label_html;
           
           $path = drupal_get_path('theme', 'surreal');
-          $path .= '/images/thinkaps_white.png';
+          $path .= '/images/thinkaps.png';
           
           print theme_image(array('path' => $path, 'width' => 108, 'height' => 49, 'attributes' => array('class' => array('aps'))));
         ?>
       </h1>
       <p class="tagline">
-        <!--<span style='background-color: <?php print $Colour; ?>' class="minimo-light uppercase"><?php print $Tagline;?></span>-->
-        <span style='background-color: #FFF; color: #5E5E5E;' class="minimo-light uppercase"><?php print $Tagline;?></span>
+        <span style='background-color: <?php print $Colour; ?>' class="minimo-light uppercase"><?php print $Tagline;?></span>
+        <!--<span style='background-color: #FFF; color: #5E5E5E;' class="minimo-light uppercase"><?php print $Tagline;?></span>-->
       </p>
     </div>
     <div class="video-container">
