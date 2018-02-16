@@ -218,13 +218,13 @@
 						var src = '';
 
 						if (videoURL[1] == 'youtube')
-							src = protocol + '//www.youtube.com/v/' + videoURL[5];
+							src = httpProtocol + '//www.youtube.com/v/' + videoURL[5];
 						
 						if (videoURL[1] == 'youtu')
-							src = protocol + '//www.youtube.com/v/' + videoURL[3];
+							src = httpProtocol + '//www.youtube.com/v/' + videoURL[3];
 						
 						if (videoURL[1] == 'vimeo')
-							src = protocol + '//player.vimeo.com/video/' + videoURL[3];
+							src = httpProtocol + '//player.vimeo.com/video/' + videoURL[3];
 						
 						if (videoURL[1] == 'dailymotion')
 							src = 'https://www.dailymotion.com/embed/video/' + videoURL[7];
