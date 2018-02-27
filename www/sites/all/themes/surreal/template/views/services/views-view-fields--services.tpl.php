@@ -26,7 +26,7 @@
       <h1 class="minimo-bold">
       <h1 class="minimo-bold" style='color: <?php print $Colour; ?>'>
         <?php 
-          //print $Title->label_html;
+          print $Title->label_html;
           print $Title->content;
         ?>
       </h1>
