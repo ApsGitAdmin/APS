@@ -1037,7 +1037,6 @@ p.percent {
 .serviceInfo .serviceInfoBack {
     background:#7B133C;
     opacity: 0;
-    pointer-events: none;
     transform: scale(1.5);
     transition: all 0.4s ease-in-out 0.2s;
 	-webkit-user-select: none;
@@ -1117,7 +1116,6 @@ p.percent {
 }
 .services .video-container a {
 	display: block;
-	pointer-events: none;
 }
 .services .video-container a img {
 	width: 100%;
