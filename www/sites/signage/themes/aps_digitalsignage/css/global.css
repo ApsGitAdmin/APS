@@ -1435,7 +1435,7 @@ table.meeting-row h3 {
   font-weight: normal;
   padding: 0;
   letter-spacing: 0;
-  line-height: 1.15em;
+  line-height: 1.05em;
 }
 
 table.meeting-row td.knockout {
@@ -1462,7 +1462,7 @@ table.meeting-row td > span {
   font-size: 28pt;
   display: inline-block;
   letter-spacing: 0;
-  line-height: 32pt;
+  line-height: 36pt;
 }
 
 table.meeting-row td.meeting-info {
