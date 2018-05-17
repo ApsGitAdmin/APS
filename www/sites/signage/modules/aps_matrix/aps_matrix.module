@@ -22,6 +22,8 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   $options  = $view->style_plugin->options;
   $handler  = $view->style_plugin;
 
+  $filter = ($view->filter['field_meeting_time_value']->value['value'])? $view->filter['field_meeting_time_value']->value['value'] : NULL;
+
   $row_class_special = isset($options['row_class_special']) ? $options['row_class_special'] : TRUE;
 
   $headers = array();
