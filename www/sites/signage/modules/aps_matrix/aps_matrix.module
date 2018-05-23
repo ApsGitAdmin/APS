@@ -108,7 +108,7 @@ function template_preprocess_aps_matrix_grid(&$vars) {
   $vars['rows'][] = $rows;
 
   // Cope with an empty table
-  if (empty($vars['rows']) && !empty($options['empty_table'])) {
+  if (!($vars['rows'][0])) {
     $vars['rows'][0][0] = $view->display_handler->render_area('empty');
     // Calculate the amounts of rows with output.
     $vars['field_attributes'][0][0]['colspan'] = count($vars['header']);
