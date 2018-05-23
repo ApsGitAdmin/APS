@@ -451,7 +451,7 @@
   </ul>
   <h4>Who do we share your data with?</h4>
   <p>
-    In order to process and manage applications we use a platform called workable, the personal details you supply will be shared with this supplier. Their privacy policy can be viewed <a href="https://www.workable.com/privacy" target="_blank">here
+    In order to process and manage applications we use a platform called workable, the personal details you supply will be shared with this supplier. Their privacy policy can be viewed <a href="https://www.workable.com/privacy" target="_blank">here</a>
     <a/>
   </p>
   <h4>Application stage</h4>
