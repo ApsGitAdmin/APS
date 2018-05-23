@@ -140,5 +140,8 @@ $(document).ready(function () {
 		    }
   		},
 	});
+	$('.magnific-inline').magnificPopup({
+	  	type:'inline',
+	});
 });
 })(jQuery);

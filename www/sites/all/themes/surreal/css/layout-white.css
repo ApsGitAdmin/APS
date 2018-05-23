@@ -2649,7 +2649,11 @@ article {
 
 .privacy-policy {
 	text-align: center;
+	margin-top: 1em;
+}
+.privacy-policy a {
 	color: #FFF;
+	font-size: 10pt;
 }
 
 #privacy-policy {

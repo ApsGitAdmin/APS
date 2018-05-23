@@ -343,7 +343,7 @@
       <?php endif; ?>
       <?php if ($page['copyright']): ?>
       <div class="sixteen columns"> <?php print render($page["copyright"]); ?> </div>
-      <div class="sixteen columns privacy-policy"><a href="#privacy-policy" class="magnific-popup">Click here to view our privacy policy</a></div>
+      <div class="sixteen columns privacy-policy"><a href="#privacy-policy" class="magnific-inline">Click here to view our privacy policy</a></div>
       <?php endif; ?>
     </div>
   </div>
