@@ -343,14 +343,14 @@
       <?php endif; ?>
       <?php if ($page['copyright']): ?>
       <div class="sixteen columns"> <?php print render($page["copyright"]); ?> </div>
-      <div class="sixteen columns privacy-policy"><a href="#privacy-policy" class="open-popup-link">Click here to view our privacy policy</a> </div>
+      <div class="sixteen columns privacy-policy"><a href="#privacy-policy" class="magnific-popup">Click here to view our privacy policy</a></div>
       <?php endif; ?>
     </div>
   </div>
 </div>
 <!--end footer--> 
   
-<div id="privacy-policy">
+<div id="privacy-policy" class="white-popup mfp-hide">
   <h3>Accepting the Privacy Policy</h3>
   <p>By consenting to this privacy notice, you are confirming that you have read and understood this policy, including how and why we use your information.</p>
   <p><strong>aps Events and Media</strong> in acting as a data controller / processor is committed to protecting and respecting your privacy. We value the trust you place in us by providing the personal information we need to provide our services.</p>
