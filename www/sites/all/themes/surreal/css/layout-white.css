@@ -2647,14 +2647,51 @@ article {
     color: #e6007e;
 }
 
+.privacy-policy {
+	text-align: center;
+	color: #FFF;
+}
 
+#privacy-policy {
+	display: none;
+	font-size: 10pt;
+	padding: 2em;
+}
+#privacy-policy h3 {
+	font-size: 12pt;
+	line-height: 14pt;
+	color: #07abda;
+	margin-top: 1.5em;
+}
+#privacy-policy h4 {
+	font-size: 11pt;
+	line-height: 13pt;
+	color: #0071b9;
+	margin-top: 1em;
+	text-decoration: underline;
+}
+#privacy-policy table {
+	width: 80%;
+	margin: 0 auto;
+	table-layout: fixed;
+}
+#privacy-policy table thead th {
+	padding: 4px 8px;
+	font-weight: bold;
+}
+#privacy-policy table tbody td {
 
-
-
-
-
-
-
-
-
-
+}
+#privacy-policy ul {
+	list-style: disc;
+	list-style-position: inside;
+	margin: 1em 0.5em;
+}
+#privacy-policy ul li {
+	margin: 2px 0;
+}
+#privacy-policy a {
+	text-decoration: underline;
+	color: #0071b9;
+	font-weight: bold;
+}
