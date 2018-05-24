@@ -1425,7 +1425,7 @@ table.meeting-row h2 {
 }
 
 table.meeting-row h3 {
-  font-size: 48pt;
+  font-size: 54pt;
   margin-bottom: 0;
 }
 
@@ -1492,7 +1492,7 @@ table.meeting-row tr.display-row:last-child table {
 
 table.meeting-row td.arrow {
   text-align: right;
-  font-size: 3.4em;
+  font-size: 3em;
   line-height: 1em;
   padding-right: 5%;
   letter-spacing: 1px;
