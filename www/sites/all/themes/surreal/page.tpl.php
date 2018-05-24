@@ -452,7 +452,6 @@
   <h4>Who do we share your data with?</h4>
   <p>
     In order to process and manage applications we use a platform called workable, the personal details you supply will be shared with this supplier. Their privacy policy can be viewed <a href="https://www.workable.com/privacy" target="_blank">here</a>
-    <a/>
   </p>
   <h4>Application stage</h4>
   <p>If you apply directly to us by email or post, this information will be processed by <strong>aps Events and Media</strong>. If you have applied via a recruitment agency or job website your details will be processed by this third party and they will act as the data controller.</p>
@@ -502,8 +501,8 @@
       </tr>
       <tr>
         <td>Email:</td>
-        <td>Samantha Duffy</td>
-        <td><a href="mailto:samantha.duffy@thinkaps.com">Samantha.duffy@thinkaps.com</a></td>
+        <td>Samantha Duffy<br /><a href="mailto:samantha.duffy@thinkaps.com">Samantha.duffy@thinkaps.com</a></td>
+        <td>&nbsp;</td>
       </tr>
     </tbody>
   </table>
