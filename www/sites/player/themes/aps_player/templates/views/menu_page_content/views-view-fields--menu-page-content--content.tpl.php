@@ -31,10 +31,26 @@
 			print $fields['edit_node']->content; 
 		}
 	?>
+	<!-- If the link is to a custom page -->
 	<?php if (array_key_exists('field_custom_path', $fields)): ?>
 		<a href="<?php print $fields['field_custom_path']->content; ?>">
+	<!-- If the link is to a Vimeo or Livestream video -->
 	<?php elseif ($fields['url'] != '#' && $fields['type']->raw != 'menu_page'): ?>
-		<a class="litebox" data-litebox-ratio="sixteen-nine" data-litebox-group="group-<?php print $fields['field_menu_page']->content; ?>" data-litebox-text="<?php print $fields['title']->content; ?>" href="<?php print $fields['url']; ?>">
+		<!-- If the link has chapters -->
+		<?php if (array_key_exists('field_chapters', $fields)): ?>
+			<?php $div_id = $fields['edit_node']->raw; ?>
+			<?php $vimeo_id = get_vimeo_id_from_url($fields['field_vimeo']->content); ?>
+			<div id="chapters-<?php print $div_id; ?>" class="embedded-video-chapters">
+				<div class="sixteen-nine">
+					<iframe title="<?php print $fields['title']->content; ?>" src="//player.vimeo.com/video/<?php print $vimeo_id; ?>?color=5f5f5f&amp;portrait=0&amp;title=0&amp;byline=0&amp;api=1&amp;player_id=vimeo-player-<?php print $div_id; ?>" frameborder="0" width="100%" height="664" id="vimeo-player-<?php print $div_id; ?>"></iframe>
+				</div>
+				<?php print $fields['field_chapters']->content; ?>
+			</div>
+			<a class="litebox" data-litebox-ratio="video-chapter" data-litebox-group="group-<?php print $fields['field_menu_page']->content; ?>" data-litebox-text="<?php print $fields['title']->content; ?>" target="_self" href="#chapters-<?php print $fields['edit_node']->raw; ?>">
+		<?php else: ?>
+			<a class="litebox" data-litebox-ratio="sixteen-nine" data-litebox-group="group-<?php print $fields['field_menu_page']->content; ?>" data-litebox-text="<?php print $fields['title']->content; ?>" href="<?php print $fields['url']; ?>">
+		<?php endif; ?>
+	<!-- If the link is to a menu page -->
 	<?php else: ?>
 		<a href="<?php print $fields['url']; ?>">
 	<?php endif; ?>

@@ -201,6 +201,29 @@
 	    max-height: 900px;
 	}
 
+	.litebox-container.video-chapter {
+
+	}
+	.litebox-container.video-chapter .litebox-inline-html {
+		padding: 0;
+		background: transparent;
+	}
+	.litebox-container.video-chapter .embedded-video-chapters {
+		display: block;
+	}
+	.litebox-container.video-chapter .embedded-video-chapters .sixteen-nine {
+		padding-bottom: 54.5%; /* 16:9 */
+	    padding-top: 25px;
+	    height: 0;
+	    right: 0%;
+	    width: 100%;
+	    max-width: 1600px;
+	    position: relative;
+	}
+	.litebox-container.video-chapter .embedded-video-chapters .sixteen-nine iframe {
+		max-width: 1600px;
+	    max-height: 900px;
+	}
 	
 	.litebox-overlay .litebox-container.litebox-scroll { overflow-y: auto; }
 

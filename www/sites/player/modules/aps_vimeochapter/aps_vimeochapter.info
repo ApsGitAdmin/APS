@@ -1,0 +1,6 @@
+name = Vimeo chapters
+description = "Field to add Chapters to control the playback of a Vimeo video"
+package = aps
+core = 7.x
+
+; Dependencies

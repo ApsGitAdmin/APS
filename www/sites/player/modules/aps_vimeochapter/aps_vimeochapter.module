@@ -1,0 +1,165 @@
+<?php
+
+/**
+ * @file
+ * aps_vimeochapter module.
+ * .
+ */
+
+/**
+ * Implements hook_field_info().
+ */
+function aps_vimeochapter_field_info() {
+  return array(
+    'chapters' => array(
+      'label' => t('Chapters'),
+      'description' => t('The field description'),
+      'default_widget' => 'chapters_widget_default',
+      'default_formatter' => 'chapters_formatter_default',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function aps_vimeochapter_field_widget_info() {
+  return array(
+    'chapters_widget_default' => array(
+      'label' => t('Default Table'),
+      'field types' => array('chapters'),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+        'default value' => FIELD_BEHAVIOR_DEFAULT,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function aps_vimeochapter_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    case 'chapters_widget_default':
+      $element['chapters']['timecode'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Time'),
+        '#description' => t('Format - hh:mm:ss'),
+        '#maxlength' => 8,
+        '#size' => 16,
+        '#default_value' => isset($items[$delta]['timecode']) ? $items[$delta]['timecode'] : NULL,
+      );
+      $element['chapters']['title'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Title'),
+        '#description' => t('Name of the chapter'),
+        '#maxlength' => 255,
+        '#default_value' => isset($items[$delta]['title']) ? $items[$delta]['title'] : NULL,
+      );
+    // Collapse existing entries, for some UX.
+    if (($delta < sizeof($items))) {
+      $fieldset_title = t("{$instance['label']} #{$delta}");
+    }
+    else {
+      $fieldset_title = t("New entry for {$instance['label']}");
+    }
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function aps_vimeochapter_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  if ($field['type'] == 'chapters') {
+    foreach ($items as $delta => $item) {
+      // If field is not considered empty, validate its data.
+      if (!aps_vimeochapter_field_is_empty($item, $field)) {
+        if (!preg_match('/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/', $item['chapters']['timecode'])) {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'invalid_timecode',
+            'message' => t('This is not a properly formatted timecode'),
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function aps_vimeochapter_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  // Structure the field data as expected by the database. Only act when the
+  // elements come nested as 'publisher_reference'. Otherwise, no change needed.
+  if (!empty($items) && $field['type'] == 'chapters' && array_key_exists('chapters', $items[0])) {
+    foreach ($items as $delta => $item) {
+      $items[$delta]['timecode'] = $item['chapters']['timecode'];
+      $items[$delta]['title'] = $item['chapters']['title'];
+    }
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function aps_vimeochapter_field_formatter_info() {
+  return array(
+    'chapters_formatter_default' => array(
+      'label' => t('Default formatter'),
+      'field types' => array('chapters'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function aps_vimeochapter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'chapters_formatter_default':
+
+    $rows = array();
+    foreach ($items as $delta => $item) {
+      $time = list($secs, $mins, $hours) = array_pad(array_reverse(explode(':', $item['timecode'])), 3, '00');
+      $seek = (3600 * $hours) + (60 * $mins) + $secs;
+
+      $timecode = ($hours != '00')? $item['timecode'] : substr($item['timecode'], 3);
+      $link = l(t('Go to chapter'), '#', array('external' => TRUE, 'attributes' => array('data-seek' => $seek, 'class' => array('timecode'))));
+      
+      $rows[] = array($timecode, $item['title'], $link);
+    }
+    
+    if ($rows) {
+      $element[$delta]['field_chapters']['content'] = array(
+        '#theme' => 'table',
+        '#header' => array(t('Time'), t('Chapter Title'), ''),
+        '#rows' => $rows,
+        '#sticky' => FALSE,
+        '#attributes' => array('class' => array('chapter-table')),
+      );
+
+      drupal_add_js(drupal_get_path('module', 'aps_vimeochapter') . '/js/vimeochapters.js', array('scope' => 'footer'));
+      drupal_add_js('http://a.vimeocdn.com/js/froogaloop2.min.js', 'external');
+    }
+    break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function aps_vimeochapter_field_is_empty($item, $field) {
+  if ($field['type'] == 'chapters') {
+    if (empty($item['chapters']['timecode'])
+      || empty($item['chapters']['title'])) {
+        return TRUE;
+    }
+    return FALSE;
+  }
+}

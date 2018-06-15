@@ -350,6 +350,10 @@ td .clipping {
   border: solid 1px #E5D53E;
 }
 
+.embedded-video-chapters {
+  display: none;
+}
+
 .feed-icon {
   text-align: center;
 }
