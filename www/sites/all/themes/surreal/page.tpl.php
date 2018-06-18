@@ -29,7 +29,7 @@
       <div class="aps-video-wrapper">        
         <!--<iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->    
           <!--<div class="vidWrap">-->
-            <img class="posterFrame" src="http://localhost/APS/www/sites/all/themes/surreal/images/playerImage.jpg" />
+            <img class="posterFrame" src="sites/all/themes/surreal/images/playerImage.jpg" />
             <iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0?api=1" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           <!--</div>-->
       </div> 
