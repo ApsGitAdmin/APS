@@ -27,10 +27,17 @@
       <?php endif; ?>
       <!--end Hero-->
       <div class="aps-video-wrapper">        
-        <iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>    
+        <!--<iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->    
+          <!--<div class="vidWrap">-->
+            <img class="posterFrame" src="http://localhost/APS/www/sites/all/themes/surreal/images/playerImage.jpg" />
+            <iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0?api=1" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <!--</div>-->
       </div> 
     </div>
   </div>
+
+
+
 
   <!--<div id="virtual-meeting"><a href="http://vimeo.com/155992387" rel="prettyPhoto"><img src="<?php global $base_path; print $base_path . drupal_get_path('theme', 'surreal'); ?>/images/video-popup.png" /></a></div>-->
 
