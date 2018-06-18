@@ -144,4 +144,37 @@ $(document).ready(function () {
 	  	type:'inline',
 	});
 });
+
+
+//Vimeo Poster Frame ---------------------------------------------------------------------/	
+
+jQuery(function($) {
+
+	var iframe = $('.aps-video')[0],
+	player = $f(iframe);
+
+	player.addEvent('ready', function() {
+		player.addEvent('play', onPlay);
+		player.addEvent('pause', onPause);
+		player.addEvent('finish', onFinish);
+	});
+  
+  $('.posterFrame').click(function(){
+    $(this).fadeOut(400);
+    player.api('play');
+
+  });
+
+});
+
+
+
+
+
+
+
+
+
+
+
 })(jQuery);

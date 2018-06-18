@@ -19,6 +19,9 @@
     <link rel="apple-touch-icon" sizes="72x72" href="<?php print $parent_root; ?>/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="<?php print $parent_root; ?>/images/apple-touch-icon-114x114.png">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+
 <!-- CSS Styles -->
 <?php print $styles; ?>
 
