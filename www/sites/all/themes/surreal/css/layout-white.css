@@ -2707,3 +2707,40 @@ article {
 	color: #0071b9;
 	font-weight: bold;
 }
+
+
+/* Vimeo Poster Frame */
+
+.vimeo-container {
+    position: relative;
+}
+
+.vidWrap {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+img.posterFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 10;
+}
+
+#vplayer {
+    position: relative;
+    z-index: 2;
+}
+
+/* END */
+
+
+
+
+
+
+
+
