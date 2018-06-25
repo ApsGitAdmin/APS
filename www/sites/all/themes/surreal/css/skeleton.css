@@ -56,6 +56,8 @@
     .container .offset-by-fourteen              { padding-left: 1055px; }
     .container .offset-by-fifteen               { padding-left: 1130px; }
 
+    #r0 .container                              { width: 1200px; }
+
     #virtual-meeting                            { position: absolute; margin: -120px 0 0 -180px; padding: 0; left: 50%; width: 360px; }
 
     .parallax                                   { height: 260px; }
@@ -103,7 +105,7 @@
     .services.even .video-container             { float: right; text-align: left; }
     .services.odd .video-container              { float: left; text-align: left; }
 
-    .services .video-container                  { margin-top: -70px; margin-bottom: 0; width: 50%; }
+    .services .video-container                  { margin-top: -94px; margin-bottom: 0; width: 50%; }
 
     .teamBlock                                  { width: 200px; height: 200px; }
     .teamBlock.even .teamImage img, 
@@ -182,6 +184,8 @@
     .container .offset-by-thirteen              { padding-left: 780px; }
     .container .offset-by-fourteen              { padding-left: 840px; }
     .container .offset-by-fifteen               { padding-left: 900px; }
+
+    #r0 .container                              { width: 100%; }
 
     #virtual-meeting                            { position: absolute; margin: -120px 0 0 -180px; padding: 0; left: 50%; width: 360px; }
 
@@ -289,6 +293,8 @@
         .container .offset-by-thirteen              { padding-left: 624px; }
         .container .offset-by-fourteen              { padding-left: 672px; }
         .container .offset-by-fifteen               { padding-left: 720px; }
+
+        #r0 .container                              { width: 100%; }
 
         #virtual-meeting                            { position: absolute; margin: -120px 0 0 -180px; padding: 0; left: 50%; width: 360px; }
 
@@ -402,6 +408,8 @@
         .container .offset-by-fourteen,
         .container .offset-by-fifteen { padding-left: 0; }
 
+        #r0 .container { width: 100%; }
+
         #virtual-meeting { position: static; padding: 15px 25% 0; margin: 0; left: auto; width: 50%; background: url('../images/background.jpg') repeat-x scroll 50% 50%; }
 
         .parallax { height: 140px; }
@@ -509,6 +517,8 @@
 		.container .one-fifth.column,
         .container .one-third.column,
         .container .two-thirds.column { width: 420px; }
+
+        #r0 .container { width: 100%; }
 
         .logoContainer { width: 75%; }
         .logo { width: auto; height: 50px; }

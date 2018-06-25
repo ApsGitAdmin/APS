@@ -20,19 +20,19 @@
 </nav>
 <div id="page">  
   <div id="homepage" class="homepage section">
-    <div id="r0">  
-      <!-- Region Hero -->  
-      <?php if ($page['hero']): ?>
-      <?php //print render($page["hero"]); ?>
-      <?php endif; ?>
-      <!--end Hero-->
-      <div class="aps-video-wrapper">        
-        <!--<iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->    
-          <!--<div class="vidWrap">-->
-            <img class="posterFrame" src="sites/all/themes/surreal/images/apsThumbnail-MAIN.jpg" />
-            <iframe src="https://player.vimeo.com/video/115250224?autoplay=0&loop=0&autopause=0?api=1" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          <!--</div>-->
-      </div> 
+    <div id="r0"> 
+      <div class="container"> 
+        <!-- Region Hero -->  
+        <?php if ($page['hero']): ?>
+        <?php //print render($page["hero"]); ?>
+        <?php endif; ?>
+        <!--end Hero-->
+        <div class="aps-video-wrapper">        
+          <!--<iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->    
+          <img class="posterFrame" src="sites/all/themes/surreal/images/apsThumbnail-MAIN.jpg" />
+          <iframe src="https://player.vimeo.com/video/115250224?autoplay=0&loop=0&autopause=0&api=1" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div> 
+      </div>
     </div>
   </div>
 
