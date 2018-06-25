@@ -256,7 +256,8 @@ blockquote:after {
 .page{
 	background-attachment:scroll;
 }
-#r0 > div { z-index: 99; background: #3C3C3C; }
+#r0 { background: #3C3C3C; }
+#r0 > div { z-index: 99; }
 #r1 > div { z-index: 60; }
 #r2 > div { z-index: 50; }
 #r3 > div { z-index: 40; }
