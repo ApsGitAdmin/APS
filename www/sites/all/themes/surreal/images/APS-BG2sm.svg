@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 100 133.5" style="enable-background:new 0 0 100 133.5;" xml:space="preserve">
+	 viewBox="0 0 100 267" style="enable-background:new 0 0 100 267;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#EFEFEF;}
 	.st1{fill:#F9F9F9;}
@@ -27,5 +27,20 @@
 	<polygon class="st1" points="0,133.5 0,124.3 34.8,122.1 50.2,133.5 	"/>
 	<polygon class="st1" points="50.2,0 66.2,29.2 100,21.4 100,0 	"/>
 	<polygon class="st1" points="0,0 0,29.6 50.2,0 	"/>
+</g>
+<g>
+	<polygon class="st0" points="100,204.1 100,245.6 66.2,237.8 	"/>
+	<polygon class="st1" points="100,204.1 66.2,237.8 44.4,195.4 	"/>
+	<polyline class="st2" points="50.2,267 66.2,237.8 44.4,195.4 50.2,267 	"/>
+	<polyline class="st0" points="50.2,267 44.4,195.4 0,190.3 0,237.4 50.2,267 	"/>
+	<polygon class="st3" points="44.4,195.4 34.8,144.9 100,204.1 	"/>
+	<polyline class="st4" points="50.2,133.5 34.8,144.9 100,204.1 50.2,133.5 	"/>
+	<polygon class="st5" points="50.2,133.5 100,204.1 100,179.1 100,133.5 	"/>
+	<polygon class="st6" points="34.8,144.9 0,184.3 0,208.8 44.4,195.4 	"/>
+	<polygon class="st7" points="0,159.1 0,184.3 34.8,144.9 	"/>
+	<polygon class="st8" points="0,142.7 0,159.1 34.8,144.9 	"/>
+	<polygon class="st1" points="50.2,133.5 34.8,144.9 0,142.7 0,133.5 	"/>
+	<polygon class="st1" points="100,267 100,245.6 66.2,237.8 50.2,267 	"/>
+	<polygon class="st1" points="50.2,267 0,237.4 0,267 	"/>
 </g>
 </svg>
