@@ -110,8 +110,15 @@
     .teamBlock                                  { width: 200px; height: 200px; }
     .teamBlock.even .teamImage img, 
     .teamBlock.odd .teamImage img               { float: none; }
-    .teamName h2                                { margin-top: 60px; font-size: 20px; }
-    .teamImage img                              { height: 200px; width: 200px; }
+    .teamName h2                                { font-size: 22pt; line-height: 32px; height: 32px; padding: 4px 0; }
+    .teamImage .teamName                        { margin-top: -50px; }
+    .teamImage img                              { height: 200px; width: 200px; opacity: 0.65; }
+    .teamImage h3                               { font-size: 16pt; margin-top: 0.75em; }
+    .teamImage:hover h2                         { height: 64px; margin-top: 5%; }
+    .teamImage:hover img, 
+    .touch-device .teamImage:hover img          { opacity: 0.2; }
+
+    .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; }
 
     .gallerySelectorList li                     { width: 20%; }
 
@@ -221,8 +228,15 @@
     .teamBlock                                  { width: 160px; height: 160px; }
     .teamBlock.even .teamImage img, 
     .teamBlock.odd .teamImage img               { float: none; }
-    .teamName h2                                { margin-top: 45px; font-size: 20px; }
-    .teamImage img                              { height: 160px; width: 160px; }
+    .teamName h2                                { font-size: 17pt; line-height: 28px; height: 28px; padding: 4px 0; }
+    .teamImage .teamName                        { margin-top: -42px; }
+    .teamImage img                              { height: 160px; width: 160px; opacity: 0.65; }
+    .teamImage h3                               { font-size: 13pt; margin-top: 0.5em; }
+    .teamImage:hover h2                         { height: 56px; margin-top: 4%; }
+    .teamImage:hover img, 
+    .touch-device .teamImage:hover img          { opacity: 0.2; }
+
+    .socialLinksTeam li a                       { font-size: 16px; height: 16px; width: 16px; }
 
     .contactLogo                                { text-align: left; }
     .contactInfo                                { padding: 0; }
@@ -340,8 +354,15 @@
         .teamBlock                                  { width: 192px; height: 192px; }
         .teamBlock.even .teamImage img, 
         .teamBlock.odd .teamImage img               { float: none; }
-        .teamName h2                                { margin-top: 65px; font-size: 24px; }
-        .teamImage img                              { height: 192px; width: 192px; }
+        .teamName h2                                { font-size: 17pt; line-height: 28px; height: 28px; padding: 4px 0; }
+        .teamImage .teamName                        { margin-top: -42px; }
+        .teamImage img                              { height: 192px; width: 192px; opacity: 0.65; }
+        .teamImage h3                               { font-size: 13pt; margin-top: 0.75em; }
+        .teamImage:hover h2                         { height: 56px; margin-top: 10%; }
+        .teamImage:hover img, 
+        .touch-device .teamImage:hover img          { opacity: 0.2; }
+
+        .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; }
 
         .contactLogo                                { text-align: center; }
         .contactInfo                                { padding: 0; }
@@ -461,9 +482,14 @@
         .teamBlock { width: calc(100%/3); height: 100px; }
         .teamBlock.even .teamImage img { float: none; }
         .teamBlock.odd .teamImage img { float: none; }
-        .teamImage h2 { margin-top: 3px; font-size: 16px; line-height: 20px; }
+        .teamImage h2 { margin-top: 3px; font-size: 16px; line-height: 20px; padding: 14px 0; }
         .teamImage h3 { font-size: 12px; line-height: 16px; }  
-        .teamImage img { height: 100px; width: 100%; }
+        .teamImage img { height: 100px; width: 100%; opacity: 0.2; }
+        .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
+        .teamImage .teamName { margin-top: 0; }
+        .teamImage:hover h2 { height: 56px; margin-top: 4%; }
+
+        .socialLinksTeam li a { font-size: 20px; height: 20px; width: 20px; }
 
         .gallerySelectorList li { width: calc(100%/3); }
 
@@ -536,7 +562,9 @@
         .teamBlock.odd .teamImage img { float: right; }
         .teamImage h2 { margin-top: 20px; font-size: 16px; line-height: 20px; }
         .teamImage h3 { font-size: 12px; line-height: 16px; }  
-        .teamImage img { height: 140px; width: 100%; }
+        .teamImage img { height: 140px; width: 100%; opacity: 0.2; }
+        .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
+
 
         form.contact-form .five.columns { width: 400px; margin: 0 10px;}
         form.contact-form .four.columns { width: 400px; margin: 0 10px;}
