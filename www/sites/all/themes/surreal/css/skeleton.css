@@ -110,10 +110,10 @@
     .teamBlock                                  { width: 200px; height: 200px; }
     .teamBlock.even .teamImage img, 
     .teamBlock.odd .teamImage img               { float: none; }
-    .teamName h2                                { font-size: 22pt; line-height: 32px; height: 32px; padding: 4px 0; }
-    .teamImage .teamName                        { margin-top: -50px; }
+    .teamName h2                                { font-size: 16pt; line-height: 32px; height: 32px; padding: 4px 0; }
+    .teamImage .teamName                        { margin-top: -40px; }
     .teamImage img                              { height: 200px; width: 200px; opacity: 0.65; }
-    .teamImage h3                               { font-size: 15pt; margin-top: 0.75em; }
+    .teamImage h3                               { font-size: 14pt; margin-top: 0.75em; }
     .teamImage:hover h2                         { height: 64px; margin-top: 5%; }
     .teamImage:hover img, 
     .touch-device .teamImage:hover img          { opacity: 0.2; }
@@ -228,8 +228,8 @@
     .teamBlock                                  { width: 160px; height: 160px; }
     .teamBlock.even .teamImage img, 
     .teamBlock.odd .teamImage img               { float: none; }
-    .teamName h2                                { font-size: 17pt; line-height: 28px; height: 28px; padding: 4px 0; }
-    .teamImage .teamName                        { margin-top: -42px; }
+    .teamName h2                                { font-size: 14pt; line-height: 28px; height: 28px; padding: 4px 0; }
+    .teamImage .teamName                        { margin-top: -36px; }
     .teamImage img                              { height: 160px; width: 160px; opacity: 0.65; }
     .teamImage h3                               { font-size: 12pt; margin-top: 0.5em; }
     .teamImage:hover h2                         { height: 56px; margin-top: 4%; }
@@ -354,10 +354,10 @@
         .teamBlock                                  { width: 192px; height: 192px; }
         .teamBlock.even .teamImage img, 
         .teamBlock.odd .teamImage img               { float: none; }
-        .teamName h2                                { font-size: 17pt; line-height: 28px; height: 28px; padding: 4px 0; }
-        .teamImage .teamName                        { margin-top: -42px; }
+        .teamName h2                                { font-size: 14pt; line-height: 28px; height: 28px; padding: 4px 0; }
+        .teamImage .teamName                        { margin-top: -36px; }
         .teamImage img                              { height: 192px; width: 192px; opacity: 0.65; }
-        .teamImage h3                               { font-size: 13pt; margin-top: 0.75em; }
+        .teamImage h3                               { font-size: 12pt; margin-top: 0.75em; }
         .teamImage:hover h2                         { height: 56px; margin-top: 10%; }
         .teamImage:hover img, 
         .touch-device .teamImage:hover img          { opacity: 0.2; }

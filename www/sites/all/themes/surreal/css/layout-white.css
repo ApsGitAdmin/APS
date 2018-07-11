@@ -783,7 +783,6 @@ nav ul li a:hover {
 }
 .teamImage .teamName {
     transition: all 0.35s linear 0s;
-    background: rgba(0, 0, 0, 0.4);
 	height: 100%;
     left: 0;
     overflow: hidden;
@@ -802,9 +801,8 @@ nav ul li a:hover {
 .teamImage h2 {
 	color: #fff;
     transition: all 0.35s linear 0s;
-    text-transform: lowercase;
+    text-transform: uppercase;
     overflow: hidden;
-    border-bottom: solid 1px #FFF;
     margin: 0 10px;
 }
 .teamImage h2 div {

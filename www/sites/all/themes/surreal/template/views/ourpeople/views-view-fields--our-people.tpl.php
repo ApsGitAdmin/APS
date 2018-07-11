@@ -10,10 +10,11 @@ $variables = array('style_name' => 'our_people', 'path' => $uri->raw, 'width' =>
 $photo = theme_image_style($variables);
 
 $split_name = explode(" ", $name);
+list($r, $g, $b) = sscanf($colour, "#%02x%02x%02x");
 ?>
 <div class="teamBlock column <?php print $zebra; ?>">
-      <div class="teamImage" style="background-color:<?php print $colour;?>"><?php print $photo; ?>
-        <div class="teamName">
+    <div class="teamImage" style="background-color:<?php print $colour;?>"><?php print $photo; ?>
+        <div class="teamName" style="background-color: rgba(<?php print $r . ',' . $g . ',' . $b; ?>,0.4);">
         	<h2><div class='minimo-bold'><?php print array_shift($split_name) . "<br/>" . implode(" ", $split_name); ?></div></h2>
 		    <h3><?php print $job;?></h3>
 		    <ul class="socialLinksTeam">
@@ -24,5 +25,5 @@ $split_name = explode(" ", $name);
 			    </li>
 		    </ul>
         </div>
-      </div>
     </div>
+</div>
