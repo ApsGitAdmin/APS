@@ -803,7 +803,6 @@ nav ul li a:hover {
     transition: all 0.35s linear 0s;
     text-transform: uppercase;
     overflow: hidden;
-    margin: 0 10px;
 }
 .teamImage h2 div {
 	display: inline-block;
