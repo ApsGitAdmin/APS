@@ -482,15 +482,12 @@
         .teamBlock { width: calc(100%/3); height: 100px; }
         .teamBlock.even .teamImage img { float: none; }
         .teamBlock.odd .teamImage img { float: none; }
-        .teamImage h2 { margin-top: 3px; font-size: 14px; line-height: 16px; padding: 4px 0; }
-        .teamImage h3 { font-size: 12px; line-height: 16px; }  
-        .teamImage img { height: 100px; width: 100%; opacity: 0.2; }
+        .teamImage h2 { margin-top: 3px; font-size: 14px; line-height: 16px; padding: 4px 0; height: auto; margin: 5% 0 0 0; }
+        .teamImage h2 div { padding: 0; }
+        .teamImage h3 { font-size: 12px; line-height: 16px; margin-top: 0.25em; }  
+        .teamImage img { height: 100px; width: 100%; opacity: 0.65; }
         .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
-        .teamImage .teamName { margin-top: 0; }
-        .teamImage:hover h2 { height: auto; margin-top: 5%; margin: 0; }
-        .teamImage:hover h2 div { padding: 0; }
-        .teamImage:hover h3 { margin-top: 0.25em; }
-        .teamImage:hover .socialLinksTeam { display: none; }
+        .teamImage .teamName { margin-top: -22px; top: 100%; }
 
         .socialLinksTeam li a { font-size: 20px; height: 20px; width: 20px; }
 
@@ -563,10 +560,11 @@
         .teamBlock { width: calc(100%/3); height: 140px; }
         .teamBlock.even .teamImage img { float: left; }
         .teamBlock.odd .teamImage img { float: right; }
-        .teamImage h2 { margin-top: 20px; font-size: 16px; line-height: 20px; }
+        .teamImage h2 { font-size: 16px; line-height: 20px; padding: 4px 0; height: auto; margin: 5% 0 0 0; }
         .teamImage h3 { font-size: 12px; line-height: 16px; }  
-        .teamImage img { height: 140px; width: 100%; opacity: 0.2; }
+        .teamImage img { height: 140px; width: 100%; opacity: 0.65; }
         .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
+        .teamImage .teamName { margin-top: -28px; top: 100%; }
 
 
         form.contact-form .five.columns { width: 400px; margin: 0 10px;}
