@@ -121,7 +121,7 @@
     .touch-device .teamImage:hover img          { opacity: 0.2; }
 
     .socialLinksTeam li                         { width: 30px; }
-    .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; }
+    .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; opacity: 0.5; }
 
     .gallerySelectorList li                     { width: 20%; }
 
@@ -242,7 +242,7 @@
     .touch-device .teamImage:hover img          { opacity: 0.2; }
 
     .socialLinksTeam li                         { width: 30px; }
-    .socialLinksTeam li a                       { font-size: 16px; height: 16px; width: 16px; }
+    .socialLinksTeam li a                       { font-size: 16px; height: 16px; width: 16px; opacity: 0.5; }
 
     .contactLogo                                { text-align: left; }
     .contactInfo                                { padding: 0; }
@@ -371,7 +371,7 @@
         .touch-device .teamImage:hover img          { opacity: 0.2; }
 
         .socialLinksTeam li                         { width: 30px; }
-        .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; }
+        .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; opacity: 0.5; }
 
         .contactLogo                                { text-align: center; }
         .contactInfo                                { padding: 0; }
@@ -511,7 +511,7 @@
 
         .teamImage.showMail h2, .teamImage.showMail h3 { opacity: 0; }
         .teamImage.showMail .socialLinksTeam { display: block; position: absolute; top: 0; height: 100%; opacity: 1; }
-        .teamImage.showMail .socialLinksTeam li a { font-size: 30px; height: 30px; width: 30px; display: block; margin-top: 30px; }
+        .teamImage.showMail .socialLinksTeam li a { font-size: 30px; height: 30px; width: 30px; display: block; margin-top: 30px; opacity: 1; }
 
         .gallerySelectorList li { width: calc(100%/3); }
 
@@ -595,7 +595,7 @@
         .teamImage.showName img, .touch-device .teamImage.showName img { opacity: 0.65; }
 
         .teamImage .socialLinksTeam li { width: 40px; }
-        .teamImage.showMail .socialLinksTeam li a { font-size: 40px; height: 40px; width: 40px; margin-top: 45px; }
+        .teamImage.showMail .socialLinksTeam li a { font-size: 40px; height: 40px; width: 40px; margin-top: 45px; opacity: 1; }
 
         form.contact-form .five.columns { width: 400px; margin: 0 10px;}
         form.contact-form .four.columns { width: 400px; margin: 0 10px;}
