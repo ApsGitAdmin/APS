@@ -814,7 +814,6 @@ nav ul li a:hover {
     transition: all 0.5s linear 0s;
 }
 .teamImage:hover .teamName {
-	margin-top: -100%;
 	background: rgba(0,0,0,0);
 }
 .touch-device .teamImage:hover .teamName {

@@ -15,7 +15,7 @@ list($r, $g, $b) = sscanf($colour, "#%02x%02x%02x");
 <div class="teamBlock column <?php print $zebra; ?>">
     <div class="teamImage" style="background-color:<?php print $colour;?>"><?php print $photo; ?>
         <div class="teamName" style="background-color: rgba(<?php print $r . ',' . $g . ',' . $b; ?>,0.4);">
-        	<?php if(strpos($email, "dogs") !== false): ?>
+        	<?php if(strpos($email, "woof") !== false): ?>
         		<h2><div class='minimo-bold'><?php print $name; ?></div></h2>
         	<?php else: ?>
         		<h2><div class='minimo-bold'><?php print array_shift($split_name) . "<br/>" . implode(" ", $split_name); ?></div></h2>

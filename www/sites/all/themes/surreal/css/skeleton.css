@@ -115,6 +115,7 @@
     .teamImage img                              { height: 200px; width: 200px; opacity: 0.65; }
     .teamImage h3                               { font-size: 14pt; margin-top: 0.75em; }
     .teamImage h2 div                           { padding: 0 10px; }
+    .teamImage:hover .teamName                  { margin-top: -100%; }
     .teamImage:hover h2                         { height: 64px; margin-top: 5%; }
     .teamImage:hover img, 
     .touch-device .teamImage:hover img          { opacity: 0.2; }
@@ -234,6 +235,7 @@
     .teamImage img                              { height: 160px; width: 160px; opacity: 0.65; }
     .teamImage h3                               { font-size: 12pt; margin-top: 0.5em; }
     .teamImage h2 div                           { padding: 0 10px; }
+    .teamImage:hover .teamName                  { margin-top: -100%; }
     .teamImage:hover h2                         { height: 56px; margin-top: 4%; }
     .teamImage:hover img, 
     .touch-device .teamImage:hover img          { opacity: 0.2; }
@@ -361,6 +363,7 @@
         .teamImage img                              { height: 192px; width: 192px; opacity: 0.65; }
         .teamImage h3                               { font-size: 12pt; margin-top: 0.75em; }
         .teamImage h2 div                           { padding: 0 10px; }
+        .teamImage:hover .teamName                  { margin-top: -100%; }
         .teamImage:hover h2                         { height: 56px; margin-top: 10%; }
         .teamImage:hover img, 
         .touch-device .teamImage:hover img          { opacity: 0.2; }
@@ -486,10 +489,11 @@
         .teamBlock.even .teamImage img { float: none; }
         .teamBlock.odd .teamImage img { float: none; }
         .teamImage h2 { font-size: 14px; line-height: 16px; padding: 4px 0; height: auto; margin: 0; }
-        .teamImage:hover h2 { height: auto; margin: 5% 0 0 0; }
         .teamImage h2 div { padding: 0; }
         .teamImage h3 { font-size: 12px; line-height: 16px; margin-top: 0.25em; }  
         .teamImage img { height: 100px; width: 100%; opacity: 0.65; }
+        .teamImage:hover .teamName { }
+        .teamImage:hover h2 { height: auto; margin: 0; }
         .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
         .teamImage .teamName { margin-top: -22px; top: 100%; }
 
@@ -566,11 +570,12 @@
         .teamBlock.even .teamImage img { float: left; }
         .teamBlock.odd .teamImage img { float: right; }
         .teamImage h2 { font-size: 16px; line-height: 20px; padding: 4px 0; height: auto; margin: 0; }
-        .teamImage:hover h2 { margin: 5% 0 0 0; }
         .teamImage h2 div { padding: 0; }
         .teamImage h3 { font-size: 12px; line-height: 16px; }  
         .teamImage img { height: 140px; width: 100%; opacity: 0.65; }
+        .teamImage:hover .teamName {  }
         .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
+        .teamImage:hover h2 { margin: 0; }
         .teamImage .teamName { margin-top: -28px; top: 100%; }
 
 
