@@ -120,6 +120,7 @@
     .teamImage:hover img, 
     .touch-device .teamImage:hover img          { opacity: 0.2; }
 
+    .socialLinksTeam li                         { width: 30px; }
     .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; }
 
     .gallerySelectorList li                     { width: 20%; }
@@ -240,6 +241,7 @@
     .teamImage:hover img, 
     .touch-device .teamImage:hover img          { opacity: 0.2; }
 
+    .socialLinksTeam li                         { width: 30px; }
     .socialLinksTeam li a                       { font-size: 16px; height: 16px; width: 16px; }
 
     .contactLogo                                { text-align: left; }
@@ -368,6 +370,7 @@
         .teamImage:hover img, 
         .touch-device .teamImage:hover img          { opacity: 0.2; }
 
+        .socialLinksTeam li                         { width: 30px; }
         .socialLinksTeam li a                       { font-size: 28px; height: 28px; width: 28px; }
 
         .contactLogo                                { text-align: center; }
@@ -492,13 +495,23 @@
         .teamImage h2 div { padding: 0; }
         .teamImage h3 { font-size: 12px; line-height: 16px; margin-top: 0.25em; }  
         .teamImage img { height: 100px; width: 100%; opacity: 0.65; }
-        .teamImage:hover .teamName { }
+        .teamImage:hover .teamName { margin-top: -22px; }
         .teamImage:hover h2 { height: auto; margin: 0; }
         .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
         .teamImage .teamName { margin-top: -22px; top: 100%; }
 
-        .socialLinksTeam { display: none; }
-        .socialLinksTeam li a { font-size: 20px; height: 20px; width: 20px; }
+        .teamImage .socialLinksTeam { opacity: 0; }
+        .teamImage .socialLinksTeam li { width: 30px; }
+
+        .teamImage.showName .socialLinksTeam { display: none; }
+        
+        .teamImage.showName .teamName, .teamImage.showMail .teamName { margin-top: -100% !important; }
+        .teamImage.showName h2, .teamImage.showMail h2 { height: auto; margin: 5% 0 0 0; }
+        .teamImage.showName img, .touch-device .teamImage.showName img { opacity: 0.65; }
+
+        .teamImage.showMail h2, .teamImage.showMail h3 { opacity: 0; }
+        .teamImage.showMail .socialLinksTeam { display: block; position: absolute; top: 0; height: 100%; opacity: 1; }
+        .teamImage.showMail .socialLinksTeam li a { font-size: 30px; height: 30px; width: 30px; display: block; margin-top: 30px; }
 
         .gallerySelectorList li { width: calc(100%/3); }
 
@@ -569,15 +582,20 @@
         .teamBlock { width: calc(100%/3); height: 140px; }
         .teamBlock.even .teamImage img { float: left; }
         .teamBlock.odd .teamImage img { float: right; }
-        .teamImage h2 { font-size: 16px; line-height: 20px; padding: 4px 0; height: auto; margin: 0; }
+        .teamImage h2 { font-size: 16px; line-height: 24px; padding: 4px 0; height: auto; margin: 0; }
         .teamImage h2 div { padding: 0; }
         .teamImage h3 { font-size: 12px; line-height: 16px; }  
         .teamImage img { height: 140px; width: 100%; opacity: 0.65; }
-        .teamImage:hover .teamName {  }
+        .teamImage:hover .teamName { margin-top: -28px; }
         .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
         .teamImage:hover h2 { margin: 0; }
         .teamImage .teamName { margin-top: -28px; top: 100%; }
+        .teamImage.showName .teamName { margin-top: -100%; }
+        .teamImage.showName h2, .teamImage.showMail h2 { height: auto; margin: 5% 0 0 0; }
+        .teamImage.showName img, .touch-device .teamImage.showName img { opacity: 0.65; }
 
+        .teamImage .socialLinksTeam li { width: 40px; }
+        .teamImage.showMail .socialLinksTeam li a { font-size: 40px; height: 40px; width: 40px; margin-top: 45px; }
 
         form.contact-form .five.columns { width: 400px; margin: 0 10px;}
         form.contact-form .four.columns { width: 400px; margin: 0 10px;}

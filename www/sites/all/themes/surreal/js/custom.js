@@ -68,7 +68,15 @@ $(document).ready(function () {
 		wh = $(window).height();
 		//$('#homepage').css({height: wh});
 	}
+	function peopleWidth() {
+		ww = $(window).width();
+		if (ww > 767) {
+			$('.teamBlock .teamImage.showName').removeClass('showName');
+			$('.teamBlock .teamImage.showMail').removeClass('showMail');
+		}
+	}
 	sliderHeight();
+	peopleWidth();
 
 
 //	Accordion  ------------------------------------------------------------------------/
@@ -110,6 +118,25 @@ $(document).ready(function () {
 		//Update slider height
 		sliderHeight();
 
+		// Update People Width
+		peopleWidth();
+	});
+
+	$('.teamBlock .teamImage').click(function(){
+		if ($(window).width() < 767) {
+			if ($(this).hasClass('showMail')) {
+				$('.teamBlock .teamImage.showMail').removeClass('showMail');
+			}
+			else if ($(this).hasClass('showName')) {
+				$('.teamBlock .teamImage.showName').removeClass('showName');
+				$(this).addClass('showMail');
+			} 
+			else {
+				$('.teamBlock .teamImage.showName').removeClass('showName');
+				$('.teamBlock .teamImage.showMail').removeClass('showMail');
+		    	$(this).addClass('showName');
+		    }
+		}
 	});
 
 //Shadowbox ---------------------------------------------------------------------/	
