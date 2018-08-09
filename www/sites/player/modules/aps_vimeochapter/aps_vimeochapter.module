@@ -1,10 +1,25 @@
 <?php
 
+define('APS_VIMEOCDN_DEFAULT', 'https://secure-a.vimeocdn.com/js/froogaloop2.min.js');
+define('APS_VIMEOCDN_PROVIDED', drupal_get_path('module', 'aps_vimeochapter') . '/js/froogaloop2.min.js');
+
 /**
  * @file
  * aps_vimeochapter module.
  * .
  */
+
+function aps_vimeochapter_menu() {
+  $items['admin/config/content/aps-vimeocdn'] = array(
+    'title' => t('Vimeo'),
+    'description' => t('Provide the location of the Froogaloop Javascript file.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('aps_vimeocdn_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'aps_vimeochapter.admin.inc',
+  );
+  return $items;
+}
 
 /**
  * Implements hook_field_info().
@@ -144,7 +159,7 @@ function aps_vimeochapter_field_formatter_view($entity_type, $entity, $field, $i
       );
 
       drupal_add_js(drupal_get_path('module', 'aps_vimeochapter') . '/js/vimeochapters.js', array('scope' => 'footer'));
-      drupal_add_js('https://secure-a.vimeocdn.com/js/froogaloop2.min.js', 'external');
+      drupal_add_js(variable_get('aps_vimeocdn_location', APS_VIMEOCDN_DEFAULT), variable_get('aps_vimeocdn_inline', 'external'));
     }
     break;
   }

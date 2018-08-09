@@ -778,18 +778,15 @@ nav ul li a:hover {
     text-align: center;
 }
 .teamImage img {
-	opacity: 0.65;
-    transform: scale(1);
-    transition: all 0.7s ease-in-out 0s;
+    transition: all 0.5s ease-in-out 0s;
+    display: block;
 }
 .teamImage .teamName {
-    opacity: 0;
-    transition: all 0.5s linear 0s;
+    transition: all 0.35s linear 0s;
 	height: 100%;
     left: 0;
     overflow: hidden;
     position: absolute;
-    top: 0;
     width: 100%;
 	text-align: center;
 	-webkit-user-select: none;
@@ -802,52 +799,34 @@ nav ul li a:hover {
     display: none;
 }
 .teamImage h2 {
-    opacity: 0;
-    transform: scale(0);
+	color: #fff;
+    transition: all 0.35s linear 0s;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+.teamImage h2 div {
+	display: inline-block;
+}
+.teamImage h3 {
+	line-height: 1.2em;
+	padding: 0 6px;
 	color: #fff;
     transition: all 0.5s linear 0s;
 }
-.teamImage h2 div {
-	padding: 0 10px;
-	display: inline-block;
-	border-bottom: solid 1px #FFF;
-}
-.teamImage h3 {
-    opacity: 0;
-    transform: scale(0);
-	color: #fff;
-    transition: all 0.7s linear 0s;
-}
-.teamImage:hover img {
-    opacity: 0;
-    transform: scale(10);
-}
 .teamImage:hover .teamName {
-    opacity: 1;
+	background: rgba(0,0,0,0);
 }
 .touch-device .teamImage:hover .teamName {
 	display: block;
 }
-.touch-device .teamImage:hover img {
-    opacity: 0;
-    transform: none;
-}
 .ie8 .teamImage:hover .teamName {
     display: block;
 }
-.teamImage:hover h2, .teamImage:hover h3 {
-    opacity: 1;
-    transform: scale(1);
-}
 .teamImage:hover .socialLinksTeam {
-    opacity: 1;
-    transform: scale(1);
 }
 .socialLinksTeam  {
 	text-align: center;
 	width: 100%;
-	opacity: 0;
-    transform: scale(0);
 	transition: all 0.8s linear 0s;
 }
 .socialLinksTeam li {
@@ -855,17 +834,11 @@ nav ul li a:hover {
     height: 30px;
     margin: 5px 1px 0;
     transition: all 0.3s ease-in-out 0s;
-    width: 30px;
 }
 .socialLinksTeam li a {
 	color: #FFFFFF;
-    display: block;
-    font-size: 28px;
-    height: 16px;
     margin: 0;
     transition: all 0.3s ease-in-out 0s;
-    width: 16px;
-	opacity: 0.5;
 }
 .socialLinksTeam li:hover a {
     opacity: 1;

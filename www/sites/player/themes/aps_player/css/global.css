@@ -434,8 +434,10 @@ td .clipping {
   margin-top: 3px;
 }
 
-.field-type-iframe, 
-.field-name-field-vimeo {
+.litebox-overlay .field-type-iframe, 
+.litebox-overlay .field-name-field-vimeo,
+article.node .field-type-iframe, 
+article.node .field-name-field-vimeo {
   height: 0;
   padding-bottom: 56.25%;
   padding-top: 0;
@@ -443,8 +445,10 @@ td .clipping {
   outline: solid 1px #fff;
   margin-bottom: 2em;
 }
-.field-type-iframe iframe,
-.field-name-field-vimeo iframe {
+.litebox-overlay .field-type-iframe iframe,
+.litebox-overlay .field-name-field-vimeo iframe,
+article.node .field-type-iframe iframe,
+article.node .field-name-field-vimeo iframe {
   height: 100%;
   left: 0;
   position: absolute;
