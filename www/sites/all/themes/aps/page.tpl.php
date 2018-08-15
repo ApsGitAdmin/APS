@@ -1,5 +1,4 @@
 <div id="top"></div>
-<?php if ($page['header']): ?>
 <!-- Start Menu -->
 <nav>
   <!-- Start Nav Menu -->
@@ -11,7 +10,7 @@
         <object class="header aps-logo" type="image/svg+xml" data="<?php print base_path() . $svg; ?>"></object>
       </div>
       <!-- End logo & slogan --> 
-      <div class="hidden-phone thirteen columns omega">
+      <div class="thirteen columns omega">
         <?php print render($page["header"]); ?>
       </div>
     </div>
@@ -19,7 +18,6 @@
   <!-- End Nav Menu --> 
 </nav>
 <!-- End Menu --> 
-<?php endif; ?>
 
 <div id="page" class="page">
   <div class="section">

@@ -100,6 +100,12 @@
 
     .client-portfolio-name                      { width: 75%; padding: 10px 2.5%; }
 
+    .view-client-services { }
+    .view-client-services .client-services-row { width: 25%; }
+    .view-client-services .client-services-row a { max-height: 295px; height: 20vw; }
+    .view-client-services .client-services-row a .client-service {}
+    .view-client-services .client-services-row a h3 {}
+
     .portfolio                                  { margin-top: 20px; }
 
     .portfolioBlock                             { width: 200px; height: 200px; }
@@ -428,6 +434,12 @@
 
         .services .video-container { width: 100%; }
 
+        .view-client-services { }
+        .view-client-services .client-services-row { width: 50%; }
+        .view-client-services .client-services-row a { max-height: 245px; height: 50vw; }
+        .view-client-services .client-services-row a .client-service {}
+        .view-client-services .client-services-row a h3 {}
+
         .client-portfolio-block { margin: 10px 0; }
 
         .client-portfolio-block, 
@@ -500,6 +512,12 @@
 		.container .one-fifth.column,
         .container .one-third.column,
         .container .two-thirds.column { width: 420px; }
+
+        .view-client-services { }
+        .view-client-services .client-services-row { width: 50%; }
+        .view-client-services .client-services-row a { max-height: 375px; height: 40vw; }
+        .view-client-services .client-services-row a .client-service {}
+        .view-client-services .client-services-row a h3 {}
 
         .client-portfolio-block { margin: 10px 0; }
 

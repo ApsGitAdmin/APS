@@ -330,7 +330,7 @@ blockquote:after {
 	z-index:2;
 }
 .page.desktop{
-	background: url(../images/background_dark.png) repeat-x scroll 50% 50%;
+	background: url(../images/background.jpg) repeat-x scroll 50% 50%;
 	position:relative !important; 
 	z-index:6;
 }
@@ -410,7 +410,6 @@ nav table.header td span {
 .header.aps-logo {
 	width: 80%;
 	height: auto;
-	margin-top: 25px;
 }
 .logo {
 	margin: 0;
@@ -1063,8 +1062,87 @@ p.percent {
 }
 
 .services-view-footer {
-	margin-top: 20px;
+	padding-top: 20px;
 	text-align: center;
+	clear: both;
+}
+
+/* Shopping List
+--------------------------------------------------------*/
+nav > .container {
+	height: 100%;
+}
+nav > .container > .title {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+nav > .container > .title > div {
+	display: table-cell;
+	float: none;
+	vertical-align: middle;
+}
+
+nav > .container > .title .client-logo {
+	text-align: right;
+}
+nav > .container > .title .client-logo img {
+	height: 48px;
+	width: auto;
+	display: block;
+	float: right;
+}
+
+#block-views-client-services-services {
+	clear: both;
+}
+.view-client-services {
+	font-size: 0;
+	padding-top: 5px;
+}
+.view-client-services .client-services-row {
+	display: inline-block;
+	float: left;
+	text-align: center;
+}
+.view-client-services .client-services-row a {
+	display: block;
+	position: relative;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+	margin: 5px;
+}
+.view-client-services .client-services-row a .client-service {
+	position: relative;
+	height: 100%;
+	background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	outline: solid 1px #ADADAD;
+}
+.view-client-services .client-services-row a .client-service:hover {
+}
+.view-client-services .client-services-row a h3 {
+	font-size: 14pt;
+	color: #FFF;
+	position: absolute;
+	width: 90%;
+	margin: 0 5%;
+	bottom: 15px;
+	text-transform: uppercase;
+}
+.view-client-services .client-services-row a h3 span {
+	font-weight: bold;
+}
+
+#block-views-client-gallery-client-gallery {
+	clear: both;
+}
+#block-views-client-gallery-client-gallery > h2 {
+	text-align: center;
+	padding: 0.25em 0;
+	margin: 0;
 }
 
 /* Manage Portfolio

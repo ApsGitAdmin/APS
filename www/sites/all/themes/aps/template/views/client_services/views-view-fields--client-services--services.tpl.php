@@ -1,75 +1,47 @@
 <?php
-    $parallax = $fields['field_parallax']->content;
-    $body = $fields['body']->content;
-    $colour = $fields['field_colour']->content; 
-    $image = $fields['field_services_image']->content;
-    $tagline = $fields['field_tagline']->content;
-    $title = $fields['title']; 
-    $portfolio = $fields['view']->content;
-    $vimeo = $fields['field_vimeo']->content;
-    
-    $width = ($vimeo || $image)? 'half' : 'full';
-    
-    $anchor = preg_replace("/[^a-z]/", '', strtolower($fields['title']->raw));
-    $file = ($parallax)? file_load($parallax) : NULL;
-    $filepath = ($file)? file_create_url($file->uri) : '';
+
+/**
+ * @file
+ * Default simple view template to all the fields as a row.
+ *
+ * - $view: The view in use.
+ * - $fields: an array of $field objects. Each one contains:
+ *   - $field->content: The output of the field.
+ *   - $field->raw: The raw data for the field, if it exists. This is NOT output safe.
+ *   - $field->class: The safe class id to use.
+ *   - $field->handler: The Views field handler object controlling this field. Do not use
+ *     var_export to dump this object, as it can't handle the recursion.
+ *   - $field->inline: Whether or not the field should be inline.
+ *   - $field->inline_html: either div or span based on the above flag.
+ *   - $field->wrapper_prefix: A complete wrapper containing the inline_html to use.
+ *   - $field->wrapper_suffix: The closing tag for the wrapper.
+ *   - $field->separator: an optional separator that may appear before a field.
+ *   - $field->label: The wrap label text to use.
+ *   - $field->label_html: The full HTML of the label to use including
+ *     configured element type.
+ * - $row: The raw result object from the query, with all data it fetched.
+ *
+ * @ingroup views_templates
+ */
 ?>
-<div id='<?php print $anchor; ?>-parallax' class="parallax fixed" style="background: url(<?php print $filepath; ?>);">
-    <div class="quoteWrap">
-      <div class="quote">
-        <div class="container clearfix">
-          <div class="services <?php print $zebra; ?> <?php print $width; ?> clearfix">
-            <?php if ($zebra == 'odd'): ?>
-              <?php if ($vimeo || $image): ?>
-              <div class="video-container hidden-phone">
-                <?php if ($vimeo): ?>
-                  <?php print $vimeo; ?>
-                <?php else: ?>
-                  <?php print $image; ?>
-                <?php endif; ?>
-              </div>
-              <?php endif; ?>
-            <?php endif; ?>
-            <div class="services-container clearfix">
-              <span>
-                <div class="services-header">
-                  <h1 class="minimo-bold">
-                    <?php 
-                      $fancy_title = explode(" ", $title->content);
-                      print "<span class='minimo-light'>" . array_shift($fancy_title) . "</span>" . implode(" ", $fancy_title);
-                    ?>
-                  </h1>
-                  <?php if ($tagline): ?>
-                    <p class="tagline">
-                      <span style="color: <?php print $colour; ?>" class="minimo-light uppercase"><?php print $tagline;?></span>
-                    </p>
-                  <?php endif; ?>
-                </div>
-                <div class="services-text <?php print $width; ?>">
-                  <?php print $body; ?>
-                </div>
-              </span>
-            </div>
-            <?php if ($zebra == 'even'): ?>
-              <?php if ($vimeo || $image): ?>
-              <div class="video-container hidden-phone">
-                <?php if ($vimeo): ?>
-                  <?php print $vimeo; ?>
-                <?php else: ?>
-                  <?php print $image; ?>
-                <?php endif; ?>
-              </div>
-              <?php endif; ?>
-            <?php endif; ?>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-<div class="container">
-  <?php if (!empty($portfolio)): ?>
-    <div class="portfolio clearfix">
-      <?php print $portfolio; ?>
-    </div>
-  <?php endif; ?>
-</div>
+<?php 
+	$path = (array_key_exists('path', $fields))? $fields['path']->content : NULL;
+	$title = (array_key_exists('title', $fields))? $fields['title']->raw : t('');
+	$uri = (array_key_exists('uri', $fields))? file_create_url($fields['uri']->raw) : NULL;
+	$image = file_create_url($uri);
+
+	$title_frag = explode(" ", $title);
+	if (count($title_frag) > 1) {
+		list($title_first, $title_last) = array_chunk($title_frag, round(count($title_frag) / 2));
+	}
+	else {
+		$title_first = array($title);
+		$title_last = array();
+	}
+	
+?>
+<a href="<?php print $path; ?>" style="background-image: url(<?php print $image; ?>);">
+	<div class="client-service">
+		<h3><span><?php print implode(" ", $title_first); ?></span> <?php print implode(" ", $title_last); ?></h3>
+	</div>
+</a>
