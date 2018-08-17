@@ -2569,102 +2569,6 @@ you can use the generic selector below, but it's slower:
 }
 
 
-	
-		
-/* MISC
---------------------------------------------------------*/		
-		
-	.clear{float:none;}			
-	
-	
-
-/* Media Queries
---------------------------------------------------------*/
-
-/* Smaller than standard 1199 (devices and browsers) */
-@media only screen and (max-width: 1199px) {
-	
-	.parallax.fixed{background-attachment:scroll; background-position: center center;}
-}
-
-
-/* Higher than 960 (desktop devices) */
-@media only screen and (min-width: 960px) and (max-width: 1199px) {
-	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 290px;}
-}
-
-
-/* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {
-	.small {font-size: 30px; font-weight:300;}
-	.smallBold {font-size: 30px; font-weight:700;}
-	.medium {font-size: 38px; text-transform: uppercase;}
-	.mediumBold {font-size: 38px; font-weight:700; text-transform: uppercase;}
-	.large {font-size: 50px; text-transform: uppercase;}
-	.largeBold {font-size: 50px; font-weight:700; text-transform: uppercase;}
-	.author {font-size: 16px; font-weight:300;}
-}
-
-
-/* Tablet Portrait size to standard 960 (devices and browsers) */
-@media only screen and (min-width: 768px) and (max-width: 959px) {
-	h1 {font-size: 200px;}
-	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 226px;}
-	.parallax.fixed{background-attachment:scroll; background-position: center center;}
-	.blogTitle {margin-top: -40px;}
-}
-
-
-/* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 767px) {
-	.dropmenu { display: block; margin-top: 5px; }
-	#slidecaption { display:none;}
-	#prevslide, #nextslide{top:120px;}
-	.parallax.fixed{background-attachment:scroll; background-position: center center;}
-	.logo {margin-top: 0; margin-left: -20px; transform: scale(.5);}
-	#prevslide {right: 45px; transform: scale(.5);}
-	#nextslide {right: 22px; transform: scale(.5);}
-	.homepage {margin-bottom: 0px;}
-	.thumbImage .thumbTextWrap {padding: 0 10px;}
-	.thumbImage .thumbText p {font-size: 12px;}
-	.thumbImage .thumbText h3 {font-size: 21px;}
-	.blogTitle {margin-top: 0px;}
-}
-	
-	
-/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-	h1 {font-size: 110px;}
-	h1 span{font-size: 80px;}
-	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 418px;}
-	
-}
-
-
-/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 479px) {
-	h1 {font-size: 80px;}
-	h1 span{font-size: 60px;}
-	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 298px;}
-
-}
-
-#warning {
-	background-color: #fff;
-    border: 4px solid #e30613;
-    margin: 0 auto;
-    padding: 20px 20px 0;
-    position: relative;
-    top: 130px;
-    width: 70%;
-    z-index: 10000;
-}
-
-div#people {
-    margin-bottom: 100px;
-}
-
-
 /* Privacy Policy Page */
 
 .privacy-policy {
@@ -2733,14 +2637,121 @@ div#people {
 	margin-top: 1em;
 }
 
-ul.menu {
-    width: 50%;
-    float: right;
+.page-node-146 ul.menu {
+    text-align: right;
+    width: 80%;
+    display: inline-block;
+}
+
+.page-node-146 ul.menu li {
+	display: inline-block;
+    position: relative;
+    margin: 0;
+}
+
+.page-node-146 ul.menu li a {
+	font-size: 18px;
+    color: #656565;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0 15px;
+}
+
+	
+		
+/* MISC
+--------------------------------------------------------*/		
+		
+	.clear{float:none;}			
+	
+	
+
+/* Media Queries
+--------------------------------------------------------*/
+
+/* Smaller than standard 1199 (devices and browsers) */
+@media only screen and (max-width: 1199px) {
+	
+	.parallax.fixed{background-attachment:scroll; background-position: center center;}
 }
 
 
+/* Higher than 960 (desktop devices) */
+@media only screen and (min-width: 960px) and (max-width: 1199px) {
+	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 290px;}
+}
 
 
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+	.small {font-size: 30px; font-weight:300;}
+	.smallBold {font-size: 30px; font-weight:700;}
+	.medium {font-size: 38px; text-transform: uppercase;}
+	.mediumBold {font-size: 38px; font-weight:700; text-transform: uppercase;}
+	.large {font-size: 50px; text-transform: uppercase;}
+	.largeBold {font-size: 50px; font-weight:700; text-transform: uppercase;}
+	.author {font-size: 16px; font-weight:300;}
+	.page-node-146 ul.menu li a {font-size: 12px;}
+}
+
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+	h1 {font-size: 200px;}
+	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 226px;}
+	.parallax.fixed{background-attachment:scroll; background-position: center center;}
+	.blogTitle {margin-top: -40px;}
+}
+
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+	.dropmenu { display: block; margin-top: 5px; }
+	#slidecaption { display:none;}
+	#prevslide, #nextslide{top:120px;}
+	.parallax.fixed{background-attachment:scroll; background-position: center center;}
+	.logo {margin-top: 0; margin-left: -20px; transform: scale(.5);}
+	#prevslide {right: 45px; transform: scale(.5);}
+	#nextslide {right: 22px; transform: scale(.5);}
+	.homepage {margin-bottom: 0px;}
+	.thumbImage .thumbTextWrap {padding: 0 10px;}
+	.thumbImage .thumbText p {font-size: 12px;}
+	.thumbImage .thumbText h3 {font-size: 21px;}
+	.blogTitle {margin-top: 0px;}
+}
+	
+	
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	h1 {font-size: 110px;}
+	h1 span{font-size: 80px;}
+	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 418px;}
+	
+}
+
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+	h1 {font-size: 80px;}
+	h1 span{font-size: 60px;}
+	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 298px;}
+
+}
+
+#warning {
+	background-color: #fff;
+    border: 4px solid #e30613;
+    margin: 0 auto;
+    padding: 20px 20px 0;
+    position: relative;
+    top: 130px;
+    width: 70%;
+    z-index: 10000;
+}
+
+div#people {
+    margin-bottom: 100px;
+}
 
 
 
