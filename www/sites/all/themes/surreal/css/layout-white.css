@@ -811,10 +811,17 @@ nav ul li a:hover {
 	line-height: 1.2em;
 	padding: 0 6px;
 	color: #fff;
+	font-size: 16px;
+	margin-top: 10px;
     transition: all 0.5s linear 0s;
 }
 .teamImage:hover .teamName {
 	background: rgba(0,0,0,0);
+}
+.teamName p.aps-email {
+    color: #fff;
+    font-size: 12px;
+    padding-top: 10px;
 }
 .touch-device .teamImage:hover .teamName {
 	display: block;
