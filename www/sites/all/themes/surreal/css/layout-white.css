@@ -2690,7 +2690,13 @@ article {
 	color: #0071b9;
 	font-weight: bold;
 }
-
+#privacy-policy p {
+	font-size: 10pt;
+	margin-top: 1em;
+}
+#node-146 #privacy-policy {
+    margin-top: 40px;
+}
 
 /* Vimeo Poster Frame */
 
