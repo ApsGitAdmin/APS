@@ -50,7 +50,8 @@
 </script>
 </head>
 
-<body ontouchstart="">
+<!--<body ontouchstart="">-->
+<body class="<?php print $classes; ?>" <?php print $attributes;?> ontouchstart="">
 
 <?php print $page_top; ?> <?php print $page; ?> <?php print $page_bottom; ?> 
 <script type="text/javascript">
