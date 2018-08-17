@@ -845,11 +845,14 @@ nav ul li a:hover {
     height: 30px;
     margin: 5px 1px 0;
     transition: all 0.3s ease-in-out 0s;
+    width: 100%;
+    text-align: center;
 }
 .socialLinksTeam li a {
 	color: #FFFFFF;
     margin: 0;
     transition: all 0.3s ease-in-out 0s;
+    font-size: 13px;
 }
 .socialLinksTeam li:hover a {
     opacity: 1;

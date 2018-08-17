@@ -24,11 +24,12 @@ list($r, $g, $b) = sscanf($colour, "#%02x%02x%02x");
 		    <ul class="socialLinksTeam">
 		    	<li>
 			    	<a href="mailto:<?php print $email;?>" data-original-title="Email">
-			            <span class="icon-envelop"></span>
+			            <!--<span class="icon-envelop"></span>-->
+			            <?php print $email;?>
 			        </a>
 			    </li>
 		    </ul>
-		    <p class="aps-email"><?php print $email;?></p>
+		    <!--<a class="aps-email"><?php print $email;?></p>-->
         </div>
     </div>
 </div>
