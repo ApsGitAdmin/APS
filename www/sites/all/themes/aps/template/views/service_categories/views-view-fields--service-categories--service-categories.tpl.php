@@ -29,11 +29,16 @@
 	$body = (array_key_exists('body', $fields))? $fields['body']->content : t('');
 	$uri = (array_key_exists('uri', $fields))? image_style_path('our_people', $fields['uri']->raw) : NULL;
 	$image = file_create_url($uri);
+	$field_portfolio_image = (array_key_exists('field_portfolio_image', $fields))? $fields['field_portfolio_image']->content : t('');
 ?>
+
+
 <div class="service-category-image">
-	<img src="<?php print $image; ?>" alt="<?php print $title; ?>">
+	<!--<img src="<?php print $image; ?>" alt="<?php print $title; ?>">-->
+	<?php print $field_portfolio_image; ?>
 </div>
 <div class="service-category">
 	<h3><?php print $title; ?></h3>
 	<p><?php print $body; ?></p>
+
 </div>

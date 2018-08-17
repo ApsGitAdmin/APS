@@ -28,6 +28,7 @@ list($r, $g, $b) = sscanf($colour, "#%02x%02x%02x");
 			        </a>
 			    </li>
 		    </ul>
+		    <p class="aps-email"><?php print $email;?></p>
         </div>
     </div>
 </div>
