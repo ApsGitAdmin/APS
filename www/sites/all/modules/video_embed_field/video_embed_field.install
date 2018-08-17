@@ -352,7 +352,8 @@ function video_embed_field_update_7008() {
 /**
  * Adds new Allowed Providers setting to existing instances.
  */
-function video_embed_field_update_7009() {
+
+/*function video_embed_field_update_7009() {
   $allowed_providers = array_keys(video_embed_get_handlers());
 
   $instances = field_info_instances();
@@ -370,10 +371,11 @@ function video_embed_field_update_7009() {
 
   return t('Updated default instance settings');
 }
-
+*/
 /**
  * Update styles with empty class parameter.
  */
+/*
 function video_embed_field_update_7010() {
   drupal_get_schema('vef_video_styles', TRUE);
   ctools_include('export');
@@ -389,3 +391,4 @@ function video_embed_field_update_7010() {
 
   return 'Parameter class added to existing styles';
 }
+*/
