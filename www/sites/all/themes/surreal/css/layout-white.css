@@ -2514,6 +2514,7 @@ you can use the generic selector below, but it's slower:
 @media only screen and (max-width: 1199px) {
 	
 	.parallax.fixed{background-attachment:scroll; background-position: center center;}
+	.socialLinksTeam li a {font-size: 10px;}
 }
 
 
@@ -2532,6 +2533,7 @@ you can use the generic selector below, but it's slower:
 	.large {font-size: 50px; text-transform: uppercase;}
 	.largeBold {font-size: 50px; font-weight:700; text-transform: uppercase;}
 	.author {font-size: 16px; font-weight:300;}
+	.socialLinksTeam li a {font-size: 13px;}
 }
 
 
