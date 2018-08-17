@@ -2679,14 +2679,14 @@ div#people {
 	background: #FFF;
 	font-size: 10pt;
 	padding: 1px 2em 2em 2em;
-	margin: 160px auto 4em;
+	margin: 40px auto 4em;
 	max-width: 1200px;
 	width: 85%;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 }
 #privacy-policy h3 {
-	font-size: 12pt;
+	font-size: 16pt;
 	line-height: 14pt;
 	color: #07abda;
 	margin-top: 1.5em;
@@ -2727,6 +2727,10 @@ div#people {
 	font-weight: bold;
 }
 
+#privacy-policy p {
+	font-size: 14px;
+	margin-top: 1em;
+}
 
 
 
