@@ -1,0 +1,7 @@
+name = Collage Formatter Fixer
+description = Provides collage formatter for Image fields including video support.
+core = 7.x
+package = aps
+dependencies[] = collageformatter
+files[] = views/aps_collageformatter_plugin_style_collage.inc
+

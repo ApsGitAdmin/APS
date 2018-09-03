@@ -100,11 +100,20 @@
 
     .client-portfolio-name                      { width: 75%; padding: 10px 2.5%; }
 
-    .view-client-services { }
-    .view-client-services .client-services-row { width: 25%; }
+    .view-client-services                       { }
+    .view-client-services .client-services-row  { width: 25%; }
     .view-client-services .client-services-row a { max-height: 295px; height: 20vw; }
+    .view-client-services .client-services-row:nth-of-type(4n+1) a { margin-left: 0; }
+    .view-client-services .client-services-row:nth-of-type(4n) a { margin-right: 0; }
+    .view-client-services .client-services-row:nth-of-type(1) a,
+    .view-client-services .client-services-row:nth-of-type(2) a,
+    .view-client-services .client-services-row:nth-of-type(3) a,
+    .view-client-services .client-services-row:nth-of-type(4) a { margin-top: 0; }
     .view-client-services .client-services-row a .client-service {}
     .view-client-services .client-services-row a h3 {}
+
+    .view-service-categories                    { }
+    .view-service-categories .service-category-row { display: table-cell; }
 
     .portfolio                                  { margin-top: 20px; }
 
@@ -437,8 +446,13 @@
         .view-client-services { }
         .view-client-services .client-services-row { width: 50%; }
         .view-client-services .client-services-row a { max-height: 245px; height: 50vw; }
+        .view-client-services .client-services-row:nth-of-type(2n+1) a { margin-left: 0; }
+        .view-client-services .client-services-row:nth-of-type(2n) a { margin-right: 0; }
         .view-client-services .client-services-row a .client-service {}
         .view-client-services .client-services-row a h3 {}
+
+        .view-service-categories { }
+        .view-service-categories .service-category-row { display: block; }
 
         .client-portfolio-block { margin: 10px 0; }
 
@@ -515,7 +529,7 @@
 
         .view-client-services { }
         .view-client-services .client-services-row { width: 50%; }
-        .view-client-services .client-services-row a { max-height: 375px; height: 40vw; }
+        .view-client-services .client-services-row a { max-height: 245px; height: 40vw; }
         .view-client-services .client-services-row a .client-service {}
         .view-client-services .client-services-row a h3 {}
 

@@ -1,22 +1,24 @@
 <div id="top"></div>
 <!-- Start Menu -->
-<nav>
-  <!-- Start Nav Menu -->
-  <div class="container">
-    <div class="title clearfix">
-      <!-- logo & slogan -->
-      <div class="three columns alpha">
-        <?php $theme = drupal_get_path('theme', 'aps'); $svg = $theme . '/images/logo.svg'; ?>
-        <object class="header aps-logo" type="image/svg+xml" data="<?php print base_path() . $svg; ?>"></object>
-      </div>
-      <!-- End logo & slogan --> 
-      <div class="thirteen columns omega">
-        <?php print render($page["header"]); ?>
+<?php if ($page['header'] || $page['branding']): ?>
+  <nav>
+    <!-- Start Nav Menu -->
+    <div class="container">
+      <div class="title clearfix">
+        <!-- logo & slogan -->
+        <div class="three columns alpha">
+          <?php $theme = drupal_get_path('theme', 'aps'); $svg = $theme . '/images/logo.svg'; ?>
+          <object class="header aps-logo" type="image/svg+xml" data="<?php print base_path() . $svg; ?>"></object>
+        </div>
+        <!-- End logo & slogan --> 
+        <div class="thirteen columns omega">
+          <?php print render($page["header"]); ?>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- End Nav Menu --> 
-</nav>
+    <!-- End Nav Menu --> 
+  </nav>
+<?php endif; ?>
 <!-- End Menu --> 
 
 <div id="page" class="page">
@@ -39,17 +41,6 @@
 
   <?php print render($page['content']); ?>
   <!-- End of Content Page -->
-
-  <!-- Return to aps -->
-  <div class="space40"></div>
-    <div class="container">
-      <div class="sixteen columns">
-        <div class="return">
-          <a href="<?php print $front_page; ?>" title="<?php print t('Return to aps Website'); ?>"><img src="<?php print base_path() . drupal_get_path('theme', 'aps') . '/css/images/aps-return.png'; ?>" alt="<?php print t('Return to aps Website'); ?>" /></a>
-        </div> 
-      </div>
-    </div>
-  <!-- End of Return -->
 
   <!-- Contact Info -->
   <div class="space40"></div>

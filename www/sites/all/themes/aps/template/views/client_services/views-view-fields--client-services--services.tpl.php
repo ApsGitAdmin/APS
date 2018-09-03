@@ -29,6 +29,7 @@
 	$title = (array_key_exists('title', $fields))? $fields['title']->raw : t('');
 	$uri = (array_key_exists('uri', $fields))? file_create_url($fields['uri']->raw) : NULL;
 	$image = file_create_url($uri);
+	$colour = (array_key_exists('field_colour', $fields))? $fields['field_colour']->content : t('transparent');
 
 	$title_frag = explode(" ", $title);
 	if (count($title_frag) > 1) {
@@ -38,9 +39,8 @@
 		$title_first = array($title);
 		$title_last = array();
 	}
-	
 ?>
-<a href="<?php print $path; ?>" style="background-image: url(<?php print $image; ?>);">
+<a href="<?php print $path; ?>" style="background-image: url(<?php print $image; ?>); background-color: <?php print $colour; ?>;">
 	<div class="client-service">
 		<h3><span><?php print implode(" ", $title_first); ?></span> <?php print implode(" ", $title_last); ?></h3>
 	</div>

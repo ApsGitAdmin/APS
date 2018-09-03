@@ -337,6 +337,9 @@ blockquote:after {
 	background-size: cover;
 	top: -20px
 }
+.page-node .page.desktop {
+	top: 0;
+}
 .page{
 	background:#fff; 
 	background-attachment:scroll;
@@ -1072,6 +1075,40 @@ p.percent {
 
 /* Shopping List
 --------------------------------------------------------*/
+.node-type-client {
+
+}
+.node-type-client .region-content.container .node-client {
+	-webkit-box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
+	background: #FFF;
+}
+.node-client .client-banner {
+
+}
+.node-client .client-banner img {
+	width: 100%;
+	height: auto;
+}
+.node-client .client-body {
+	padding: 1em 2em;
+}
+.node-client .client-body p {
+	font-size: 15pt;
+}
+.node-client .client-body p:last-child {
+	margin-bottom: 0;
+}
+.node-client .client-subcontent > h2,
+.node-shopping-service .service-subcontent > h2 {
+	text-align: center;
+	padding: 0.25em 0;
+	margin: 0;
+	background: #5f5f5f;
+	color: #FFF;
+	clear: both;
+}
+
 nav > .container {
 	height: 100%;
 }
@@ -1101,7 +1138,6 @@ nav > .container > .title .client-logo img {
 }
 .view-client-services {
 	font-size: 0;
-	padding-top: 5px;
 }
 .view-client-services .client-services-row {
 	display: inline-block;
@@ -1112,17 +1148,13 @@ nav > .container > .title .client-logo img {
 	display: block;
 	position: relative;
 	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: contain;
-	margin: 5px;
+	background-position: center 30%;
+	background-size: 55%;
+	margin: 0;
 }
 .view-client-services .client-services-row a .client-service {
 	position: relative;
 	height: 100%;
-	background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
-	background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
-	background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
-	outline: solid 1px #ADADAD;
 }
 .view-client-services .client-services-row a .client-service:hover {
 }
@@ -1132,20 +1164,173 @@ nav > .container > .title .client-logo img {
 	position: absolute;
 	width: 90%;
 	margin: 0 5%;
-	bottom: 15px;
+	top: 76%;
 	text-transform: uppercase;
 }
 .view-client-services .client-services-row a h3 span {
 	font-weight: bold;
 }
 
-#block-views-client-gallery-client-gallery {
+.view-client-gallery,
+.view-services-gallery {
 	clear: both;
 }
-#block-views-client-gallery-client-gallery > h2 {
+.view-client-gallery .collageformatter-collage-image,
+.view-services-gallery .collageformatter-collage-image {
+	position: relative;
+	background: #000;
+}
+.view-client-gallery .collageformatter-collage-image > a,
+.view-services-gallery .collageformatter-collage-image > a {
+	position: relative;
+	display: block;
+}
+.view-client-gallery .collageformatter-collage-image > a:before,
+.view-services-gallery .collageformatter-collage-image > a:before {
+	content: "\f002";
+	font-family: "FontAwesome";
+	font-size: 24pt;
 	text-align: center;
-	padding: 0.25em 0;
-	margin: 0;
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	left: 50%;
+	color: #FFF;
+	z-index: 1;
+	opacity: 0;
+	transition: all 0.35s linear 0s;
+	transform: translateX(-50%) translateY(-100%);
+}
+.view-client-gallery .collageformatter-collage-image > a:after,
+.view-services-gallery .collageformatter-collage-image > a:after {
+	position: absolute;
+	content: attr(title);
+	text-align: center;
+	top: 52%;
+	left: 50%;
+	width: 80%;
+	color: #FFF;
+	z-index: 2;
+	opacity: 0;
+    transition: all 0.35s linear 0s;
+    transform: translateX(-50%);
+}
+.view-client-gallery .collageformatter-collage-image > a > img,
+.view-services-gallery .collageformatter-collage-image > a > img {
+	transition: all 0.35s linear 0s;
+	display: block;
+}
+.view-client-gallery .collageformatter-collage-image:hover > a:before,
+.view-services-gallery .collageformatter-collage-image:hover > a:before {
+	opacity: 1;
+}
+.view-client-gallery .collageformatter-collage-image:hover > a:after,
+.view-services-gallery .collageformatter-collage-image:hover > a:after {
+	opacity: 1;
+}
+.view-client-gallery .collageformatter-collage-image:hover > a > img,
+.view-services-gallery .collageformatter-collage-image:hover > a > img {
+	opacity: 0.6;
+}
+
+/* Shopping Service
+--------------------------------------------------------*/
+.node-type-shopping-service .region-content.container {
+	-webkit-box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
+}
+
+.node-shopping-service {
+
+}
+.node-shopping-service .container {
+	background: #FFF;
+}
+.node-shopping-service .service-subcontent > h2 {
+	background: transparent;
+}
+.node-shopping-service .service-subcontent table, 
+.node-shopping-service .service-subcontent * {
+	border-bottom-color: inherit;
+}
+.node-shopping-service .service-heading-container {	
+	display: table;
+	width: 100%;
+	margin: 1em 0;
+}
+.node-shopping-service .service-heading-container > * {
+	display: table-cell;
+	vertical-align: middle;
+}
+.node-shopping-service .service-heading-container .service-heading-image {
+	width: 30%;
+	text-align: center;
+}
+.node-shopping-service .service-heading-container .service-heading-image img {
+	width: 80%;
+	height: auto;
+}
+.node-shopping-service .service-heading-container .service-heading-text {
+	padding-right: 2.5%;
+	color: #FFF;
+}
+.node-shopping-service .service-heading-container .service-heading-text h2 {
+	color: #FFF;
+}
+.node-shopping-service .service-heading-container .service-heading-text p {
+	font-size: 14pt;
+}
+.node-shopping-service .service-heading-container .service-heading-text p:last-child {
+	margin-bottom: 0;
+}
+
+.view-service-categories {
+
+}
+.view-service-categories table {
+	table-layout: fixed;
+	width: 100%;
+}
+.view-service-categories table tr {
+	background: transparent;
+}
+.view-service-categories .service-category-row,
+.view-service-categories td {
+	vertical-align: top;
+	border-bottom-style: solid;
+	border-bottom-width: 10px;
+	border-bottom-color: inherit;
+	background: #FFF;
+}
+.view-service-categories tr:last-child .service-category-row,
+.view-service-categories tr:last-child td {
+	border-bottom: 0;
+}
+.view-service-categories .service-category-row .service-category-container {
+	display: table;
+	width: 100%;
+}
+.view-service-categories .service-category-row .service-category-container > div {
+	display: table-cell;
+	vertical-align: top;
+}
+.view-service-categories .service-category-row .service-category-image {
+	width: 30%;
+	overflow: hidden;
+}
+.view-service-categories .service-category-row .service-category-image img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.view-service-categories .service-category-row .service-category {
+	padding: 20px;
+}
+.view-service-categories .service-category-row .service-category p {
+	font-size: 11pt;
+}
+.view-service-categories .service-category-row .service-category p:last-child {
+	margin-bottom: 0;
 }
 
 /* Manage Portfolio

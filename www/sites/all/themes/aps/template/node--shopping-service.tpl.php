@@ -80,36 +80,52 @@
  * @ingroup themeable
  */
 ?>
-<div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
-
-  <?php print $user_picture; ?>
-
-  <?php print render($title_prefix); ?>
-  <?php if (!$page): ?>
-    <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <?php endif; ?>
-  <?php print render($title_suffix); ?>
-
-  <?php if ($display_submitted): ?>
-    <div class="submitted">
-      <?php print $submitted; ?>
+<?php $colour = ($field_colour)? $field_colour[0]['rgb'] : 'transparent'; ?>
+<div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?> style="background-color: <?php print $colour; ?>;">
+  <!-- Return to aps -->
+  <?php if ($client_ref): ?>
+    <div class="container">
+      <div class="space20"></div>
+        <div class="fifteen columns">
+            <div class="return">
+                <a href='<?php print url(drupal_get_path_alias("node/{$client_ref[LANGUAGE_NONE][0]['target_id']}"), array('absolute' => TRUE)); ?>' title="<?php print t('Back'); ?>"><img src="<?php print base_path() . drupal_get_path('theme', 'aps') . '/css/images/aps-back.png'; ?>" alt="<?php print t('Back'); ?>" /></a>
+            </div> 
+        </div>
+      <div class="space20"></div>
     </div>
+    <!-- End of Return -->
   <?php endif; ?>
 
-    <h1 class="title" id="page-title">
-      <?php print $title; ?>
-    </h1>
   <div class="content"<?php print $content_attributes; ?>>
-    <?php
-      // We hide the comments and links now so that we can render them later.
-      hide($content['comments']);
-      hide($content['links']);
-      print render($content);
-    ?>
+    <div class="service-heading-container">
+      <div class="service-heading-image">
+        <?php 
+          if (array_key_exists('field_service_icon', $content) && $content['field_service_icon']) {
+            $uri = $content['field_service_icon'][0]['#item']['uri']; $image = file_create_url($uri);
+          }
+        ?>
+        <img src="<?php print $image; ?>">
+      </div>
+      <div class="service-heading-text">
+        <h2<?php print $title_attributes; ?>><?php print $title; ?></h2>
+        <?php 
+          if ($body) {
+            print $body[0]['safe_value'];
+          }
+        ?>
+      </div>
+    </div>
   </div>
 
-  <?php print render($content['links']); ?>
-
-  <?php print render($content['comments']); ?>
-
+  <div class="service-subcontent" style="border-bottom-color: <?php print $colour; ?>;">
+    <?php 
+      if(!empty(views_get_view_result('service_categories', 'categories'))) {
+        print views_embed_view('service_categories', 'categories');
+      } 
+      if(!empty(views_get_view_result('services_gallery', 'gallery'))) {
+        print '<h2>PORTFOLIO</h2>';
+        print views_embed_view('services_gallery', 'gallery');
+      } 
+    ?>
+  </div>
 </div>
