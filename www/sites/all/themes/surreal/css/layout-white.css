@@ -815,7 +815,7 @@ nav ul li a:hover {
 	line-height: 1.2em;
 	padding: 0 6px;
 	color: #fff;
-	font-size: 16px;
+	/*font-size: 12px;*/
 	margin-top: 10px;
     transition: all 0.5s linear 0s;
 }
