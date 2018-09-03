@@ -1101,6 +1101,7 @@ p.percent {
 }
 .node-client .client-subcontent > h2,
 .node-shopping-service .service-subcontent > h2 {
+	font-family: 'Minimo-Regular';
 	text-align: center;
 	padding: 0.25em 0;
 	margin: 0;
