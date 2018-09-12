@@ -13,7 +13,6 @@
     <div class="client-subcontent">
         <?php 
             if(!empty(views_get_view_result('client_services', 'services'))) {
-                print '<h2>SERVICES</h2>';
                 print views_embed_view('client_services', 'services');
             } 
             if(!empty(views_get_view_result('client_gallery', 'gallery'))) {

@@ -1392,8 +1392,15 @@ nav > .container > .title .client-logo img {
 .view-service-categories .service-category-row .service-category {
 	padding: 20px;
 }
+.view-service-categories .service-category-row .service-category h3 {
+	margin-bottom: 16px;
+	color: inherit;
+}
 .view-service-categories .service-category-row .service-category p {
 	font-size: 11pt;
+	line-height: 16px;
+	white-space: pre-wrap;
+	color: #222;
 }
 .view-service-categories .service-category-row .service-category p:last-child {
 	margin-bottom: 0;
