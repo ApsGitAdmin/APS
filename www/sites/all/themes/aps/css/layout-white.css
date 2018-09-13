@@ -1371,6 +1371,12 @@ nav > .container > .title .client-logo img {
 .view-service-categories tr:last-child td {
 	border-bottom: 0;
 }
+.view-service-categories .attachment tr:last-child .service-category-row,
+.view-service-categories .attachment tr:last-child td {
+	border-bottom-style: solid;
+	border-bottom-width: 10px;
+	border-bottom-color: inherit;
+}
 .view-service-categories .service-category-row .service-category-container {
 	display: table;
 	width: 100%;
