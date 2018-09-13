@@ -1360,8 +1360,7 @@ nav > .container > .title .client-logo img {
 .view-service-categories table tr {
 	background: transparent;
 }
-.view-service-categories .service-category-row,
-.view-service-categories td {
+.view-service-categories .service-category-row {
 	vertical-align: top;
 	border-bottom-style: solid;
 	border-bottom-width: 10px;
@@ -1383,6 +1382,9 @@ nav > .container > .title .client-logo img {
 .view-service-categories .service-category-row .service-category-image {
 	width: 30%;
 	overflow: hidden;
+}
+.view-service-categories .service-category-row.double .service-category-image {
+	width: 15%;
 }
 .view-service-categories .service-category-row .service-category-image img {
 	display: block;
