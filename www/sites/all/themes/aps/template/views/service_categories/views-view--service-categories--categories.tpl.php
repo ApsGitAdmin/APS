@@ -5,6 +5,12 @@
     </div>
 	<?php endif; ?>
 
+  <?php if ($attachment_before): ?>
+    <div class="attachment attachment-before">
+      <?php print $attachment_before; ?>
+    </div>
+  <?php endif; ?>
+
   <?php if ($rows): ?>
     <?php print $rows; ?>
   <?php elseif ($empty): ?>
