@@ -118,6 +118,14 @@
     .node-shopping-service .service-heading-container .service-heading-text { padding-right: 7.5%; padding-left: 0; }
     .node-shopping-service .service-heading-container .service-heading-text h2 { font-size: 44px }
 
+    .view-service-categories .service-category-row .service-category-container { display: table; }
+    .view-service-categories .service-category-row .service-category-container > div { display: table-cell; }
+    .view-service-categories .service-category-row .service-category-image { width: 30%; }
+    .view-service-categories .service-category-row.double .service-category-image { width: 15%; }
+
+    .view-service-categories tr:last-child .service-category-row,
+    .view-service-categories tr:last-child td { border-bottom: 0; }
+
     .view-service-categories                    { }
     .view-service-categories .service-category-row { display: table-cell; }
 
@@ -481,6 +489,14 @@
         .node-shopping-service .service-heading-container .service-heading-image { width: 40%; margin: 0 30%; }
         .node-shopping-service .service-heading-container .service-heading-text { padding-right: 7.5%; padding-left: 7.5%; }
         .node-shopping-service .service-heading-container .service-heading-text h2 { font-size: 30px }
+
+        .view-service-categories .service-category-row .service-category-container { display: block; }
+        .view-service-categories .service-category-row .service-category-container > div { display: block; }
+        .view-service-categories .service-category-row .service-category-image { width: 100%; }
+        .view-service-categories .service-category-row.double .service-category-image { width: 100%; }
+
+        .view-service-categories tr:last-child .service-category-row,
+        .view-service-categories tr:last-child td { border-bottom: 10px; }
 
         a.view-add-link { font-size: 50px; }
 

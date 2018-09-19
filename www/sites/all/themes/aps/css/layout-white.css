@@ -1363,10 +1363,6 @@ nav > .container > .title .client-logo img {
 	border-bottom-color: inherit;
 	background: #FFF;
 }
-.view-service-categories tr:last-child .service-category-row,
-.view-service-categories tr:last-child td {
-	border-bottom: 0;
-}
 .view-service-categories .attachment tr:last-child .service-category-row,
 .view-service-categories .attachment tr:last-child td {
 	border-bottom-style: solid;
@@ -1374,19 +1370,15 @@ nav > .container > .title .client-logo img {
 	border-bottom-color: inherit;
 }
 .view-service-categories .service-category-row .service-category-container {
-	display: table;
 	width: 100%;
 }
 .view-service-categories .service-category-row .service-category-container > div {
-	display: table-cell;
 	vertical-align: top;
 }
 .view-service-categories .service-category-row .service-category-image {
-	width: 30%;
 	overflow: hidden;
 }
 .view-service-categories .service-category-row.double .service-category-image {
-	width: 15%;
 }
 .view-service-categories .service-category-row .service-category-image img {
 	display: block;
