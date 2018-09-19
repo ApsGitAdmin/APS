@@ -1155,7 +1155,7 @@ p.percent {
 	height: auto;
 }
 .node-client .client-body {
-	padding: 1em 2em;
+	padding: 2em 3.5em;
 }
 .node-client .client-body p {
 	font-size: 15pt;
@@ -1319,16 +1319,13 @@ nav > .container > .title .client-logo img {
 	border-bottom-color: inherit;
 }
 .node-shopping-service .service-heading-container {	
-	display: table;
 	width: 100%;
 	margin: 1em 0;
 }
 .node-shopping-service .service-heading-container > * {
-	display: table-cell;
 	vertical-align: middle;
 }
 .node-shopping-service .service-heading-container .service-heading-image {
-	width: 30%;
 	text-align: center;
 }
 .node-shopping-service .service-heading-container .service-heading-image img {
@@ -1336,7 +1333,6 @@ nav > .container > .title .client-logo img {
 	height: auto;
 }
 .node-shopping-service .service-heading-container .service-heading-text {
-	padding-right: 2.5%;
 	color: #FFF;
 }
 .node-shopping-service .service-heading-container .service-heading-text h2 {
