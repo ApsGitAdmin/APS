@@ -1468,7 +1468,7 @@ table.meeting-row td > span {
 
 table.meeting-row td.meeting-info {
   padding-left: 5%;
-  font-size: 5vh;
+  font-size: 5.5vh;
 }
 
 table.meeting-row td.meeting-info p {
@@ -1494,7 +1494,7 @@ table.meeting-row tr.display-row:last-child table {
 
 table.meeting-row td.arrow {
   text-align: right;
-  font-size: 300%;
+  font-size: 200%;
   line-height: 1em;
   padding-right: 5%;
   letter-spacing: 1px;
