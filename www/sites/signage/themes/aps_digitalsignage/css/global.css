@@ -1420,12 +1420,12 @@ table.meeting-row tr:hover td {
 }
 
 table.meeting-row h2 {
-  font-size: 60pt;
+  font-size: 100%;
   margin-bottom: 0;
 }
 
 table.meeting-row h3 {
-  font-size: 54pt;
+  font-size: 90%;
   margin-bottom: 0;
 }
 
@@ -1449,7 +1449,7 @@ table.meeting-row td.knockout > div {
   vertical-align: text-top;
   padding: 10px 20px;
   color: #FFF;
-  font-size: 24pt;
+  font-size: 40%;
   text-transform: uppercase;
   margin-left: 2px;
   background: -moz-linear-gradient(45deg, #0033a0 0%, #752b90 66%, #ed0c6e 100%);
@@ -1459,14 +1459,15 @@ table.meeting-row td.knockout > div {
 }
 
 table.meeting-row td > span {
-  font-size: 28pt;
+  font-size: 45%;
   display: inline-block;
   letter-spacing: 0;
-  line-height: 36pt;
+  line-height: 60%;
 }
 
 table.meeting-row td.meeting-info {
   padding-left: 5%;
+  font-size: 10vh;
 }
 
 table.meeting-row td.meeting-info p {
@@ -1492,7 +1493,7 @@ table.meeting-row tr.display-row:last-child table {
 
 table.meeting-row td.arrow {
   text-align: right;
-  font-size: 3em;
+  font-size: 5%;
   line-height: 1em;
   padding-right: 5%;
   letter-spacing: 1px;
