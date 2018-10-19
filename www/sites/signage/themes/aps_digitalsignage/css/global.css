@@ -1471,6 +1471,12 @@ table.meeting-row td.meeting-info {
   font-size: 5.5vh;
 }
 
+@media screen and (min-height: 1000px) {
+  table.meeting-row td.meeting-info {
+    font-size: 3vh;
+  }
+}
+
 table.meeting-row td.meeting-info p {
   margin: 0;
   padding: 0;
