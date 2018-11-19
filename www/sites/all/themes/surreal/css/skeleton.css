@@ -488,20 +488,20 @@
 
         .services .video-container { margin-top: 0; margin-bottom: 10px; width: 100%; }
 
-        .teamBlock { width: calc(100%/3); height: 100px; }
+        .teamBlock { width: calc(100%/2); height: 150px; }
         .teamBlock.even .teamImage img { float: none; }
         .teamBlock.odd .teamImage img { float: none; }
         .teamImage h2 { font-size: 14px; line-height: 16px; padding: 4px 0; height: auto; margin: 0; }
         .teamImage h2 div { padding: 0; }
         .teamImage h3 { font-size: 12px; line-height: 16px; margin-top: 0.25em; }  
-        .teamImage img { height: 100px; width: 100%; opacity: 0.65; }
+        .teamImage img { height: 152px; width: 100%; opacity: 0.65; }
         .teamImage:hover .teamName { margin-top: -22px; }
         .teamImage:hover h2 { height: auto; margin: 0; }
         .teamImage:hover img, .touch-device .teamImage:hover img { opacity: 0.65; }
         .teamImage .teamName { margin-top: -22px; top: 100%; }
 
         .teamImage .socialLinksTeam { opacity: 0; }
-        .teamImage .socialLinksTeam li { width: 30px; }
+        .teamImage .socialLinksTeam li { width: 135px; }
 
         .teamImage.showName .socialLinksTeam { display: none; }
         
@@ -511,7 +511,7 @@
 
         .teamImage.showMail h2, .teamImage.showMail h3 { opacity: 0; }
         .teamImage.showMail .socialLinksTeam { display: block; position: absolute; top: 0; height: 100%; opacity: 1; }
-        .teamImage.showMail .socialLinksTeam li a { font-size: 30px; height: 30px; width: 30px; display: block; margin-top: 30px; opacity: 1; }
+        .teamImage.showMail .socialLinksTeam li a { font-size: 10px; height: 30px; width: 100%; display: block; margin-top: 65px; opacity: 1; }
 
         .gallerySelectorList li { width: calc(100%/3); }
 
