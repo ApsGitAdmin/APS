@@ -501,7 +501,7 @@
         .teamImage .teamName { margin-top: -22px; top: 100%; }
 
         .teamImage .socialLinksTeam { opacity: 0; }
-        .teamImage .socialLinksTeam li { width: 135px; }
+        .teamImage .socialLinksTeam li { width: 150px; }
 
         .teamImage.showName .socialLinksTeam { display: none; }
         
