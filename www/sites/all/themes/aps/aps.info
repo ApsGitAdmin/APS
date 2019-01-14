@@ -7,6 +7,7 @@ engine = phptemplate
 stylesheets[all][] = css/skeleton.css
 stylesheets[all][] = css/prettyPhoto.css
 stylesheets[all][] = css/inspiromedia.css
+stylesheets[all][] = css/hover.css
 
 ;JavaScripts
 scripts[] = js/prefixfree.min.js

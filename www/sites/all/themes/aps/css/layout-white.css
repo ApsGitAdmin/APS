@@ -1156,9 +1156,11 @@ p.percent {
 }
 .node-client .client-body {
 	padding: 2em 3.5em;
+	text-align: center;
 }
 .node-client .client-body p {
-	font-size: 13pt;
+	font-size: 15pt;
+	color: #5f5f5f;
 }
 .node-client .client-body p:last-child {
 	margin-bottom: 0;
@@ -1203,11 +1205,13 @@ nav > .container > .title .client-logo img {
 }
 .view-client-services {
 	font-size: 0;
+	text-align: center;
+	padding-bottom: 5px;
 }
 .view-client-services .client-services-row {
 	display: inline-block;
-	float: left;
 	text-align: center;
+	margin: 5px;
 }
 .view-client-services .client-services-row a {
 	display: block;
@@ -1220,30 +1224,67 @@ nav > .container > .title .client-logo img {
 .view-client-services .client-services-row a .client-service {
 	position: relative;
 	height: 100%;
+	-webkit-transition: all 320ms ease;
+    -moz-transition: all 320ms ease;
+    -ms-transition: all 320ms ease;
+    -o-transition: all 320ms ease;
+    transition: all 320ms ease;
 }
-.view-client-services .client-services-row a .client-service:hover {
+.view-client-services .client-services-row a .client-service img {
+	position: absolute;
+	top: 40%;
+    left: 50%;
+    width: 55%;
+    height: auto;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    -webkit-transition: all 320ms ease;
+    -moz-transition: all 320ms ease;
+    -ms-transition: all 320ms ease;
+    -o-transition: all 320ms ease;
+    transition: all 320ms ease;
 }
 .view-client-services .client-services-row a h3 {
 	font-size: 14pt;
 	color: #FFF;
 	position: absolute;
-	width: 90%;
-	margin: 0 5%;
+	width: 70%;
+	margin: 0 15%;
 	top: 76%;
 	text-transform: uppercase;
+	-webkit-transition: all 320ms ease;
+    -moz-transition: all 320ms ease;
+    -ms-transition: all 320ms ease;
+    -o-transition: all 320ms ease;
+    transition: all 320ms ease;
 }
 .view-client-services .client-services-row a h3 span {
 	font-weight: bold;
+}
+.view-client-services .client-services-row a .client-service:hover {
+	background: rgba(0,0,0,0.32);
+}
+.view-client-services .client-services-row a .client-service:hover img {
+	width: 75%;
+}
+.view-client-services .client-services-row a .client-service:hover h3 {
+	transform: scale(1.2);
+	transition-delay: 50ms;
 }
 
 .view-client-gallery,
 .view-services-gallery {
 	clear: both;
+	overflow: hidden;
 }
 .view-client-gallery .collageformatter-collage-image,
 .view-services-gallery .collageformatter-collage-image {
 	position: relative;
 	background: #000;
+	outline: solid 5px #FFF;
 }
 .view-client-gallery .collageformatter-collage-image > a,
 .view-services-gallery .collageformatter-collage-image > a {
@@ -1263,7 +1304,11 @@ nav > .container > .title .client-logo img {
 	color: #FFF;
 	z-index: 1;
 	opacity: 0;
-	transition: all 0.35s linear 0s;
+	-webkit-transition: all 320ms ease;
+    -moz-transition: all 320ms ease;
+    -ms-transition: all 320ms ease;
+    -o-transition: all 320ms ease;
+    transition: all 320ms ease;
 	transform: translateX(-50%) translateY(-100%);
 }
 .view-client-gallery .collageformatter-collage-image > a:after,
@@ -1277,26 +1322,53 @@ nav > .container > .title .client-logo img {
 	color: #FFF;
 	z-index: 2;
 	opacity: 0;
-    transition: all 0.35s linear 0s;
+    -webkit-transition: all 320ms ease;
+    -moz-transition: all 320ms ease;
+    -ms-transition: all 320ms ease;
+    -o-transition: all 320ms ease;
+    transition: all 320ms ease;
     transform: translateX(-50%);
 }
 .view-client-gallery .collageformatter-collage-image > a > img,
 .view-services-gallery .collageformatter-collage-image > a > img {
-	transition: all 0.35s linear 0s;
+	-webkit-transition: all 320ms ease;
+    -moz-transition: all 320ms ease;
+    -ms-transition: all 320ms ease;
+    -o-transition: all 320ms ease;
+    transition: all 320ms ease;
 	display: block;
 }
 .view-client-gallery .collageformatter-collage-image:hover > a:before,
 .view-services-gallery .collageformatter-collage-image:hover > a:before {
 	opacity: 1;
+	font-size: 32pt;
 }
 .view-client-gallery .collageformatter-collage-image:hover > a:after,
 .view-services-gallery .collageformatter-collage-image:hover > a:after {
 	opacity: 1;
+	font-size: 22pt;
+	transition-delay: 50ms;
 }
 .view-client-gallery .collageformatter-collage-image:hover > a > img,
 .view-services-gallery .collageformatter-collage-image:hover > a > img {
-	opacity: 0.6;
+	opacity: 0.68;
 }
+
+.pbWrapper > div,
+.pbWrapper > img{
+    transition: 0.45s ease-out;
+    opacity: 1;
+}
+
+.pbWrapper > *,
+.pbHide.next .pbWrapper > .prepare { opacity: 0; transform: none; }
+/* prepare current slide which will "go away" */
+.pbHide.next .pbWrapper > * { opacity: 0; transform: none;  }
+
+/* when going to the previous slide */
+.pbWrapper > *,
+.pbHide.prev .pbWrapper > .prepare { opacity: 0; transform: none;  }
+.pbHide.prev .pbWrapper > * { opacity: 0; transform: none;  }
 
 /* Shopping Service
 --------------------------------------------------------*/

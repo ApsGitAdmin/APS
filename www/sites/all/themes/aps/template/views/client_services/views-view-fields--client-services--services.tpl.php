@@ -32,16 +32,19 @@
 	$colour = (array_key_exists('field_colour', $fields))? $fields['field_colour']->content : t('transparent');
 
 	$title_frag = explode(" ", $title);
+	$split = (array_key_exists('field_bold_words', $fields))? $fields['field_bold_words']->content : round(count($title_frag) / 2);
 	if (count($title_frag) > 1) {
-		list($title_first, $title_last) = array_chunk($title_frag, round(count($title_frag) / 2));
+		$title_first = array_slice($title_frag, 0, $split);
+		$title_last = array_slice($title_frag, $split);
 	}
 	else {
 		$title_first = array($title);
 		$title_last = array();
 	}
 ?>
-<a href="<?php print $path; ?>" style="background-image: url(<?php print $image; ?>); background-color: <?php print $colour; ?>;">
+<a href="<?php print $path; ?>" style="background-color: <?php print $colour; ?>;">
 	<div class="client-service">
+		<img src="<?php print $image; ?>" class="hvr-bounce-in">
 		<h3><span><?php print implode(" ", $title_first); ?></span> <?php print implode(" ", $title_last); ?></h3>
 	</div>
 </a>
