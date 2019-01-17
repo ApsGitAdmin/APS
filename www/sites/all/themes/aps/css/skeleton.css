@@ -101,7 +101,7 @@
     .client-portfolio-name                      { width: 75%; padding: 10px 2.5%; }
 
     .view-client-services                       { }
-    .view-client-services .client-services-row  { width: calc(25% - 7.5px); }
+    .view-client-services .client-services-row  { width: 25%; }
     .view-client-services .client-services-row a { max-height: 295px; height: 20vw; }
     .view-client-services .client-services-row:nth-of-type(4n+1) { margin-left: 0; }
     .view-client-services .client-services-row:nth-of-type(4n) { margin-right: 0; }
@@ -110,7 +110,7 @@
     .view-client-services .client-services-row:nth-of-type(3) a,
     .view-client-services .client-services-row:nth-of-type(4) a { margin-top: 0; }
     .view-client-services .client-services-row a .client-service {}
-    .view-client-services .client-services-row a h3 {}
+    .view-client-services .client-services-row a h3 { font-size: 14pt; }
 
     .node-shopping-service .service-heading-container { display: table; }
     .node-shopping-service .service-heading-container > * { display: table-cell; }
@@ -346,6 +346,14 @@
 
         .services .video-container                  { width: 50%; }  
 
+        .view-client-services { }
+        .view-client-services .client-services-row { }
+        .view-client-services .client-services-row a { max-height: 215px; height: 25vw; }
+        .view-client-services .client-services-row:nth-of-type(2n+1) a { }
+        .view-client-services .client-services-row:nth-of-type(2n) a { }
+        .view-client-services .client-services-row a .client-service {}
+        .view-client-services .client-services-row a h3 { font-size: 12pt; }
+
         .client-portfolio-block                     { margin: 10px; }
 
         .client-portfolio-block,
@@ -458,12 +466,12 @@
         .services .video-container { width: 100%; }
 
         .view-client-services { }
-        .view-client-services .client-services-row { width: calc(50% - 2.5px); }
+        .view-client-services .client-services-row { width: 50%; }
         .view-client-services .client-services-row a { max-height: 245px; height: 50vw; }
         .view-client-services .client-services-row:nth-of-type(2n+1) a { margin-left: 0; }
         .view-client-services .client-services-row:nth-of-type(2n) a { margin-right: 0; }
         .view-client-services .client-services-row a .client-service {}
-        .view-client-services .client-services-row a h3 {}
+        .view-client-services .client-services-row a h3 { font-size: 12pt; }
 
         .view-service-categories { }
         .view-service-categories .service-category-row { display: block; }
@@ -556,10 +564,10 @@
         .container .two-thirds.column { width: 420px; }
 
         .view-client-services { }
-        .view-client-services .client-services-row { width: calc(50% - 2.5px); }
+        .view-client-services .client-services-row { width: 50%; }
         .view-client-services .client-services-row a { max-height: 245px; height: 40vw; }
         .view-client-services .client-services-row a .client-service {}
-        .view-client-services .client-services-row a h3 {}
+        .view-client-services .client-services-row a h3 { font-size: 13pt; }
 
         .client-portfolio-block { margin: 10px 0; }
 

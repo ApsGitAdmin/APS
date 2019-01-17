@@ -1156,7 +1156,7 @@ p.percent {
 }
 .node-client .client-body {
 	padding: 2em 3.5em;
-	text-align: center;
+	text-align: justify;
 }
 .node-client .client-body p {
 	font-size: 15pt;
@@ -1211,7 +1211,6 @@ nav > .container > .title .client-logo img {
 .view-client-services .client-services-row {
 	display: inline-block;
 	text-align: center;
-	margin: 5px;
 }
 .view-client-services .client-services-row a {
 	display: block;
@@ -1248,7 +1247,6 @@ nav > .container > .title .client-logo img {
     transition: all 320ms ease;
 }
 .view-client-services .client-services-row a h3 {
-	font-size: 14pt;
 	color: #FFF;
 	position: absolute;
 	width: 70%;
@@ -1284,7 +1282,6 @@ nav > .container > .title .client-logo img {
 .view-services-gallery .collageformatter-collage-image {
 	position: relative;
 	background: #000;
-	outline: solid 5px #FFF;
 }
 .view-client-gallery .collageformatter-collage-image > a,
 .view-services-gallery .collageformatter-collage-image > a {
@@ -1293,30 +1290,28 @@ nav > .container > .title .client-logo img {
 }
 .view-client-gallery .collageformatter-collage-image > a:before,
 .view-services-gallery .collageformatter-collage-image > a:before {
-	content: "\f002";
-	font-family: "FontAwesome";
-	font-size: 24pt;
+	content: "";
 	text-align: center;
 	position: absolute;
 	width: 100%;
-	top: 50%;
-	left: 50%;
-	color: #FFF;
+	height: 100%;
+	top: 0;
+	left: 0;
 	z-index: 1;
-	opacity: 0;
+	-webkit-box-shadow:inset 0 0 45px 0 rgba(255,255,255,0.6);
+	box-shadow:inset 0 0 45px 0 rgba(255,255,255,0.6);
 	-webkit-transition: all 320ms ease;
     -moz-transition: all 320ms ease;
     -ms-transition: all 320ms ease;
     -o-transition: all 320ms ease;
     transition: all 320ms ease;
-	transform: translateX(-50%) translateY(-100%);
 }
 .view-client-gallery .collageformatter-collage-image > a:after,
 .view-services-gallery .collageformatter-collage-image > a:after {
 	position: absolute;
 	content: attr(title);
 	text-align: center;
-	top: 52%;
+	top: 50%;
 	left: 0;
 	width: 80%;
 	padding: 0 10%;
@@ -1324,12 +1319,17 @@ nav > .container > .title .client-logo img {
 	z-index: 2;
 	opacity: 0;
 	font-size: 22pt;
+	text-transform: uppercase;
+	-moz-transform: scale(0.75) translateY(-50%);
+    -webkit-transform: scale(0.75) translateY(-50%);
+    -o-transform: scale(0.75) translateY(-50%);
+    -ms-transform: scale(0.75) translateY(-50%);
+    transform: scale(0.75) translateY(-50%);
     -webkit-transition: all 320ms ease;
     -moz-transition: all 320ms ease;
     -ms-transition: all 320ms ease;
     -o-transition: all 320ms ease;
     transition: all 320ms ease;
-    transform: scale(0.75);
 }
 .view-client-gallery .collageformatter-collage-image > a > img,
 .view-services-gallery .collageformatter-collage-image > a > img {
@@ -1342,8 +1342,7 @@ nav > .container > .title .client-logo img {
 }
 .view-client-gallery .collageformatter-collage-image:hover > a:before,
 .view-services-gallery .collageformatter-collage-image:hover > a:before {
-	opacity: 1;
-	font-size: 32pt;
+
 }
 .view-client-gallery .collageformatter-collage-image:hover > a:after,
 .view-services-gallery .collageformatter-collage-image:hover > a:after {
