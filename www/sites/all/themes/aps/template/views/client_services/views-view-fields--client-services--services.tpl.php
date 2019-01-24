@@ -43,10 +43,7 @@
 	}
 ?>
 <?php if (array_key_exists('field_blank', $fields)): ?>
-	<a href="#" class="hidden-phone no-link" style="background-color: <?php print $colour; ?>;">
-		<div class="client-service">
-		</div>
-	</a>
+	<a class="hidden-phone no-link" style="background-color: <?php print $colour; ?>;"></a>
 <?php else: ?>
 	<a href="<?php print $path; ?>" style="background-color: <?php print $colour; ?>;">
 		<div class="client-service">
