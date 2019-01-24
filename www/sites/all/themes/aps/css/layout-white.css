@@ -1221,7 +1221,7 @@ nav > .container > .title .client-logo img {
 	margin: 0;
 }
 .view-client-services .client-services-row a.no-link {
-	cursor: pointer;
+	cursor: default;
 }
 .view-client-services .client-services-row a .client-service {
 	position: relative;
