@@ -100,6 +100,8 @@
 
     .client-portfolio-name                      { width: 75%; padding: 10px 2.5%; }
 
+    .node-client .client-body                   { padding: 2em 6.5em; }
+
     .view-client-services                       { }
     .view-client-services .client-services-row  { width: 25%; }
     .view-client-services .client-services-row a { max-height: 295px; height: 20vw; }
@@ -235,6 +237,8 @@
 
     .services .video-container                  { width: 50%; }
 
+    .node-client .client-body                   { padding: 2em 5em; }
+
     .client-portfolio-block                     { margin: 10px; }
 
     .client-portfolio-block,
@@ -345,6 +349,8 @@
         .services.odd .video-container              { float: left; text-align: left; }
 
         .services .video-container                  { width: 50%; }  
+
+        .node-client .client-body                   { padding: 2em 4em; }
 
         .view-client-services { }
         .view-client-services .client-services-row { }
@@ -465,6 +471,8 @@
 
         .services .video-container { width: 100%; }
 
+        .node-client .client-body { padding: 2em 2em; }
+
         .view-client-services { }
         .view-client-services .client-services-row { width: 50%; }
         .view-client-services .client-services-row a { max-height: 245px; height: 50vw; }
@@ -563,6 +571,8 @@
 		.container .one-fifth.column,
         .container .one-third.column,
         .container .two-thirds.column { width: 420px; }
+
+        .node-client .client-body { padding: 2em 2em; }
 
         .view-client-services { }
         .view-client-services .client-services-row { width: 50%; }
