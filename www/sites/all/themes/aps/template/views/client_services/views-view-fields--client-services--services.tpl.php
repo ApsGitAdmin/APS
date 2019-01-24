@@ -42,9 +42,18 @@
 		$title_last = array();
 	}
 ?>
-<a href="<?php print $path; ?>" style="background-color: <?php print $colour; ?>;">
-	<div class="client-service">
-		<img src="<?php print $image; ?>" class="hvr-bounce-in">
-		<h3><span><?php print implode(" ", $title_first); ?></span> <?php print implode(" ", $title_last); ?></h3>
-	</div>
-</a>
+<?php if (array_key_exists('field_blank', $fields)): ?>
+	<a href="#" class="hidden-phone no-link" style="background-color: <?php print $colour; ?>;">
+		<div class="client-service">
+			<img src="<?php print $image; ?>" class="hvr-bounce-in">
+			<h3><span><?php print implode(" ", $title_first); ?></span> <?php print implode(" ", $title_last); ?></h3>
+		</div>
+	</a>
+<?php else: ?>
+	<a href="<?php print $path; ?>" style="background-color: <?php print $colour; ?>;">
+		<div class="client-service">
+			<img src="<?php print $image; ?>" class="hvr-bounce-in">
+			<h3><span><?php print implode(" ", $title_first); ?></span> <?php print implode(" ", $title_last); ?></h3>
+		</div>
+	</a>
+<?php endif; ?>

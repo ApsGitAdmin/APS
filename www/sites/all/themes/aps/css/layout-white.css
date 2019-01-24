@@ -1220,6 +1220,9 @@ nav > .container > .title .client-logo img {
 	background-size: 55%;
 	margin: 0;
 }
+.view-client-services .client-services-row a.no-link {
+	cursor: pointer;
+}
 .view-client-services .client-services-row a .client-service {
 	position: relative;
 	height: 100%;
