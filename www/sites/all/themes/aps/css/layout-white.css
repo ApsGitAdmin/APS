@@ -1395,7 +1395,7 @@ nav > .container > .title .client-logo img {
 }
 .node-shopping-service .service-subcontent table, 
 .node-shopping-service .service-subcontent * {
-	border-bottom-color: inherit;
+	border-color: inherit;
 }
 .node-shopping-service .service-heading-container {	
 	width: 100%;
@@ -1444,9 +1444,9 @@ nav > .container > .title .client-logo img {
 }
 .view-service-categories .attachment tr:last-child .service-category-row,
 .view-service-categories .attachment tr:last-child td {
-	border-bottom-style: solid;
-	border-bottom-width: 10px;
-	border-bottom-color: inherit;
+	border-top-style: solid;
+	border-top-width: 10px;
+	border-top-color: inherit;
 }
 .view-service-categories .service-category-row .service-category-container {
 	width: 100%;

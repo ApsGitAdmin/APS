@@ -117,7 +117,7 @@
     </div>
   </div>
 
-  <div class="service-subcontent" style="border-bottom-color: <?php print $colour; ?>; color: <?php print $colour; ?>;">
+  <div class="service-subcontent" style="border-color: <?php print $colour; ?>; color: <?php print $colour; ?>;">
     <?php 
       if(!empty(views_get_view_result('service_categories', 'categories'))) {
         print views_embed_view('service_categories', 'categories');
