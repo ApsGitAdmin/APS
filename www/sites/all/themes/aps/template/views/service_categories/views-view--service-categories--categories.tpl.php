@@ -19,6 +19,12 @@
     </div>
   <?php endif; ?>
 
+    <?php if ($attachment_after): ?>
+    <div class="attachment attachment-after">
+      <?php print $attachment_after; ?>
+    </div>
+  <?php endif; ?>
+
   <?php if ($footer): ?>
     <?php if (user_access('Client Services: Create new content')): ?>
       <div class="categories-view-footer clearfix">
