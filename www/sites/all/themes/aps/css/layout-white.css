@@ -1318,7 +1318,7 @@ nav > .container > .title .client-logo img {
 	color: #FFF;
 	z-index: 2;
 	opacity: 0;
-	font-size: 22pt;
+	font-size: 12pt;
 	text-transform: uppercase;
 	-moz-transform: scale(0.75) translateY(-50%);
     -webkit-transform: scale(0.75) translateY(-50%);
