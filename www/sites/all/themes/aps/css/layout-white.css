@@ -3085,5 +3085,60 @@ div#people {
 }
 
 
+.node-type-client .copyright ul.menu li a,
+.node-type-shopping-service .copyright ul.menu li a {
+	color: #fff;
+}
+
+
+.node-type-shopping-service .copyright ul.menu {
+	text-align:center;
+}
+
+.node-type-client .copyright ul.menu li.first a,
+.node-type-shopping-service .copyright ul.menu li.first a {
+	display: none;
+}
+
+
+.page-user.not-logged-in #user-login {
+
+}
+
+.page-user.not-logged-in #user-login .form-item-name,
+.page-user.not-logged-in #user-login .form-item-pass {
+	text-align: center;
+	margin: 2em 0;
+}
+
+.page-user.not-logged-in #user-login .form-item-name input,
+.page-user.not-logged-in #user-login .form-item-pass input {
+	margin: 0 auto;
+}
+
+.page-user.not-logged-in #user-login label {
+	font-weight: bold;
+} 
+
+.page-user.not-logged-in #user-login .description {
+	font-size: 12px;
+	margin: 0.5em 0;	
+}
+
+
+.page-user.not-logged-in #user-login input[type="submit"] {
+    display: block;
+    margin: 2em auto;
+}
+
+h2.client-login {
+    margin: 1em 0;
+    text-transform: initial;
+    text-align: center;
+}
+
+
+
+
 
 
