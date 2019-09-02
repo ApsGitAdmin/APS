@@ -3113,6 +3113,7 @@ div#people {
 .page-user.not-logged-in #user-login .form-item-name input,
 .page-user.not-logged-in #user-login .form-item-pass input {
 	margin: 0 auto;
+	text-align:center;
 }
 
 .page-user.not-logged-in #user-login label {
