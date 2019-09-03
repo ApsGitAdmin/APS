@@ -3003,12 +3003,21 @@ you can use the generic selector below, but it's slower:
 @media only screen and (max-width: 1199px) {
 	
 	.parallax.fixed{background-attachment:scroll; background-position: center center;}
+
+	.page-user.not-logged-in #user-login .form-item-pass input {
+		width: 50%;
+	}
 }
 
 
 /* Higher than 960 (desktop devices) */
 @media only screen and (min-width: 960px) and (max-width: 1199px) {
 	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 290px;}
+
+	.page-user.not-logged-in #user-login .form-item-pass input {
+		width: 50%;
+	}
+
 }
 
 
@@ -3031,6 +3040,9 @@ you can use the generic selector below, but it's slower:
 	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 226px;}
 	.parallax.fixed{background-attachment:scroll; background-position: center center;}
 	.blogTitle {margin-top: -40px;}
+	.page-user.not-logged-in #user-login .form-item-pass input {
+		width: 50%;
+	}
 }
 
 
@@ -3048,6 +3060,9 @@ you can use the generic selector below, but it's slower:
 	.thumbImage .thumbText p {font-size: 12px;}
 	.thumbImage .thumbText h3 {font-size: 21px;}
 	.blogTitle {margin-top: 0px;}
+	.page-user.not-logged-in #user-login .form-item-pass input {
+		width: 100%;
+	}
 }
 	
 	
@@ -3101,6 +3116,8 @@ div#people {
 
 
 .page-user.not-logged-in #user-login {
+	background: #fff;
+	padding: 1em 0.5em;
 
 }
 
@@ -3108,12 +3125,14 @@ div#people {
 .page-user.not-logged-in #user-login .form-item-pass {
 	text-align: center;
 	margin: 2em 0;
+	padding: 10px;
 }
 
 .page-user.not-logged-in #user-login .form-item-name input,
 .page-user.not-logged-in #user-login .form-item-pass input {
 	margin: 0 auto;
 	text-align:center;
+	width: 100%;
 }
 
 .page-user.not-logged-in #user-login label {
