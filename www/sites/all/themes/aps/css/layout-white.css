@@ -3004,8 +3004,9 @@ you can use the generic selector below, but it's slower:
 	
 	.parallax.fixed{background-attachment:scroll; background-position: center center;}
 
+	.page-user.not-logged-in #user-login .form-item-name input,
 	.page-user.not-logged-in #user-login .form-item-pass input {
-		width: 50%;
+		width: 50%;v
 	}
 }
 
@@ -3014,10 +3015,13 @@ you can use the generic selector below, but it's slower:
 @media only screen and (min-width: 960px) and (max-width: 1199px) {
 	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 290px;}
 
+	.page-user.not-logged-in #user-login .form-item-name input,
 	.page-user.not-logged-in #user-login .form-item-pass input {
 		width: 50%;
 	}
-
+	.page-user.not-logged-in #user-login {
+		margin-top:0px;
+	}
 }
 
 
@@ -3031,6 +3035,9 @@ you can use the generic selector below, but it's slower:
 	.largeBold {font-size: 50px; font-weight:700; text-transform: uppercase;}
 	.author {font-size: 16px; font-weight:300;}
 	.page-node-146 ul.menu li a {font-size: 12px;}
+	.page-user.not-logged-in #user-login {
+		margin-top:0px;
+	}
 }
 
 
@@ -3040,8 +3047,12 @@ you can use the generic selector below, but it's slower:
 	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 226px;}
 	.parallax.fixed{background-attachment:scroll; background-position: center center;}
 	.blogTitle {margin-top: -40px;}
+	.page-user.not-logged-in #user-login .form-item-name input,
 	.page-user.not-logged-in #user-login .form-item-pass input {
 		width: 50%;
+	}
+	.page-user.not-logged-in #user-login {
+		margin-top:0px;
 	}
 }
 
@@ -3060,9 +3071,14 @@ you can use the generic selector below, but it's slower:
 	.thumbImage .thumbText p {font-size: 12px;}
 	.thumbImage .thumbText h3 {font-size: 21px;}
 	.blogTitle {margin-top: 0px;}
+	.page-user.not-logged-in #user-login .form-item-name input,
 	.page-user.not-logged-in #user-login .form-item-pass input {
 		width: 100%;
 	}
+	.page-user.not-logged-in #user-login {
+		margin-top:0px;
+	}
+
 }
 	
 	
@@ -3071,7 +3087,9 @@ you can use the generic selector below, but it's slower:
 	h1 {font-size: 110px;}
 	h1 span{font-size: 80px;}
 	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 418px;}
-	
+	.page-user.not-logged-in #user-login {
+		margin-top:0px;
+	}
 }
 
 
@@ -3080,6 +3098,9 @@ you can use the generic selector below, but it's slower:
 	h1 {font-size: 80px;}
 	h1 span{font-size: 60px;}
 	input[type="text"], input[type="password"], input[type="email"], textarea, select {width: 298px;}
+	.page-user.not-logged-in #user-login {
+		margin-top:0px;
+	}
 
 }
 
@@ -3118,7 +3139,7 @@ div#people {
 .page-user.not-logged-in #user-login {
 	background: #fff;
 	padding: 1em 0.5em;
-
+	margin-top: 50px;
 }
 
 .page-user.not-logged-in #user-login .form-item-name,
@@ -3132,7 +3153,6 @@ div#people {
 .page-user.not-logged-in #user-login .form-item-pass input {
 	margin: 0 auto;
 	text-align:center;
-	width: 100%;
 }
 
 .page-user.not-logged-in #user-login label {
