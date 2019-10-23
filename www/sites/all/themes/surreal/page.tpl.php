@@ -516,7 +516,7 @@
   <h3>Use of 'cookies'</h3>
   <p>Like many other websites, the <strong>aps Events and Media</strong> website uses cookies. 'Cookies' are small pieces of information sent by an organisation to your computer and stored on your hard drive to allow that website to recognise you when you visit. This helps us to improve our website and deliver a better, more personalised service. We may therefore collect details about the type of device you use to access our website, its operating system and version, your IP address, your general geographic location, your browser and the webpages / content you view.</p>
   <p>It is possible to switch off cookies by setting your browser preferences. Turning cookies off may result in a loss of functionality when using our website. Please refer to the following guides below if you wish to disable cookies.</p>
-  <p><a href="http://www.allaboutcookies.org/manage-cookies" target="_blank">http://www.allaboutcookies.org/manage-cookies</a></p>
+  <p><a href="https://www.allaboutcookies.org/manage-cookies" target="_blank">http://www.allaboutcookies.org/manage-cookies</a></p>
   <h3>Links to other websites</h3>
   <p>Our website may contain links to other websites run by other organisations. This privacy policy applies only to our website‚ so we encourage you to read the privacy statements on the other websites you visit. We cannot be responsible for the privacy policies and practices of other sites even if you access them using links from our website.</p>
   <p>In addition, if you linked to our website from a third-party site, we cannot be responsible for the privacy policies and practices of the owners and operators of that third-party site and recommend that you check the policy of that third-party site.</p>
