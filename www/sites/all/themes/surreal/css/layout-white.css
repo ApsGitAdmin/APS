@@ -2740,7 +2740,7 @@ img.posterFrame {
     max-width: 640px;
     box-sizing: border-box;
 	font-size: 14pt;
-	padding: 1px 2em 1em 2em;
+	padding: 0.75em 2em 1.25em 2em;
 	margin: 160px auto 4em;
 	width: 85%;
 	-webkit-border-radius: 5px;
@@ -2759,6 +2759,11 @@ img.posterFrame {
 
 #alert-popup p {
     margin-bottom: 1em;
+}
+
+#alert-popup p:last-of-type,
+#alert-popup p:last-child {
+    margin-bottom: 0;
 }
 
 #alert-popup .mfp-close {
