@@ -2778,6 +2778,7 @@ img.posterFrame {
     font-size: 120%;
     font-family: inherit;
     text-align: left;
+    text-transform: uppercase;
 }
 
 
