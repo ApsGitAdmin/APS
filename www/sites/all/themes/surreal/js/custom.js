@@ -24,25 +24,27 @@ $(document).ready(function () {
 	}
 
 //POPUP -------------------------------------------------------------------------------/
-    $.magnificPopup.open({
-        items: [
-            {
-                src: '#alert-popup',
-                type: 'inline'
-        	}
-        ],
-        modal: true,
-        callbacks: {
-            close: function () {
-                $("html, body").animate({
-                    scrollTop: $("#services").offset().top + "px"
-                }, {
-                    duration: Math.abs(($(document).scrollTop() - $("#services").offset().top) / 2),
-                    easing: "swing"
-                });
+    if ($('#alert-popup').length != 0) {
+        $.magnificPopup.open({
+            items: [
+                {
+                    src: '#alert-popup',
+                    type: 'inline'
+                }
+            ],
+            modal: true,
+            callbacks: {
+                close: function () {
+                    $("html, body").animate({
+                        scrollTop: $("#services").offset().top + "px"
+                    }, {
+                        duration: Math.abs(($(document).scrollTop() - $("#services").offset().top) / 2),
+                        easing: "swing"
+                    });
+                }
             }
-        }
-    }, 0);
+        }, 0);
+    }
 
 //MENU --------------------------------------------------------------------------------/
 	$("nav ul.menu li a").click(function () {

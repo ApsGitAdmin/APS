@@ -2758,7 +2758,7 @@ img.posterFrame {
 }
 
 #alert-popup p {
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
 }
 
 #alert-popup p:last-of-type,
@@ -2776,6 +2776,8 @@ img.posterFrame {
     padding: 0;
     color: #f9b233;
     font-size: 120%;
+    font-family: inherit;
+    text-align: left;
 }
 
 
