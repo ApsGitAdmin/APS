@@ -525,8 +525,8 @@
 </div>
 
 <div id="alert-popup" class="white-popup mfp-hide">
-    <h1 class="minimo-bold" style="color: #65B32E">
-        <span class="views-label views-label-title minimo-light uppercase">Think</span>Virtual Events
+    <h1 class="minimo-bold" style="color: #f9b233">
+        <span class="views-label views-label-title minimo-light uppercase">Think</span> Virtual Events
     </h1>
     <p>We’ve been working harder than ever to ensure our clients can engage and interact with their delegates globally, without the need to travel.</p>
     <p><a href="#services" class="mfp-close" type="button">Why not take a look…</a></p>

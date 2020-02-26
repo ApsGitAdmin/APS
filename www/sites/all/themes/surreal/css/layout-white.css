@@ -2735,7 +2735,43 @@ img.posterFrame {
 
 /* END */
 
+#alert-popup {
+    background: #FFF;
+    max-width: 640px;
+    box-sizing: border-box;
+	font-size: 14pt;
+	padding: 1px 2em 1em 2em;
+	margin: 160px auto 4em;
+	width: 85%;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
 
+#alert-popup h1 {
+    font-size: 28pt;
+    color: #f9b233;
+}
+
+#alert-popup h1 span {
+    font-size: inherit;
+    color: #939393;
+}
+
+#alert-popup p {
+    margin-bottom: 1em;
+}
+
+#alert-popup .mfp-close {
+    display: block;
+    position: relative;
+    width: auto;
+    height: auto;
+    line-height: 1em;
+    opacity: 1;
+    padding: 0;
+    color: #f9b233;
+    font-size: 120%;
+}
 
 
 
