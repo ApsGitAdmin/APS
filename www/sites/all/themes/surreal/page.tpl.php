@@ -530,7 +530,7 @@
     </h1>
     <p>We’ve been working harder than ever to ensure our clients can engage and interact with their delegates globally, without the need to travel.</p>
     <p><a href="#services" class="mfp-close" type="button">Why not take a look here…</a></p>-->
-    <a href="https://www.thinkaps.com/#services"><img src="https://mcusercontent.com/a2a1917b6b8c0511230a8c675/images/fb7a89c5-c199-4eff-8453-1835b1155478.jpg"></a>
+    <a href="#services"><img class="mfp-close" src="https://mcusercontent.com/a2a1917b6b8c0511230a8c675/images/d5337df7-d440-459d-a3c1-d4a6ad023a33.png"></a>
 </div>
 <?php endif; ?>
 
