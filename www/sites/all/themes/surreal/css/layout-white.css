@@ -2736,7 +2736,7 @@ img.posterFrame {
 /* END */
 
 #alert-popup {
-    background: #FFF;
+    background: none;
     max-width: 640px;
     box-sizing: border-box;
 	font-size: 14pt;
