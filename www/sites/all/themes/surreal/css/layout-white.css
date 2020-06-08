@@ -284,7 +284,9 @@ nav {
 	/*padding-top: 140px;*/
 	padding-top: 0;
 }
-
+#r0 .container img {
+    width: 100%;
+}
 nav ul {
 	display: inline-block;
 	vertical-align: top;
