@@ -281,7 +281,8 @@ nav {
 	border-image: url(https://www.thinkaps.com/sites/default/files/parallax/background/Contact_Parallax_0_0.png) 25 25 stretch;
 }
 #r1 {
-	padding-top: 140px;
+	/*padding-top: 140px;*/
+	padding-top: 0;
 }
 
 nav ul {
