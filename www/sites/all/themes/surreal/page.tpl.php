@@ -524,16 +524,16 @@
   <h3>Review of this Policy</h3>
   <p>We keep this Policy under regular review so please check often for changes. This Policy was last updated in May 2018.</p>
 </div>
-<?php if (drupal_is_front_page()): ?>
+<!--<?php if (drupal_is_front_page()): ?>
 <div id="alert-popup" class="white-popup mfp-hide">
-    <!--<h1 class="minimo-bold" style="color: #f9b233">
+    <h1 class="minimo-bold" style="color: #f9b233">
         <span class="views-label views-label-title minimo-light uppercase">Think</span> Virtual Events
     </h1>
     <p>We’ve been working harder than ever to ensure our clients can engage and interact with their delegates globally, without the need to travel.</p>
-    <p><a href="#services" class="mfp-close" type="button">Why not take a look here…</a></p>-->
+    <p><a href="#services" class="mfp-close" type="button">Why not take a look here…</a></p>
     <a href="#services"><img class="mfp-close" src="https://mcusercontent.com/a2a1917b6b8c0511230a8c675/images/d5337df7-d440-459d-a3c1-d4a6ad023a33.png"></a>
 </div>
-<?php endif; ?>
+<?php endif; ?>-->
 
 
 
