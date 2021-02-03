@@ -3177,6 +3177,16 @@ h2.client-login {
 }
 
 
+/* blank video page */
+
+.page-node-749 .page.desktop,
+.page-node-749 #footer {
+	background: #fff;
+}
+
+.page-node-749 .contactContainer {
+	display: none;
+}
 
 
 
