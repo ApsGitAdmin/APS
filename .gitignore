@@ -1,3 +1,6 @@
+# Ignore ddev
+.ddev
+
 # Ignore virtual box info
 local/
 
