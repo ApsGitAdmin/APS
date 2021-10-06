@@ -1353,6 +1353,10 @@ p.percent {
 }
 .contactForm {
 	background:#fff;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	padding: 2em 0;
 }
 .contactLogo {
 	margin-bottom: 23px;
@@ -1360,6 +1364,12 @@ p.percent {
 }
 .contactLogo img {
 	margin-top: 30px;
+}
+.contactInfo {
+	font-weight: bold;
+}
+.contactDetails {
+	margin-top: 20px;
 }
 .contactDetails li span {
     padding-right: 5px;

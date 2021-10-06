@@ -265,17 +265,18 @@
         <?php endif; ?>
         <div class="container contactForm">
           <?php if (theme_get_setting('contact-info', 'surreal')): ?>
-          <div class="five columns offset-by-one minimo-light uppercase">
+          <div class="six columns offset-by-one minimo-light uppercase">
             <?php if ($logo): ?>
-              <div class="contactLogo"><img height="100" width="186" src="<?php print $logo; ?>" alt="<?php print $site_name; ?>" /></div>
+                <?php $theme_path = drupal_get_path('theme', 'surreal'); ?>
+              <div class="contactLogo"><img height="100" width="324" src="<?php print drupal_get_path('theme', 'surreal'); ?>/images/aps-cyberessentials.png" alt="<?php print $site_name; ?>" /></div>
             <?php endif; ?>
-            <div class="contactInfo">
-              <?php print theme_get_setting('contact-info', 'surreal'); ?>
-            </div>
           </div>
           <?php endif; ?>
-          <div class="nine columns">
-            <div class="five columns contactDetails minimo-light uppercase alpha">
+          <div class="eight columns">
+              <div class="contactInfo">
+				  <?php print theme_get_setting('contact-info', 'surreal'); ?>
+              </div>
+            <div class="four columns contactDetails minimo-light uppercase alpha">
               <ul>
                 <li><span class="icon-location"></span><?php print theme_get_setting('contact-map', 'surreal'); ?>
                   <br/><span class="icon-spacer"></span><?php print theme_get_setting('contact-map-region', 'surreal'); ?>
@@ -350,7 +351,7 @@
       <?php print render($page["footer"]); ?>
       <?php endif; ?>
       <?php if ($page['copyright']): ?>
-      <div class="sixteen columns"> <?php print render($page["copyright"]); ?> </div>
+       <?php print render($page["copyright"]); ?>
       <div class="sixteen columns privacy-policy"><a href="#privacy-policy" class="magnific-inline">Click here to view our privacy policy</a></div>
       <?php endif; ?>
     </div>
