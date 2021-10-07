@@ -1359,17 +1359,24 @@ p.percent {
 	padding: 2em 0;
 }
 .contactLogo {
-	margin-bottom: 23px;
+	text-align: right;
 	
 }
 .contactLogo img {
-	margin-top: 30px;
+    margin-top: 0;
 }
 .contactInfo {
 	font-weight: bold;
+    text-align: center;
 }
 .contactDetails {
 	margin-top: 20px;
+}
+.contactDetails.alpha {
+
+}
+.contactDetails.alpha ul {
+    float: right;
 }
 .contactDetails li span {
     padding-right: 5px;
