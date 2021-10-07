@@ -293,7 +293,9 @@
                         <div class="space20"></div>
                     </div>
                     <div class="three columns">
-                        <img height="90" width="75" src="<?php print drupal_get_path('theme', 'surreal'); ?>/images/cyberessentials.png" alt="Cyber Essentials Certified" />
+                        <a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank">
+                            <img height="90" width="75" src="<?php print drupal_get_path('theme', 'surreal'); ?>/images/cyberessentials.png" alt="Cyber Essentials Certified" />
+                        </a>
                     </div>
 					<?php if ($page['region6']): ?>
 						<?php print render($page["region6"]); ?>

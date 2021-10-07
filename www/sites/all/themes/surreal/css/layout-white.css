@@ -1358,6 +1358,10 @@ p.percent {
 	align-items: center;
 	padding: 2em 0;
 }
+.contactForm a {
+    border: none;
+    text-decoration: none;
+}
 .contactLogo {
 	text-align: right;
 	
