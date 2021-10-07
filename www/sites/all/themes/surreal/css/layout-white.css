@@ -1356,7 +1356,7 @@ p.percent {
 	display: flex;
 	flex-flow: row;
 	align-items: center;
-	padding: 2em 0;
+	padding: 3em 0;
 }
 .contactForm a {
     border: none;
@@ -1364,7 +1364,6 @@ p.percent {
 }
 .contactLogo {
 	text-align: right;
-	
 }
 .contactLogo img {
     margin-top: 0;
@@ -1372,9 +1371,10 @@ p.percent {
 .contactInfo {
 	font-weight: bold;
     text-align: center;
+    padding: 0;
 }
 .contactDetails {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .contactDetails.alpha {
 
