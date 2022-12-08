@@ -29,7 +29,7 @@
                 <!--end Hero-->
                 <div class="aps-video-wrapper">
                     <!--<iframe src="https://player.vimeo.com/video/246274334?autoplay=0&loop=0&autopause=0" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
-                    <img class="posterFrame" src="sites/all/themes/surreal/images/apsThumbnail-MAIN.jpg" />
+                    <!--<img class="posterFrame" src="sites/all/themes/surreal/images/apsThumbnail-MAIN.jpg" />-->
                     <iframe src="https://player.vimeo.com/video/115250224?autoplay=0&loop=0&autopause=0&api=1" class="aps-video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
                 <img src="https://www.thinkaps.com/sites/default/files/styles/service_gallery/public/client-service/gallery/APS-GPTW-BANNER.png">
